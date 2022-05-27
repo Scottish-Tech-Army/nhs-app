@@ -1,11 +1,12 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import { testData } from './api/testData.json'
+import BoxList from '../components/boxes/BoxList'
 
-export default function Home() {
+
+ function Home() {
   return (
     <div>
-      list of boxes
+        <BoxList Boxes={testData} />
     </div>
   )
 }
+export default Home;

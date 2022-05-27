@@ -5,6 +5,7 @@
         "boxes": [
           {
             "name": "trauma chest drain - box 1",
+            "id":1,
             "items": [
               {
                 "name": "Blunt dissection chest drainage insertion pack",
