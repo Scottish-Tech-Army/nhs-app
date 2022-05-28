@@ -11,10 +11,10 @@ function BoxesDetails(props) {
 
     return (
         <BoxItemDetail
-            id={loadedBox.id}
-            hip={loadedBox.hip}
-            hd={loadedBox.hd} 
-            hr={loadedBox.hr} 
+            id={loadedBox.items.id}
+            name={loadedBox.items.name}
+            size={loadedBox.items.size} 
+            description={loadedBox.items.description} 
         />
     )
 }
@@ -27,17 +27,17 @@ export async function getStaticPaths() {
         paths: [
             {
                 params: {
-                    sID: "9",
+                    boxID: "1",
                 },
             },
             {
                 params: {
-                    sID: "0",
+                    boxID: "2",
                 },
             },
             {
                 params: {
-                    sID: "1",
+                    boxID: "3",
                 },
             },
         ],
