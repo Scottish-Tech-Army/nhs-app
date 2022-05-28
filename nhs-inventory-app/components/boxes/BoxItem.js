@@ -2,8 +2,6 @@ import { useRouter } from 'next/router';
 import Card from '../ui/Card';
 
 
-
-
 function BoxItem(props) {
   const router = useRouter();
 
@@ -14,9 +12,7 @@ function BoxItem(props) {
   
   return (
           <Card>    
-            <label >Name of equipment</label>
-            <div>{props.name}</div><br/><br/>
-            <button onClick={onClickHandler}>More Details</button>
+            <button onClick={onClickHandler}>{props.name}</button>
           </Card>
   );
 }

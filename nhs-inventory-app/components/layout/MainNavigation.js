@@ -9,13 +9,13 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link href='/'>Box 1</Link>
+          <Link href='/scan'>Scan</Link>
           </li>
           <li>
-            <Link href='box2'>Box 2</Link>
+            <Link href='/'>Library</Link>
           </li>
           <li>
-            <Link href='box3'>Box 3</Link>
+            <Link href='/Review'>Review</Link>
           </li>
         </ul>
       </nav>
