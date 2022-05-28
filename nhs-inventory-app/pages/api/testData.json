@@ -1,5 +1,4 @@
-{
-    "areas": [
+[
       {
         "name": "trauma tower",
         "boxes": [
@@ -152,4 +151,3 @@
         ]
       }
     ]
-  }

@@ -1,17 +1,16 @@
 import BoxItem from "./BoxItem";
-//import classes from './MeetupList.module.css';
 
 function BoxList(props) {
   return (
     <ul >
       {
-        props.boxes.map((box) => (
+        props.areas.map((box) => (
           <BoxItem
             key={box.id}
             id={box.id}
-            hip={box.hip}
-            spect={box.spect}
-            con={box.con}
+            name={box.name}
+            size={box.size}
+            description={box.description}
           />
         ))}
     </ul>

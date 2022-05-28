@@ -5,7 +5,7 @@ import BoxList from '../components/boxes/BoxList'
  function Home() {
   return (
     <div>
-        <BoxList Boxes={testData} />
+        <BoxList boxes={testData} />
     </div>
   )
 }
