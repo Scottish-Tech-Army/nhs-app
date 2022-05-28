@@ -1,5 +1,5 @@
 import BoxItemDetail from '../../components/boxes/BoxItemDetail';
-import starJson from '../../data/stars';
+import testDataJson from '../api/testData.json'
 import fs from 'fs/promises';
 import path from 'path';
 
