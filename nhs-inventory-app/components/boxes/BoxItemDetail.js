@@ -6,13 +6,10 @@ function BoxItemDetail(props) {
 
     return (
         <section section >
-            <div>{box.id}</div>
-            <div>{box.id}</div>
-            <div>{box.name}</div>
-            <div>{box.size}</div>
-            <div>{box.description}</div>
+            <div>{props.id}</div>
+            <div>{props.name}</div>
         </section>
     )
 }
 
-export default BoxItemDetail
+export default BoxItemDetail;

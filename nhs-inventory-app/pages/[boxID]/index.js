@@ -10,10 +10,9 @@ function BoxesDetails(props) {
 
     return (
         <BoxItemDetail
-            id={loadedBox.items.id}
-            name={loadedBox.items.name}
-            size={loadedBox.items.size} 
-            description={loadedBox.items.description} 
+            id={loadedBox.id}
+            name={loadedBox.name}
+            boxes={loadedBox.boxes} 
         />
     )
 }

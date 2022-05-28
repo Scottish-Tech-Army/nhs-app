@@ -6,7 +6,8 @@ function BoxList(props) {
       {
         props.boxes.map((box) => (
           <BoxItem
-          name={props.name}
+            id={box.id}
+          name={box.name}
           />
         ))}
     </ul>
