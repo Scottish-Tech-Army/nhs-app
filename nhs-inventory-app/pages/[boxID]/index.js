@@ -1,7 +1,6 @@
 import BoxItemDetail from '../../components/boxes/BoxItemDetail';
 import testData from '../api/testData.json'
-import fs from 'fs/promises';
-import path from 'path';
+
 
 
 
@@ -49,12 +48,7 @@ export async function getStaticProps(context) {
     const { params } = context;
     const boxId = params.boxID;
 
-    const filePath = path.join(process.cwd(), 'data', 'testData.json');
-    const jsonData = await fs.readFile(filePath);
-    const data = JSON.parse(jsonData);
-
-
-    const boxFound = data.testData.find(boxFound => boxFound.id === boxId)
+    const boxFound = testData.find(boxFound => boxFound.id === boxId)
     return {
         props: {
             loadedBox: boxFound

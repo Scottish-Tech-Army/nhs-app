@@ -4,13 +4,9 @@ function BoxList(props) {
   return (
     <ul >
       {
-        props.areas.map((box) => (
+        props.boxes.map((box) => (
           <BoxItem
-            key={box.id}
-            id={box.id}
-            name={box.name}
-            size={box.size}
-            description={box.description}
+          name={props.name}
           />
         ))}
     </ul>

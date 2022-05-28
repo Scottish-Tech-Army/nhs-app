@@ -14,17 +14,21 @@ function BoxItem(props) {
   
   return (
           <Card>    
-             <label >Box ID</label>
-              <div >{props.items.id}</div><br/><br/>
-             <label >Name of equipment</label>
-              <div>{props.items.name}</div><br/><br/>
-             <label >Size</label>
-              <div>{props.items.size}</div><br/><br/>
-             <label>Description</label>
-              <div>{props.items.description}</div><br/><br/>
+            <label >Name of equipment</label>
+            <div>{props.name}</div><br/><br/>
             <button onClick={onClickHandler}>More Details</button>
           </Card>
   );
 }
 
 export default BoxItem;
+
+/* 
+<label >Box ID</label>
+<div >{props.items.id}</div><br/><br/>
+<label >Name of equipment</label>
+<div>{props.items.name}</div><br/><br/>
+<label >Size</label>
+<div>{props.items.size}</div><br/><br/>
+<label>Description</label>
+<div>{props.items.description}</div><br/><br/> */

@@ -1,4 +1,4 @@
-import { testData } from './api/testData.json'
+import  testData  from './api/testData.json'
 import BoxList from '../components/boxes/BoxList'
 
 
