@@ -5,17 +5,17 @@ function MainNavigation() {
 
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>StarMap</div>
+      <div className={classes.logo}>NHS</div>
       <nav>
         <ul>
           <li>
-            <Link href='/'>Stars</Link>
+            <Link href='/'>Box 1</Link>
           </li>
           <li>
-            <Link href='project/wallet'>Wallet</Link>
+            <Link href='box2'>Box 2</Link>
           </li>
           <li>
-            <Link href='project/my-account'>Account</Link>
+            <Link href='box3'>Box 3</Link>
           </li>
         </ul>
       </nav>

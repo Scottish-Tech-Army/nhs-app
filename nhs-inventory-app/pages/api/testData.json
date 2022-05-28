@@ -130,19 +130,24 @@
             ]
           },
           {
-            "name": "trauma chest drain - box 2"
+            "name": "trauma chest drain - box 2",
+            "id": 2
           },
           {
-            "name": "trauma chest drain - box 3"
+            "name": "trauma chest drain - box 3",
+            "id": 3
           },
           {
-            "name": "trauma chest drain - box 4"
+            "name": "trauma chest drain - box 4",
+            "id": 4
           },
           {
-            "name": "trauma chest drain - box 5"
+            "name": "trauma chest drain - box 5",
+            "id": 5
           },
           {
-            "name": "trauma chest drain - box 6"
+            "name": "trauma chest drain - box 6",
+            "id": 6
           }
         ]
       }
