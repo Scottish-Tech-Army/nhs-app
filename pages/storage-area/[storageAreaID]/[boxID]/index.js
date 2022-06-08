@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
-import data from '../../../../../testData.json'
 import BoxesContents from '../../../../components/contents/BoxesContents';
 import Form from '../../../../components/UI/form/form';
+import data from '../../../api/testData.json'
+
 
 function Box() {
     const router = useRouter();

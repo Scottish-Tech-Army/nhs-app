@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import data from '../../../../testData.json'
 import BoxesList from '../../../components/boxes/BoxesList';
+import data from '../../api/testData.json'
 
 
 function StorageAreaId() {

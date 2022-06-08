@@ -1,6 +1,6 @@
 import StorageAreaList from "../../components/storage-areas/StorageAreaList";
-import data from '../../../testData.json'
 
+import data from '../api/testData.json'
 
 function StorageArea() {
     const storageAreas = data;
