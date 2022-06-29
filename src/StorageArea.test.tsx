@@ -1,12 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import StorageArea, { getStaticProps } from "../pages/storage-area";
+import StorageArea from "./StorageArea";
 import "@testing-library/jest-dom";
 import React from "react";
-import storageAreaContents from "./data/traumaTower.json";
 
 describe("StorageArea", () => {
   it("renders a home page", async () => {
-    render(<StorageArea storageAreaContents={storageAreaContents} />);
+    render(<StorageArea />);
+
+    expect(screen.getByText("Major Trauma Tower")).toBeDefined();
 
     const links = await screen.findAllByRole("link");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
@@ -28,20 +29,8 @@ describe("StorageArea", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = render(
-      <StorageArea storageAreaContents={storageAreaContents} />
-    );
+    const { container } = render(<StorageArea />);
 
     expect(container).toMatchSnapshot();
-  });
-});
-
-describe("getStaticProps", () => {
-  it("gets storageAreaContents", async () => {
-    expect(await getStaticProps()).toEqual({
-      props: {
-        storageAreaContents, // From JSON import above
-      },
-    });
   });
 });
