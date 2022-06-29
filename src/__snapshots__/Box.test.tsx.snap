@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Box does not render if no boxId 1`] = `<div />`;
+
+exports[`Box does not render if unknown boxId 1`] = `<div />`;
+
+exports[`Box renders correctly 1`] = `
+<div>
+  <div>
+    <h1>
+      trauma chest drain - box 4
+    </h1>
+    <form>
+      <ul>
+        <li>
+          <label>
+            Blunt dissection chest drainage insertion pack
+            <input
+              max="10"
+              min="0"
+              name="Blunt dissection chest drainage insertion pack"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Sterile gloves
+            <input
+              max="10"
+              min="0"
+              name="Sterile gloves"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Sterile gloves
+            <input
+              max="10"
+              min="0"
+              name="Sterile gloves"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Sterile gloves
+            <input
+              max="10"
+              min="0"
+              name="Sterile gloves"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Chest drain catheter 28Fr
+            <input
+              max="10"
+              min="0"
+              name="Chest drain catheter 28Fr"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Chest drain catheter 32Fr
+            <input
+              max="10"
+              min="0"
+              name="Chest drain catheter 32Fr"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Chest drain catheter 36Fr
+            <input
+              max="10"
+              min="0"
+              name="Chest drain catheter 36Fr"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+      </ul>
+      <div>
+        <button
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
