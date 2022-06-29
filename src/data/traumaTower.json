@@ -1,0 +1,442 @@
+{
+    "rackId": "0",
+    "name": "Major Trauma Tower",
+    "boxes": [
+      {
+        "name": "trauma chest drain - box 1",
+        "boxId": "0",
+        "items": [
+          {
+            "name": "Blunt dissection chest drainage insertion pack",
+            "size": "28Fg",
+            "description": "Pack containing equipment for insertion of trauma chest drain",
+            "location": "Resus store XX",
+            "photo": "chestdrain.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Small",
+            "description": "Small sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "smallsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Medium",
+            "description": "Medium sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "mediumsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Large",
+            "description": "Large sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "largesterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 28Fr",
+            "size": "28Fr",
+            "description": "Chest drain catheter - 28Fr",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 32Fr",
+            "size": "32Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 36Fr",
+            "size": "36Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "ChloraPrep applicator",
+            "size": "n/a",
+            "description": "ChloraPrep applicator for cleaning skin for sterile procedure",
+            "location": "Resus store XX",
+            "photo": "chloraprep.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Lidocaine 1%",
+            "size": "5ml / 50mg",
+            "description": "Local anaesthetic",
+            "location": "Resus store XX",
+            "photo": "lidocaine.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Standard suture pack",
+            "size": "Standard",
+            "description": "Pack of equipment for suturing",
+            "location": "Resus store XX",
+            "photo": "standardsuture.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Mefix roll",
+            "size": "5cm x 10m",
+            "description": "Roll of mefix dressing retention tape",
+            "location": "Resus store XX",
+            "photo": "mefix.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain bottle",
+            "size": "n/a",
+            "description": "Chest drain bottle for draining air and blood",
+            "location": "Resus store XX",
+            "photo": "chestdrainbottle.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain tubing",
+            "size": "n/a",
+            "description": "Tubing for connecting chest drain catheter and chest drain bottle",
+            "location": "Resus store XX",
+            "photo": "chestdraintubing.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile water (H20) bottle",
+            "size": "1000ml bottle",
+            "description": "Sterile water (H2O)",
+            "location": "Resus store XX",
+            "photo": "sterilewater.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Spencer wells forceps",
+            "size": "Straight 20cm",
+            "description": "Forceps for chest procedures including chest drain insertion, thoracostomies and thoracotomy",
+            "location": "Resus store XX",
+            "photo": "spencerwells.jpg",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "name": "trauma chest drain - box 2",
+        "boxId": "1",
+        "items": [
+          {
+            "name": "Blunt dissection chest drainage insertion pack",
+            "size": "28Fg",
+            "description": "Pack containing equipment for insertion of trauma chest drain",
+            "location": "Resus store XX",
+            "photo": "chestdrain.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Small",
+            "description": "Small sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "smallsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Medium",
+            "description": "Medium sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "mediumsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Large",
+            "description": "Large sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "largesterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 28Fr",
+            "size": "28Fr",
+            "description": "Chest drain catheter - 28Fr",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 32Fr",
+            "size": "32Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 36Fr",
+            "size": "36Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "name": "trauma chest drain - box 3",
+        "boxId": "2",
+        "items": [
+          {
+            "name": "Blunt dissection chest drainage insertion pack",
+            "size": "28Fg",
+            "description": "Pack containing equipment for insertion of trauma chest drain",
+            "location": "Resus store XX",
+            "photo": "chestdrain.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Small",
+            "description": "Small sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "smallsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Medium",
+            "description": "Medium sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "mediumsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Large",
+            "description": "Large sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "largesterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 28Fr",
+            "size": "28Fr",
+            "description": "Chest drain catheter - 28Fr",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 32Fr",
+            "size": "32Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 36Fr",
+            "size": "36Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "name": "trauma chest drain - box 4",
+        "boxId": "3",
+        "items": [
+          {
+            "name": "Blunt dissection chest drainage insertion pack",
+            "size": "28Fg",
+            "description": "Pack containing equipment for insertion of trauma chest drain",
+            "location": "Resus store XX",
+            "photo": "chestdrain.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Small",
+            "description": "Small sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "smallsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Medium",
+            "description": "Medium sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "mediumsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Large",
+            "description": "Large sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "largesterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 28Fr",
+            "size": "28Fr",
+            "description": "Chest drain catheter - 28Fr",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 32Fr",
+            "size": "32Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 36Fr",
+            "size": "36Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "name": "trauma chest drain - box 5",
+        "boxId": "4",
+        "items": [
+          {
+            "name": "Blunt dissection chest drainage insertion pack",
+            "size": "28Fg",
+            "description": "Pack containing equipment for insertion of trauma chest drain",
+            "location": "Resus store XX",
+            "photo": "chestdrain.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Small",
+            "description": "Small sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "smallsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Medium",
+            "description": "Medium sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "mediumsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Large",
+            "description": "Large sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "largesterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 28Fr",
+            "size": "28Fr",
+            "description": "Chest drain catheter - 28Fr",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 32Fr",
+            "size": "32Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 36Fr",
+            "size": "36Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "name": "trauma chest drain - box 6",
+        "boxId": "5",
+        "items": [
+          {
+            "name": "Blunt dissection chest drainage insertion pack",
+            "size": "28Fg",
+            "description": "Pack containing equipment for insertion of trauma chest drain",
+            "location": "Resus store XX",
+            "photo": "chestdrain.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Small",
+            "description": "Small sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "smallsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Medium",
+            "description": "Medium sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "mediumsterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Sterile gloves",
+            "size": "Large",
+            "description": "Large sterile gloves - 1 pair",
+            "location": "Resus store XX",
+            "photo": "largesterilegloves.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 28Fr",
+            "size": "28Fr",
+            "description": "Chest drain catheter - 28Fr",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 32Fr",
+            "size": "32Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          },
+          {
+            "name": "Chest drain catheter 36Fr",
+            "size": "36Fr",
+            "description": "Chest drain catheter",
+            "location": "Resus store XX",
+            "photo": "pleuralcatheter.jpg",
+            "quantity": 1
+          }
+        ]
+      }
+    ]
+  }
