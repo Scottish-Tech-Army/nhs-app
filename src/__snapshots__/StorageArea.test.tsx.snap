@@ -9,42 +9,42 @@ exports[`StorageArea renders correctly 1`] = `
     <ul>
       <li>
         <a
-          href="/box/0-1"
+          href="/box/0/1"
         >
           Trauma Chest Drain - Box 1
         </a>
       </li>
       <li>
         <a
-          href="/box/0-2"
+          href="/box/0/2"
         >
           Trauma Chest Drain - Box 2
         </a>
       </li>
       <li>
         <a
-          href="/box/0-3"
+          href="/box/0/3"
         >
           Trauma Chest Drain - Box 3
         </a>
       </li>
       <li>
         <a
-          href="/box/0-4"
+          href="/box/0/4"
         >
           Trauma Chest Drain - Box 4
         </a>
       </li>
       <li>
         <a
-          href="/box/0-5"
+          href="/box/0/5"
         >
           Trauma Chest Drain - Box 5
         </a>
       </li>
       <li>
         <a
-          href="/box/0-6"
+          href="/box/0/6"
         >
           Trauma Chest Drain - Box 6
         </a>

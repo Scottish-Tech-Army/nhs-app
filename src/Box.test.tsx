@@ -2,7 +2,6 @@ import React from "react";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import storageAreaContents from "./data/traumaTower";
 
 import Box from "./Box";
 
@@ -12,12 +11,12 @@ describe("Box", () => {
   it("rendered a box page", async () => {
     render(
       <Box
-        boxId={"3"}
-        storageAreaContents={storageAreaContents}
+      boxTemplateId={"0"}
+      boxId={"3"}
         setBoxContents={setBoxContents}
       />
     );
-    expect(screen.getByText("trauma chest drain - box 4")).toBeDefined();
+    expect(screen.getByText("Trauma Chest Drain - Box 3")).toBeDefined();
 
     const inputFields = screen.getAllByRole("spinbutton");
 
@@ -32,16 +31,49 @@ describe("Box", () => {
       "Chest drain catheter 28Fr",
       "Chest drain catheter 32Fr",
       "Chest drain catheter 36Fr",
+      "ChloraPrep applicator",
+      "Lidocaine 1%",
+      "Standard suture pack",
+      "Mefix roll",
+      "Chest drain bottle",
+      "Chest drain tubing",
+      "Sterile water (H20) bottle",
+      "Spencer wells forceps",
     ]);
 
     expect(screen.getByRole("button", { name: "Submit" })).toBeDefined();
   });
 
+  it("does not render if no boxTemplateId", async () => {
+    const { container } = render(
+      <Box
+      boxTemplateId={""}
+      boxId={"3"}
+        setBoxContents={setBoxContents}
+      />
+    );
+
+    expect(container).toMatchSnapshot();
+  });
+
+
   it("does not render if no boxId", async () => {
     const { container } = render(
       <Box
-        boxId={""}
-        storageAreaContents={storageAreaContents}
+      boxTemplateId={"0"}
+      boxId={""}
+        setBoxContents={setBoxContents}
+      />
+    );
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it("does not render if unknown boxTemplateId", async () => {
+    const { container } = render(
+      <Box
+      boxTemplateId={"Unknown"}
+      boxId={"4"}
         setBoxContents={setBoxContents}
       />
     );
@@ -52,8 +84,8 @@ describe("Box", () => {
   it("does not render if unknown boxId", async () => {
     const { container } = render(
       <Box
-        boxId={"Unknown"}
-        storageAreaContents={storageAreaContents}
+      boxTemplateId={"0"}
+      boxId={"Unknown"}
         setBoxContents={setBoxContents}
       />
     );
@@ -67,9 +99,9 @@ describe("Box", () => {
 
     render(
       <Box
+        boxTemplateId={"0"}
         boxId={"3"}
         setBoxContents={setBoxContents}
-        storageAreaContents={storageAreaContents}
       />
     );
 
@@ -83,7 +115,7 @@ describe("Box", () => {
     expect(inputField).toHaveDisplayValue("5");
 
     expect(setBoxContents).toHaveBeenCalledTimes(1);
-    expect(setBoxContents).toHaveBeenCalledWith("3", [
+    expect(setBoxContents).toHaveBeenCalledWith("0", "3", [
       { name: "Blunt dissection chest drainage insertion pack", count: 5 },
       { name: "Sterile gloves", count: 0 },
       { name: "Sterile gloves", count: 0 },
@@ -98,7 +130,7 @@ describe("Box", () => {
     const { container } = render(
       <Box
         boxId={"3"}
-        storageAreaContents={storageAreaContents}
+        boxTemplateId={"0"}
         setBoxContents={setBoxContents}
       />
     );

@@ -6,7 +6,7 @@ import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
 const getBoxes = (boxTemplate: StorageAreaBoxTemplate) => {
   const result = [];
   for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
-    const boxId = `${boxTemplate.boxTemplateId}-${boxIndex}`;
+    const boxId = `${boxTemplate.boxTemplateId}/${boxIndex}`;
     result.push(
       <li key={boxId}>
         <a href={`/box/${boxId}`}>{`${boxTemplate.name} - Box ${boxIndex}`}</a>

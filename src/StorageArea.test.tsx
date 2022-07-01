@@ -11,12 +11,12 @@ describe("StorageArea", () => {
 
     const links = await screen.findAllByRole("link");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
-      "/box/0-1",
-      "/box/0-2",
-      "/box/0-3",
-      "/box/0-4",
-      "/box/0-5",
-      "/box/0-6",
+      "/box/0/1",
+      "/box/0/2",
+      "/box/0/3",
+      "/box/0/4",
+      "/box/0/5",
+      "/box/0/6",
     ]);
     expect(links.map((link) => link.textContent)).toEqual([
       "Trauma Chest Drain - Box 1",
