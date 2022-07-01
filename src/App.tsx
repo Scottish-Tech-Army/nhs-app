@@ -1,21 +1,18 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import './App.css';
 import StorageArea from './StorageArea';
+import storageAreaContents from "./data/traumaTower.json";
 
 import Box from './Box';
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path='/'>
-          <StorageArea />
-        </Route>
-        <Route path='box/box1'>
-          <Box />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path='/' element={<StorageArea />}/>
+        <Route path='box/:boxId' element={<Box storageAreaContents={storageAreaContents} setBoxContents={() => {}}/>} />
+      </Routes>
     </Router> 
       );
 }

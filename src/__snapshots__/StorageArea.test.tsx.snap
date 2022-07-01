@@ -2,54 +2,52 @@
 
 exports[`StorageArea renders correctly 1`] = `
 <div>
-  <div>
-    <h1>
-      Major Trauma Tower
-    </h1>
-    <ul>
-      <li>
-        <a
-          href="/box/0"
-        >
-          trauma chest drain - box 1
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/1"
-        >
-          trauma chest drain - box 2
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/2"
-        >
-          trauma chest drain - box 3
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/3"
-        >
-          trauma chest drain - box 4
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/4"
-        >
-          trauma chest drain - box 5
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/5"
-        >
-          trauma chest drain - box 6
-        </a>
-      </li>
-    </ul>
-  </div>
+  <h1>
+    Major Trauma Tower
+  </h1>
+  <ul>
+    <li>
+      <a
+        href="/box/0"
+      >
+        trauma chest drain - box 1
+      </a>
+    </li>
+    <li>
+      <a
+        href="/box/1"
+      >
+        trauma chest drain - box 2
+      </a>
+    </li>
+    <li>
+      <a
+        href="/box/2"
+      >
+        trauma chest drain - box 3
+      </a>
+    </li>
+    <li>
+      <a
+        href="/box/3"
+      >
+        trauma chest drain - box 4
+      </a>
+    </li>
+    <li>
+      <a
+        href="/box/4"
+      >
+        trauma chest drain - box 5
+      </a>
+    </li>
+    <li>
+      <a
+        href="/box/5"
+      >
+        trauma chest drain - box 6
+      </a>
+    </li>
+  </ul>
 </div>
 `;

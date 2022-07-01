@@ -1,4 +1,5 @@
 import React, { FormEvent, useState } from "react";
+import { useParams } from "react-router-dom";
 import { StorageAreaType } from "./data/StorageTypes";
 
 export type FormValueType = {
@@ -6,12 +7,13 @@ export type FormValueType = {
   count: number;
 };
 export interface BoxProps {
-  boxId: string;
   storageAreaContents: StorageAreaType;
   setBoxContents: (boxId: string, contents: FormValueType[]) => void;
 }
 
-function Box({ boxId, storageAreaContents, setBoxContents }: BoxProps) {
+function Box({ storageAreaContents, setBoxContents }: BoxProps) {
+  let { boxId } = useParams();
+
   const box = storageAreaContents.boxes.find((box) => box.boxId === boxId);
 
   const startingArrayOfObjects: FormValueType[] =
@@ -34,7 +36,7 @@ function Box({ boxId, storageAreaContents, setBoxContents }: BoxProps) {
 
   let handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setBoxContents(boxId, formValues);
+    setBoxContents(boxId!, formValues);
   };
 
   return (

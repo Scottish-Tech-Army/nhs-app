@@ -3,6 +3,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import storageAreaContents from "./data/traumaTower.json";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 
 import Box from "./Box";
 
@@ -10,13 +11,7 @@ const setBoxContents = jest.fn();
 
 describe("Box", () => {
   it("rendered a box page", async () => {
-    render(
-      <Box
-        boxId={"3"}
-        storageAreaContents={storageAreaContents}
-        setBoxContents={setBoxContents}
-      />
-    );
+    renderWithRoute("/box/3");
     expect(screen.getByText("trauma chest drain - box 4")).toBeDefined();
 
     const inputFields = screen.getAllByRole("spinbutton");
@@ -38,25 +33,15 @@ describe("Box", () => {
   });
 
   it("does not render if no boxId", async () => {
-    const { container } = render(
-      <Box
-        boxId={""}
-        storageAreaContents={storageAreaContents}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } =renderWithRoute("/box/");
 
     expect(container).toMatchSnapshot();
   });
 
   it("does not render if unknown boxId", async () => {
-    const { container } = render(
-      <Box
-        boxId={"Unknown"}
-        storageAreaContents={storageAreaContents}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } =renderWithRoute("/box/Unknown");
+    
+  
 
     expect(container).toMatchSnapshot();
   });
@@ -65,13 +50,7 @@ describe("Box", () => {
     const user = userEvent.setup();
     jest.spyOn(window, "alert").mockImplementation(() => {});
 
-    render(
-      <Box
-        boxId={"3"}
-        setBoxContents={setBoxContents}
-        storageAreaContents={storageAreaContents}
-      />
-    );
+    renderWithRoute("/box/3");
 
     const inputField = screen.getByRole("spinbutton", {
       name: "Blunt dissection chest drainage insertion pack",
@@ -95,14 +74,24 @@ describe("Box", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = render(
-      <Box
-        boxId={"3"}
-        storageAreaContents={storageAreaContents}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } = renderWithRoute("/box/3");
 
     expect(container).toMatchSnapshot();
   });
+
+
+  function renderWithRoute(url:string) {
+    return    render(
+      <MemoryRouter initialEntries={[url]}>
+      <Routes>
+        <Route path='box/:boxId' element={ <Box
+        storageAreaContents={storageAreaContents}
+        setBoxContents={setBoxContents}
+      />}> 
+        </Route>
+      </Routes>
+    </MemoryRouter> )
+
+
+  }
 });

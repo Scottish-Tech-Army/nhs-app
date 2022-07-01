@@ -9,8 +9,10 @@ function StorageArea() {
     <>
       <h1>{storageAreaContents.name}</h1>
       <ul>
-        {storageAreaContents.boxes.map((box) => (
+        {storageAreaContents.boxes.map((box, index) => (
+          <li key={index}>
           <Link to={`/box/${box.boxId}`}>{box.name}</Link>
+          </li>
         ))}
       </ul>
     </>
