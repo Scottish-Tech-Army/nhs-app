@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import './App.css';
 import StorageArea from './StorageArea';
-import storageAreaContents from "./data/traumaTower.json";
 
 import Box from './Box';
 
@@ -11,7 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<StorageArea />}/>
-        <Route path='box/:boxId' element={<Box storageAreaContents={storageAreaContents} setBoxContents={() => {}}/>} />
+        <Route path='box/:boxId' element={<Box setBoxContents={() => {}}/>} />
       </Routes>
     </Router> 
       );

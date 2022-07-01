@@ -8,24 +8,24 @@ describe("StorageArea", () => {
   it("renders a home page", async () => {
     renderWithRoute();
 
-    expect(screen.getByText("Major Trauma Tower")).toBeDefined();
+    expect(screen.getByText("Trauma Tower")).toBeDefined();
 
     const links = await screen.findAllByRole("link");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
-      "/box/0",
-      "/box/1",
-      "/box/2",
-      "/box/3",
-      "/box/4",
-      "/box/5",
+      "/box/0/1",
+      "/box/0/2",
+      "/box/0/3",
+      "/box/0/4",
+      "/box/0/5",
+      "/box/0/6",
     ]);
     expect(links.map((link) => link.textContent)).toEqual([
-      "trauma chest drain - box 1",
-      "trauma chest drain - box 2",
-      "trauma chest drain - box 3",
-      "trauma chest drain - box 4",
-      "trauma chest drain - box 5",
-      "trauma chest drain - box 6",
+      "Trauma Chest Drain - Box 1",
+      "Trauma Chest Drain - Box 2",
+      "Trauma Chest Drain - Box 3",
+      "Trauma Chest Drain - Box 4",
+      "Trauma Chest Drain - Box 5",
+      "Trauma Chest Drain - Box 6",
     ]);
   });
 

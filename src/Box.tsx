@@ -1,28 +1,28 @@
 import React, { FormEvent, useState } from "react";
+import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
 import { useParams } from "react-router-dom";
-import { StorageAreaType } from "./data/StorageTypes";
 
 export type FormValueType = {
   name: string;
   count: number;
 };
 export interface BoxProps {
-  storageAreaContents: StorageAreaType;
   setBoxContents: (boxId: string, contents: FormValueType[]) => void;
 }
 
-function Box({ storageAreaContents, setBoxContents }: BoxProps) {
-  let { boxId } = useParams();
+function Box({ setBoxContents }: BoxProps) {
+  let { boxTemplateId, boxId } = useParams();
 
-  const box = storageAreaContents.boxes.find((box) => box.boxId === boxId);
+
+  const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find((box) => box.boxTemplateId === boxTemplateId);
 
   const startingArrayOfObjects: FormValueType[] =
-    box?.items.map(({ name }) => ({ name, count: 0 })) || [];
+  boxTemplate?.items.map(({ name }) => ({ name, count: 0 })) || [];
   const [formValues, setFormValues] = useState<FormValueType[]>(
     startingArrayOfObjects
   );
 
-  if (box === undefined) {
+  if (boxTemplate === undefined) {
     return null;
   }
 
@@ -41,11 +41,11 @@ function Box({ storageAreaContents, setBoxContents }: BoxProps) {
 
   return (
     <div>
-      <h1>{box.name}</h1>
+      <h1>{`${boxTemplate.name} - Box ${boxId}`}</h1>
 
       <form onSubmit={handleSubmit}>
         <ul>
-          {box.items.map((item, index) => (
+          {boxTemplate.items.map((item, index) => (
             <li key={index}>
               <label>
                 {item.name}

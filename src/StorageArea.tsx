@@ -1,21 +1,32 @@
 import React from "react";
 import "./App.css";
-import storageAreaContents from "./data/traumaTower.json";
+import { StorageAreaBoxTemplate } from "./data/StorageTypes";
+import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
 import {  Link } from "react-router-dom";
 
+const getBoxes = (boxTemplate: StorageAreaBoxTemplate) => {
+  const result = [];
+  for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
+    const boxId = `${boxTemplate.boxTemplateId}/${boxIndex}`;
+    result.push(
+      <li key={boxId}>
+         <Link to={`/box/${boxTemplate.boxTemplateId}/${boxIndex}`}>{`${boxTemplate.name} - Box ${boxIndex}`}</Link>
+      </li>
+    );
+  }
+  return result;
+};
 
 function StorageArea() {
   return (
-    <>
-      <h1>{storageAreaContents.name}</h1>
+    <div>
+      <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
       <ul>
-        {storageAreaContents.boxes.map((box, index) => (
-          <li key={index}>
-          <Link to={`/box/${box.boxId}`}>{box.name}</Link>
-          </li>
-        ))}
+        {TRAUMA_TOWER_TEMPLATE.boxes.map((boxTemplate) =>
+          getBoxes(boxTemplate)
+        )}
       </ul>
-    </>
+    </div>
   );
 }
 
