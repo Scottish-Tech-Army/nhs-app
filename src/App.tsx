@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<StorageArea />}/>
-        <Route path='box/:boxId' element={<Box setBoxContents={() => {}}/>} />
+        <Route path='box/:boxTemplateId/:boxId' element={<Box setBoxContents={() => {}}/>} />
       </Routes>
     </Router> 
       );

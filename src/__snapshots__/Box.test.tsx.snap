@@ -4,6 +4,8 @@ exports[`Box does not render if no boxId 1`] = `<div />`;
 
 exports[`Box does not render if no boxTemplateId 1`] = `<div />`;
 
+exports[`Box does not render if unknown boxId - box number too high 1`] = `<div />`;
+
 exports[`Box does not render if unknown boxId 1`] = `<div />`;
 
 exports[`Box does not render if unknown boxTemplateId 1`] = `<div />`;
@@ -12,7 +14,7 @@ exports[`Box renders correctly 1`] = `
 <div>
   <div>
     <h1>
-      trauma chest drain - box 4
+      Trauma Chest Drain - Box 3
     </h1>
     <form>
       <ul>
@@ -101,6 +103,110 @@ exports[`Box renders correctly 1`] = `
               max="10"
               min="0"
               name="Chest drain catheter 36Fr"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            ChloraPrep applicator
+            <input
+              max="10"
+              min="0"
+              name="ChloraPrep applicator"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Lidocaine 1%
+            <input
+              max="10"
+              min="0"
+              name="Lidocaine 1%"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Standard suture pack
+            <input
+              max="10"
+              min="0"
+              name="Standard suture pack"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Mefix roll
+            <input
+              max="10"
+              min="0"
+              name="Mefix roll"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Chest drain bottle
+            <input
+              max="10"
+              min="0"
+              name="Chest drain bottle"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Chest drain tubing
+            <input
+              max="10"
+              min="0"
+              name="Chest drain tubing"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Sterile water (H20) bottle
+            <input
+              max="10"
+              min="0"
+              name="Sterile water (H20) bottle"
+              step="1"
+              type="number"
+              value="0"
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            Spencer wells forceps
+            <input
+              max="10"
+              min="0"
+              name="Spencer wells forceps"
               step="1"
               type="number"
               value="0"

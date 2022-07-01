@@ -13,7 +13,7 @@ jest.mock("react-router-dom");
 describe("Box", () => {
   it("rendered a box page", async () => {
     renderWithRoute("0", "3");
-    expect(screen.getByText("trauma chest drain - box 3")).toBeDefined();
+    expect(screen.getByText("Trauma Chest Drain - Box 3")).toBeDefined();
 
     const inputFields = screen.getAllByRole("spinbutton");
 
@@ -44,12 +44,17 @@ describe("Box", () => {
   it("does not render if no boxTemplateId", async () => {
     const { container } = renderWithRoute("", "3");
 
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.children).toHaveLength(0);
+
     expect(container).toMatchSnapshot();
   });
 
-
   it("does not render if no boxId", async () => {
     const { container } = renderWithRoute("0", "");
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.children).toHaveLength(0);
 
     expect(container).toMatchSnapshot();
   });
@@ -57,11 +62,26 @@ describe("Box", () => {
   it("does not render if unknown boxTemplateId", async () => {
     const { container } = renderWithRoute("Unknown", "4");
 
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.children).toHaveLength(0);
+
     expect(container).toMatchSnapshot();
   });
 
   it("does not render if unknown boxId", async () => {
     const { container } = renderWithRoute("0", "Unknown");
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.children).toHaveLength(0);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it("does not render if unknown boxId - box number too high", async () => {
+    const { container } = renderWithRoute("0", "7");
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.children).toHaveLength(0);
 
     expect(container).toMatchSnapshot();
   });
@@ -71,7 +91,7 @@ describe("Box", () => {
     jest.spyOn(window, "alert").mockImplementation(() => {});
 
     renderWithRoute("0", "3");
- 
+
     const inputField = screen.getByRole("spinbutton", {
       name: "Blunt dissection chest drainage insertion pack",
     });
@@ -82,14 +102,22 @@ describe("Box", () => {
     expect(inputField).toHaveDisplayValue("5");
 
     expect(setBoxContents).toHaveBeenCalledTimes(1);
-    expect(setBoxContents).toHaveBeenCalledWith("0", "3", [
-      { name: "Blunt dissection chest drainage insertion pack", count: 5 },
-      { name: "Sterile gloves", count: 0 },
-      { name: "Sterile gloves", count: 0 },
-      { name: "Sterile gloves", count: 0 },
-      { name: "Chest drain catheter 28Fr", count: 0 },
-      { name: "Chest drain catheter 32Fr", count: 0 },
-      { name: "Chest drain catheter 36Fr", count: 0 },
+    expect(setBoxContents).toHaveBeenCalledWith("0", 3, [
+      { count: 5, name: "Blunt dissection chest drainage insertion pack" },
+      { count: 0, name: "Sterile gloves" },
+      { count: 0, name: "Sterile gloves" },
+      { count: 0, name: "Sterile gloves" },
+      { count: 0, name: "Chest drain catheter 28Fr" },
+      { count: 0, name: "Chest drain catheter 32Fr" },
+      { count: 0, name: "Chest drain catheter 36Fr" },
+      { count: 0, name: "ChloraPrep applicator" },
+      { count: 0, name: "Lidocaine 1%" },
+      { count: 0, name: "Standard suture pack" },
+      { count: 0, name: "Mefix roll" },
+      { count: 0, name: "Chest drain bottle" },
+      { count: 0, name: "Chest drain tubing" },
+      { count: 0, name: "Sterile water (H20) bottle" },
+      { count: 0, name: "Spencer wells forceps" },
     ]);
   });
 
@@ -100,11 +128,7 @@ describe("Box", () => {
   });
 
   function renderWithRoute(boxTemplateId: string, boxId: string) {
-    (useParams as jest.Mock).mockReturnValue({boxTemplateId,  boxId });
-    return render(
-      <Box
-        setBoxContents={setBoxContents}
-      />
-    );
+    (useParams as jest.Mock).mockReturnValue({ boxTemplateId, boxId });
+    return render(<Box setBoxContents={setBoxContents} />);
   }
 });

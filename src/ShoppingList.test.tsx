@@ -1,18 +1,22 @@
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import storageAreaContents from "./data/traumaTower";
 
-import Box from "./Box";
-
-const setBoxContents = jest.fn();
+import ShoppingList from "./ShoppingList";
 
 describe("ShoppingList", () => {
+
+  const ALL_CONTENTS: string[] = [
+
+  ]
+
+  const PARTIAL_CONTENTS: string[] = [
+
+  ]
+
   it("rendered a shopping list page for empty store - ie all items shown", async () => {
     render(
       <ShoppingList
-        expectedContents={storageAreaContents}
         actualContents={[]}
       />
     );
@@ -33,7 +37,6 @@ describe("ShoppingList", () => {
   it("rendered a shopping list page for filled store - ie no items shown", async () => {
     render(
       <ShoppingList
-        expectedContents={storageAreaContents}
         actualContents={ALL_CONTENTS}
       />
     );
@@ -45,7 +48,6 @@ describe("ShoppingList", () => {
   it("rendered a shopping list page for partially filled store - ie some items shown", async () => {
     render(
       <ShoppingList
-        expectedContents={storageAreaContents}
         actualContents={PARTIAL_CONTENTS}
       />
     );
@@ -59,7 +61,6 @@ describe("ShoppingList", () => {
   it("renders correctly", () => {
     const { container } = render(
       <ShoppingList
-        expectedContents={storageAreaContents}
         actualContents={PARTIAL_CONTENTS}
       />
     );

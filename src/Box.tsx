@@ -6,23 +6,29 @@ export type FormValueType = {
   name: string;
   count: number;
 };
+
 export interface BoxProps {
-  setBoxContents: (boxId: string, contents: FormValueType[]) => void;
+  setBoxContents: (boxTemplateId: string, boxNumber: number, contents: FormValueType[]) => void;
 }
 
 function Box({ setBoxContents }: BoxProps) {
   let { boxTemplateId, boxId } = useParams();
 
-
-  const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find((box) => box.boxTemplateId === boxTemplateId);
-
+  const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find(
+    (box) => box.boxTemplateId === boxTemplateId
+  );
   const startingArrayOfObjects: FormValueType[] =
-  boxTemplate?.items.map(({ name }) => ({ name, count: 0 })) || [];
+    boxTemplate?.items.map(({ name }) => ({ name, count: 0 })) || [];
   const [formValues, setFormValues] = useState<FormValueType[]>(
     startingArrayOfObjects
   );
 
-  if (boxTemplate === undefined) {
+  let boxNumber = 0;
+  if (boxId?.match(/^\d+$/)) {
+    boxNumber = Number.parseInt(boxId);
+  }
+
+  if (!boxTemplate || boxNumber < 1 || boxNumber > boxTemplate.count) {
     return null;
   }
 
@@ -36,7 +42,7 @@ function Box({ setBoxContents }: BoxProps) {
 
   let handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setBoxContents(boxId!, formValues);
+    setBoxContents(boxTemplateId!, boxNumber, formValues);
   };
 
   return (
