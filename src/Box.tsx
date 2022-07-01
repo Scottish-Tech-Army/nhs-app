@@ -1,17 +1,19 @@
 import React, { FormEvent, useState } from "react";
 import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
+import { useParams } from "react-router-dom";
 
 export type FormValueType = {
   name: string;
   count: number;
 };
 export interface BoxProps {
-  boxTemplateId: string;
-  boxId: string;
   setBoxContents: (boxId: string, contents: FormValueType[]) => void;
 }
 
-function Box({ boxTemplateId, boxId, setBoxContents }: BoxProps) {
+function Box({ setBoxContents }: BoxProps) {
+  let { boxTemplateId, boxId } = useParams();
+
+
   const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find((box) => box.boxTemplateId === boxTemplateId);
 
   const startingArrayOfObjects: FormValueType[] =
@@ -34,7 +36,7 @@ function Box({ boxTemplateId, boxId, setBoxContents }: BoxProps) {
 
   let handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setBoxContents(boxId, formValues);
+    setBoxContents(boxId!, formValues);
   };
 
   return (

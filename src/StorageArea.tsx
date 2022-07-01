@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { StorageAreaBoxTemplate } from "./data/StorageTypes";
 import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
+import {  Link } from "react-router-dom";
 
 const getBoxes = (boxTemplate: StorageAreaBoxTemplate) => {
   const result = [];
@@ -9,7 +10,7 @@ const getBoxes = (boxTemplate: StorageAreaBoxTemplate) => {
     const boxId = `${boxTemplate.boxTemplateId}/${boxIndex}`;
     result.push(
       <li key={boxId}>
-        <a href={`/box/${boxId}`}>{`${boxTemplate.name} - Box ${boxIndex}`}</a>
+         <Link to={`/box/${boxTemplate.boxTemplateId}/${boxIndex}`}>{`${boxTemplate.name} - Box ${boxIndex}`}</Link>
       </li>
     );
   }

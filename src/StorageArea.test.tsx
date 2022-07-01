@@ -2,10 +2,11 @@ import { render, screen } from "@testing-library/react";
 import StorageArea from "./StorageArea";
 import "@testing-library/jest-dom";
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 
 describe("StorageArea", () => {
   it("renders a home page", async () => {
-    render(<StorageArea />);
+    renderWithRoute();
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
 
@@ -29,8 +30,17 @@ describe("StorageArea", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = render(<StorageArea />);
+    const { container } =    renderWithRoute();
+
 
     expect(container).toMatchSnapshot();
   });
+
+  function renderWithRoute() {
+    return    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <StorageArea  />
+      </MemoryRouter>
+    );
+  }
 });

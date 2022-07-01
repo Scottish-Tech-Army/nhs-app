@@ -2,21 +2,18 @@ import React from "react";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useParams } from "react-router-dom";
 
 import Box from "./Box";
 
 const setBoxContents = jest.fn();
 
+jest.mock("react-router-dom");
+
 describe("Box", () => {
   it("rendered a box page", async () => {
-    render(
-      <Box
-      boxTemplateId={"0"}
-      boxId={"3"}
-        setBoxContents={setBoxContents}
-      />
-    );
-    expect(screen.getByText("Trauma Chest Drain - Box 3")).toBeDefined();
+    renderWithRoute("0", "3");
+    expect(screen.getByText("trauma chest drain - box 3")).toBeDefined();
 
     const inputFields = screen.getAllByRole("spinbutton");
 
@@ -45,50 +42,26 @@ describe("Box", () => {
   });
 
   it("does not render if no boxTemplateId", async () => {
-    const { container } = render(
-      <Box
-      boxTemplateId={""}
-      boxId={"3"}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } = renderWithRoute("", "3");
 
     expect(container).toMatchSnapshot();
   });
 
 
   it("does not render if no boxId", async () => {
-    const { container } = render(
-      <Box
-      boxTemplateId={"0"}
-      boxId={""}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } = renderWithRoute("0", "");
 
     expect(container).toMatchSnapshot();
   });
 
   it("does not render if unknown boxTemplateId", async () => {
-    const { container } = render(
-      <Box
-      boxTemplateId={"Unknown"}
-      boxId={"4"}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } = renderWithRoute("Unknown", "4");
 
     expect(container).toMatchSnapshot();
   });
 
   it("does not render if unknown boxId", async () => {
-    const { container } = render(
-      <Box
-      boxTemplateId={"0"}
-      boxId={"Unknown"}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } = renderWithRoute("0", "Unknown");
 
     expect(container).toMatchSnapshot();
   });
@@ -97,14 +70,8 @@ describe("Box", () => {
     const user = userEvent.setup();
     jest.spyOn(window, "alert").mockImplementation(() => {});
 
-    render(
-      <Box
-        boxTemplateId={"0"}
-        boxId={"3"}
-        setBoxContents={setBoxContents}
-      />
-    );
-
+    renderWithRoute("0", "3");
+ 
     const inputField = screen.getByRole("spinbutton", {
       name: "Blunt dissection chest drainage insertion pack",
     });
@@ -127,14 +94,17 @@ describe("Box", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = render(
-      <Box
-        boxId={"3"}
-        boxTemplateId={"0"}
-        setBoxContents={setBoxContents}
-      />
-    );
+    const { container } = renderWithRoute("0", "3");
 
     expect(container).toMatchSnapshot();
   });
+
+  function renderWithRoute(boxTemplateId: string, boxId: string) {
+    (useParams as jest.Mock).mockReturnValue({boxTemplateId,  boxId });
+    return render(
+      <Box
+        setBoxContents={setBoxContents}
+      />
+    );
+  }
 });
