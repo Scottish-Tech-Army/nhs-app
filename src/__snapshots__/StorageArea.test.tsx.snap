@@ -4,49 +4,49 @@ exports[`StorageArea renders correctly 1`] = `
 <div>
   <div>
     <h1>
-      Major Trauma Tower
+      Trauma Tower
     </h1>
     <ul>
       <li>
         <a
-          href="/box/0"
+          href="/box/0-1"
         >
-          trauma chest drain - box 1
+          Trauma Chest Drain - Box 1
         </a>
       </li>
       <li>
         <a
-          href="/box/1"
+          href="/box/0-2"
         >
-          trauma chest drain - box 2
+          Trauma Chest Drain - Box 2
         </a>
       </li>
       <li>
         <a
-          href="/box/2"
+          href="/box/0-3"
         >
-          trauma chest drain - box 3
+          Trauma Chest Drain - Box 3
         </a>
       </li>
       <li>
         <a
-          href="/box/3"
+          href="/box/0-4"
         >
-          trauma chest drain - box 4
+          Trauma Chest Drain - Box 4
         </a>
       </li>
       <li>
         <a
-          href="/box/4"
+          href="/box/0-5"
         >
-          trauma chest drain - box 5
+          Trauma Chest Drain - Box 5
         </a>
       </li>
       <li>
         <a
-          href="/box/5"
+          href="/box/0-6"
         >
-          trauma chest drain - box 6
+          Trauma Chest Drain - Box 6
         </a>
       </li>
     </ul>

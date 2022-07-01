@@ -2,7 +2,7 @@ import React from "react";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import storageAreaContents from "./data/traumaTower.json";
+import storageAreaContents from "./data/traumaTower";
 
 import Box from "./Box";
 

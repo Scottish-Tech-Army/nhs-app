@@ -1,46 +1,31 @@
-import React from 'react';
-import './App.css';
-import storageAreaContents from "./data/traumaTower.json";
-import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";  
+import React from "react";
+import "./App.css";
+import { StorageAreaBoxTemplate } from "./data/StorageTypes";
+import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
 
-import Box1 from './pages/Box1';
-import Box2 from './pages/Box2';
-import Box3 from './pages/Box3';
-import Box4 from './pages/Box4';
-import Box5 from './pages/Box5';
+const getBoxes = (boxTemplate: StorageAreaBoxTemplate) => {
+  const result = [];
+  for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
+    const boxId = `${boxTemplate.boxTemplateId}-${boxIndex}`;
+    result.push(
+      <li key={boxId}>
+        <a href={`/box/${boxId}`}>{`${boxTemplate.name} - Box ${boxIndex}`}</a>
+      </li>
+    );
+  }
+  return result;
+};
 
 function StorageArea() {
   return (
-    <Router>
-      <h1>{storageAreaContents.name}</h1>
+    <div>
+      <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
       <ul>
-        {storageAreaContents.boxes.map((box) => (
-          <Link to={`/box/${box.boxId}`} >
-          {box.name}
-          </Link>
-        ))}
+        {TRAUMA_TOWER_TEMPLATE.boxes.map((boxTemplate) =>
+          getBoxes(boxTemplate)
+        )}
       </ul>
-
-
-
-      <Switch>
-        <Route path='box/box1'>
-          <Box1 />
-        </Route>
-        <Route path='box/box2'>
-          <Box2 />
-        </Route>
-        <Route path='box/box3'>
-          <Box3 />
-        </Route>
-        <Route path='box/box4'>
-          <Box4 />
-        </Route>
-        <Route path='box/box5'>
-          <Box5 />
-        </Route>
-      </Switch>
-    </Router>
+    </div>
   );
 }
 

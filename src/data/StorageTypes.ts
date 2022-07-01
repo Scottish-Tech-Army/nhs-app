@@ -7,6 +7,13 @@ export type StorageAreaItemType = {
   quantity?: number;
 };
 
+export type StorageAreaBoxTemplate = {
+  boxTemplateId: string;
+  name: string;
+  items: StorageAreaItemType[];
+  count: number;
+};
+
 export type StorageAreaBoxType = {
   boxId: string;
   name: string;
@@ -14,7 +21,7 @@ export type StorageAreaBoxType = {
 };
 
 export type StorageAreaType = {
-  rackId: string;
+  storageAreaId: string;
   name: string;
-  boxes: StorageAreaBoxType[];
+  boxes: StorageAreaBoxTemplate[];
 };
