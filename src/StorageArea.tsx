@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import { StorageAreaBoxTemplate } from "./data/StorageTypes";
-import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
+import { BoxTemplate } from "./data/StorageTypes";
+import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
 import {  Link } from "react-router-dom";
 
-const getBoxes = (boxTemplate: StorageAreaBoxTemplate) => {
+const getBoxes = (boxTemplate: BoxTemplate) => {
   const result = [];
   for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
     const boxId = `${boxTemplate.boxTemplateId}/${boxIndex}`;
@@ -26,6 +26,7 @@ function StorageArea() {
           getBoxes(boxTemplate)
         )}
       </ul>
+      <Link to={"/needed"}>Items needed</Link>
     </div>
   );
 }

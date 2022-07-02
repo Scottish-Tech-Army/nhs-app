@@ -1,18 +1,42 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import React from "react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
+import { renderWithProvider } from "./testUtils";
+import { MemoryRouter } from "react-router-dom";
 
-describe("compoent App", () => {
+describe("App", () => {
   it("renders default view", () => {
-    render(<App />);
+    renderWithProvider(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
     expect(screen.getByText("Trauma Tower")).toBeDefined();
+  });
+
+  it("renders shopping list view", async () => {
+    const user = userEvent.setup();
+
+    renderWithProvider(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    await user.click(screen.getByRole("link", { name: "Items needed" }));
+
+    expect(screen.getByText("Items to replace")).toBeDefined();
   });
 
   it("renders box view", async () => {
     const user = userEvent.setup();
 
-    render(<App />);
+    renderWithProvider(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     await user.click(
       screen.getByRole("link", { name: "Trauma Chest Drain - Box 2" })
@@ -21,7 +45,7 @@ describe("compoent App", () => {
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
 
     expect(
-      screen.getByText("Blunt dissection chest drainage insertion pack")
+      screen.getByText("Blunt dissection chest drainage insertion pack (28Fg)")
     ).toBeDefined();
   });
 });

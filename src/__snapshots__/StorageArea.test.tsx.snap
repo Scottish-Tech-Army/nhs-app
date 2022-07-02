@@ -50,6 +50,11 @@ exports[`StorageArea renders correctly 1`] = `
         </a>
       </li>
     </ul>
+    <a
+      href="/needed"
+    >
+      Items needed
+    </a>
   </div>
 </div>
 `;

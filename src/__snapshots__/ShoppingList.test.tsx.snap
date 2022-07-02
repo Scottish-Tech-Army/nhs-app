@@ -1,0 +1,487 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShoppingList renders correctly 1`] = `
+<div>
+  <div>
+    <h1>
+      Items to replace
+    </h1>
+    <div
+      class="box"
+    >
+      <div>
+        <h2>
+          Trauma Chest Drain - Box 3
+        </h2>
+      </div>
+      <dl>
+        <div>
+          <dt>
+            Sterile gloves (Medium)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Large)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (28Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (32Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            ChloraPrep applicator
+          </dt>
+          <dd>
+            2
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Lidocaine 1% (5ml / 50mg)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain bottle
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain tubing
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile water (H20) bottle (1000ml bottle)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+      </dl>
+    </div>
+    <div
+      class="box"
+    >
+      <div>
+        <h2>
+          Trauma Chest Drain - Box 4
+        </h2>
+      </div>
+      <dl>
+        <div>
+          <dt>
+            Blunt dissection chest drainage insertion pack (28Fg)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Small)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Medium)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Large)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (28Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (32Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (36Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            ChloraPrep applicator
+          </dt>
+          <dd>
+            2
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Lidocaine 1% (5ml / 50mg)
+          </dt>
+          <dd>
+            2
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Standard suture pack (Standard)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Mefix roll (5cm x 10m)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain bottle
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain tubing
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile water (H20) bottle (1000ml bottle)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Spencer wells forceps (Straight 20cm)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+      </dl>
+    </div>
+    <div
+      class="box"
+    >
+      <div>
+        <h2>
+          Trauma Chest Drain - Box 5
+        </h2>
+      </div>
+      <dl>
+        <div>
+          <dt>
+            Blunt dissection chest drainage insertion pack (28Fg)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Small)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Medium)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Large)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (28Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (32Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (36Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            ChloraPrep applicator
+          </dt>
+          <dd>
+            2
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Lidocaine 1% (5ml / 50mg)
+          </dt>
+          <dd>
+            2
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Standard suture pack (Standard)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Mefix roll (5cm x 10m)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain bottle
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain tubing
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile water (H20) bottle (1000ml bottle)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Spencer wells forceps (Straight 20cm)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+      </dl>
+    </div>
+    <div
+      class="box"
+    >
+      <div>
+        <h2>
+          Trauma Chest Drain - Box 6
+        </h2>
+      </div>
+      <dl>
+        <div>
+          <dt>
+            Blunt dissection chest drainage insertion pack (28Fg)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Small)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Medium)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile gloves (Large)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (28Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (32Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain catheter (36Fr)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            ChloraPrep applicator
+          </dt>
+          <dd>
+            2
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Lidocaine 1% (5ml / 50mg)
+          </dt>
+          <dd>
+            2
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Standard suture pack (Standard)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Mefix roll (5cm x 10m)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain bottle
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Chest drain tubing
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Sterile water (H20) bottle (1000ml bottle)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Spencer wells forceps (Straight 20cm)
+          </dt>
+          <dd>
+            1
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
+`;

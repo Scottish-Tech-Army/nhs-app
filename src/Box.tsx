@@ -1,73 +1,134 @@
-import React, { FormEvent, useState } from "react";
-import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
-import { useParams } from "react-router-dom";
+import React, { FormEvent, useEffect, useState } from "react";
+import {
+  getBoxName,
+  getItemDisplayName,
+  TRAUMA_TOWER_TEMPLATE,
+} from "./data/TraumaTower";
+import { useNavigate, useParams } from "react-router-dom";
+import { BoxTemplate, ItemTemplate } from "./data/StorageTypes";
+import { getBoxContents, setBoxContents } from "./data/BoxContentsSlice";
+import rfdc from "rfdc";
+import { useAppDispatch, useAppSelector } from "./data/store";
+import "./App.css";
 
-export type FormValueType = {
-  name: string;
-  count: number;
-};
+export interface BoxProps {}
 
-export interface BoxProps {
-  setBoxContents: (boxTemplateId: string, boxNumber: number, contents: FormValueType[]) => void;
-}
+const clone = rfdc();
 
-function Box({ setBoxContents }: BoxProps) {
+function Box() {
   let { boxTemplateId, boxId } = useParams();
+  let navigate = useNavigate();
 
-  const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find(
-    (box) => box.boxTemplateId === boxTemplateId
-  );
-  const startingArrayOfObjects: FormValueType[] =
-    boxTemplate?.items.map(({ name }) => ({ name, count: 0 })) || [];
-  const [formValues, setFormValues] = useState<FormValueType[]>(
-    startingArrayOfObjects
-  );
+  const boxContents = useAppSelector(getBoxContents(boxTemplateId, boxId));
+  const dispatch = useAppDispatch();
 
-  let boxNumber = 0;
-  if (boxId?.match(/^\d+$/)) {
-    boxNumber = Number.parseInt(boxId);
-  }
+  const [boxTemplate, setBoxTemplate] = useState<BoxTemplate>();
+  const [itemCounts, setItemCounts] = useState<number[]>();
 
-  if (!boxTemplate || boxNumber < 1 || boxNumber > boxTemplate.count) {
-    return null;
-  }
+  useEffect(() => {
+    if (boxContents) {
+      setBoxTemplate(
+        TRAUMA_TOWER_TEMPLATE.boxes.find(
+          (box) => box.boxTemplateId === boxContents.boxTemplateId
+        )
+      );
 
-  let handleChange = (index: number, target: HTMLInputElement) => {
-    let newFormValues = [...formValues];
-
-    newFormValues[index].count = Number.parseInt(target!.value);
-
-    setFormValues(newFormValues);
-  };
+      setItemCounts(boxContents.items.map((item) => item.quantity));
+    } else {
+      setBoxTemplate(undefined);
+      setItemCounts([]);
+    }
+  }, [boxContents]);
 
   let handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setBoxContents(boxTemplateId!, boxNumber, formValues);
+
+    const newBoxContents = clone(boxContents)!;
+    itemCounts?.forEach(
+      (count, index) => (newBoxContents.items[index].quantity = count)
+    );
+
+    dispatch(setBoxContents(newBoxContents));
+    navigate("/");
   };
 
-  return (
-    <div>
-      <h1>{`${boxTemplate.name} - Box ${boxId}`}</h1>
+  function getItem(itemTemplate: ItemTemplate, index: number) {
+    const expectedQuantity = itemTemplate.quantity || 1;
+    const actualQuantity = itemCounts![index];
+    // TODO are too many items bad?
+    const enoughItems = actualQuantity - expectedQuantity >= 0;
 
+    return (
+      <div className="item" key={index}>
+        <div className="display-name">{getItemDisplayName(itemTemplate)}</div>
+        <div className="quantity">
+          <span
+            className={
+              enoughItems ? "actual-quantity-good" : "actual-quantity-bad"
+            }
+          >
+            {itemCounts![index]}
+          </span>
+          <span>{` / `}</span>
+          <span className="expected-quantity">
+            {itemTemplate.quantity || 1}
+          </span>
+        </div>
+        <button
+          type="button"
+          className="change-quantity"
+          onClick={() =>
+            setItemCounts((itemCounts) => {
+              const result = [...itemCounts!];
+              result![index] = Math.max(0, result![index] - 1);
+              return result;
+            })
+          }
+          disabled={itemCounts![index] === 0}
+        >
+          -
+        </button>
+        <button
+          type="button"
+          className="change-quantity"
+          onClick={() =>
+            setItemCounts((itemCounts) => {
+              const result = [...itemCounts!];
+              result![index] = result![index] + 1;
+              return result;
+            })
+          }
+        >
+          +
+        </button>
+      </div>
+    );
+  }
+
+  if (!boxTemplate) {
+    return null;
+  }
+
+  return (
+    <div className="box-details">
+      <h1>{getBoxName(boxTemplate!.name, boxContents!.boxNumber)}</h1>
+      <button
+        type="button"
+        onClick={() => {
+          const newBoxContents = clone(boxContents)!;
+          boxTemplate.items.forEach(
+            ({ quantity }, index) =>
+              (newBoxContents.items[index].quantity = quantity || 1)
+          );
+
+          dispatch(setBoxContents(newBoxContents));
+          navigate("/");
+        }}
+      >
+        Filled
+      </button>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {boxTemplate.items.map((item, index) => (
-            <li key={index}>
-              <label>
-                {item.name}
-                <input
-                  name={item.name}
-                  type="number"
-                  max="10"
-                  min="0"
-                  step="1"
-                  value={formValues[index].count || 0}
-                  onChange={({ target }) => handleChange(index, target)}
-                />
-              </label>
-            </li>
-          ))}
-        </ul>
+        {boxTemplate?.items.map(getItem)}
         <div>
           <button type="submit">Submit</button>
         </div>

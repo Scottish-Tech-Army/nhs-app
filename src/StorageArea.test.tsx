@@ -18,6 +18,7 @@ describe("StorageArea", () => {
       "/box/0/4",
       "/box/0/5",
       "/box/0/6",
+      "/needed",
     ]);
     expect(links.map((link) => link.textContent)).toEqual([
       "Trauma Chest Drain - Box 1",
@@ -26,20 +27,20 @@ describe("StorageArea", () => {
       "Trauma Chest Drain - Box 4",
       "Trauma Chest Drain - Box 5",
       "Trauma Chest Drain - Box 6",
+      "Items needed",
     ]);
   });
 
   it("renders correctly", () => {
-    const { container } =    renderWithRoute();
-
+    const { container } = renderWithRoute();
 
     expect(container).toMatchSnapshot();
   });
 
   function renderWithRoute() {
-    return    render(
+    return render(
       <MemoryRouter initialEntries={["/"]}>
-        <StorageArea  />
+        <StorageArea />
       </MemoryRouter>
     );
   }
