@@ -3,7 +3,7 @@ export type ItemTemplate = {
   size?: string;
   description: string;
   location: string;
-  photo?: string;
+  photo: string;
   quantity?: number;
 };
 

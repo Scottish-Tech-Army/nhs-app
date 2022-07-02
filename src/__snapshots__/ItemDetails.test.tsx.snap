@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemDetails does not render if no boxTemplateId 1`] = `
+<div>
+  <div
+    class="item-details"
+  >
+    <button
+      type="button"
+    >
+      Back
+    </button>
+    <h1>
+      Item Details
+    </h1>
+  </div>
+</div>
+`;
+
+exports[`ItemDetails rendered an item details page with size 1`] = `
+<div>
+  <div
+    class="item-details"
+  >
+    <button
+      type="button"
+    >
+      Back
+    </button>
+    <h1>
+      Item Details
+    </h1>
+    <img
+      alt=""
+      class="item-photo"
+      src="/items/standardsuture.jpg"
+    />
+    <h2
+      class="name"
+    >
+      Standard suture pack
+    </h2>
+    <dl>
+      <div
+        class="description"
+      >
+        <dt>
+          Description
+        </dt>
+        <dd>
+          Pack of equipment for suturing
+        </dd>
+      </div>
+    </dl>
+    <dl>
+      <div
+        class="size"
+      >
+        <dt>
+          Size
+        </dt>
+        <dd>
+          Standard
+        </dd>
+      </div>
+    </dl>
+    <dl>
+      <div
+        class="location"
+      >
+        <dt>
+          Location
+        </dt>
+        <dd>
+          Resus store XX
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+`;
+
+exports[`ItemDetails rendered an item details page without size 1`] = `
+<div>
+  <div
+    class="item-details"
+  >
+    <button
+      type="button"
+    >
+      Back
+    </button>
+    <h1>
+      Item Details
+    </h1>
+    <img
+      alt=""
+      class="item-photo"
+      src="/items/chloraprep.jpg"
+    />
+    <h2
+      class="name"
+    >
+      ChloraPrep applicator
+    </h2>
+    <dl>
+      <div
+        class="description"
+      >
+        <dt>
+          Description
+        </dt>
+        <dd>
+          ChloraPrep applicator for cleaning skin for sterile procedure
+        </dd>
+      </div>
+    </dl>
+    <dl>
+      <div
+        class="size"
+      >
+        <dt>
+          Size
+        </dt>
+        <dd>
+          -
+        </dd>
+      </div>
+    </dl>
+    <dl>
+      <div
+        class="location"
+      >
+        <dt>
+          Location
+        </dt>
+        <dd>
+          Resus store XX
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+`;

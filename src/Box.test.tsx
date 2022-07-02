@@ -84,10 +84,7 @@ describe("Box", () => {
   });
 
   it("can submit item changes", async () => {
-    const user = userEvent.setup();
-    jest.spyOn(window, "alert").mockImplementation(() => {});
-
-    const { store } = renderWithRoute("0", "3");
+    const { store, user } = renderWithRoute("0", "3");
 
     const itemLabel = screen.getByText(
       "Blunt dissection chest drainage insertion pack (28Fg)"
@@ -137,10 +134,7 @@ describe("Box", () => {
   });
 
   it("can mark box as filled", async () => {
-    const user = userEvent.setup();
-    jest.spyOn(window, "alert").mockImplementation(() => {});
-
-    const { store } = renderWithRoute("0", "3");
+    const { store, user } = renderWithRoute("0", "3");
 
     await user.click(screen.getByRole("button", { name: "Filled" }));
 
@@ -153,6 +147,20 @@ describe("Box", () => {
     expect(navigate).toHaveBeenCalledWith("/");
   });
 
+  it("can go to item details", async () => {
+    const { user } = renderWithRoute("0", "3");
+
+    const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
+
+    const infoButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "i",
+    });
+    await user.click(infoButton);
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+    expect(navigate).toHaveBeenCalledWith("/item/0/4");
+  });
+
   it("renders correctly", () => {
     const { container } = renderWithRoute("0", "3");
 
@@ -161,10 +169,13 @@ describe("Box", () => {
 
   function renderWithRoute(boxTemplateId: string, boxId: string) {
     const store = createStore();
+    const user = userEvent.setup();
     (useParams as jest.Mock).mockReturnValue({ boxTemplateId, boxId });
     (useNavigate as jest.Mock).mockReturnValue(navigate);
+
     return {
       store,
+      user,
       ...render(
         <Provider store={store}>
           <Box />

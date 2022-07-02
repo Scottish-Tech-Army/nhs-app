@@ -40,3 +40,7 @@
 .box-details .item {
   display: flex;
 }
+
+img.item-photo {
+  max-width: 200px;
+}

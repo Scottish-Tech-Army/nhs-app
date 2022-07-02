@@ -11,8 +11,6 @@ import rfdc from "rfdc";
 import { useAppDispatch, useAppSelector } from "./data/store";
 import "./App.css";
 
-export interface BoxProps {}
-
 const clone = rfdc();
 
 function Box() {
@@ -61,6 +59,13 @@ function Box() {
     return (
       <div className="item" key={index}>
         <div className="display-name">{getItemDisplayName(itemTemplate)}</div>
+        <button
+          type="button"
+          className="item-details"
+          onClick={() => navigate(`/item/${boxTemplateId}/${index}`)}
+        >
+          i
+        </button>
         <div className="quantity">
           <span
             className={

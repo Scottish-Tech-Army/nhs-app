@@ -132,6 +132,18 @@ export function getBoxTemplate(boxTemplateId: string) {
   );
 }
 
+export function getItemTemplate(
+  boxTemplateId: string,
+  itemNumberString: string
+) {
+  let itemNumber = -1;
+  if (itemNumberString?.match(/^\d+$/)) {
+    itemNumber = Number.parseInt(itemNumberString);
+  }
+
+  return getBoxTemplate(boxTemplateId)?.items[itemNumber];
+}
+
 export function getBoxName(boxTemplateName: string, boxNumber: number) {
   return `${boxTemplateName} - Box ${boxNumber}`;
 }

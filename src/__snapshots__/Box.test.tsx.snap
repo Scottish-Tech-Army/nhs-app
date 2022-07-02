@@ -32,6 +32,12 @@ exports[`Box renders correctly 1`] = `
         >
           Blunt dissection chest drainage insertion pack (28Fg)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -71,6 +77,12 @@ exports[`Box renders correctly 1`] = `
         >
           Sterile gloves (Small)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -110,6 +122,12 @@ exports[`Box renders correctly 1`] = `
         >
           Sterile gloves (Medium)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -149,6 +167,12 @@ exports[`Box renders correctly 1`] = `
         >
           Sterile gloves (Large)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -188,6 +212,12 @@ exports[`Box renders correctly 1`] = `
         >
           Chest drain catheter (28Fr)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -227,6 +257,12 @@ exports[`Box renders correctly 1`] = `
         >
           Chest drain catheter (32Fr)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -266,6 +302,12 @@ exports[`Box renders correctly 1`] = `
         >
           Chest drain catheter (36Fr)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -305,6 +347,12 @@ exports[`Box renders correctly 1`] = `
         >
           ChloraPrep applicator
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -344,6 +392,12 @@ exports[`Box renders correctly 1`] = `
         >
           Lidocaine 1% (5ml / 50mg)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -383,6 +437,12 @@ exports[`Box renders correctly 1`] = `
         >
           Standard suture pack (Standard)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -422,6 +482,12 @@ exports[`Box renders correctly 1`] = `
         >
           Mefix roll (5cm x 10m)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -461,6 +527,12 @@ exports[`Box renders correctly 1`] = `
         >
           Chest drain bottle
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -500,6 +572,12 @@ exports[`Box renders correctly 1`] = `
         >
           Chest drain tubing
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -539,6 +617,12 @@ exports[`Box renders correctly 1`] = `
         >
           Sterile water (H20) bottle (1000ml bottle)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
@@ -578,6 +662,12 @@ exports[`Box renders correctly 1`] = `
         >
           Spencer wells forceps (Straight 20cm)
         </div>
+        <button
+          class="item-details"
+          type="button"
+        >
+          i
+        </button>
         <div
           class="quantity"
         >
