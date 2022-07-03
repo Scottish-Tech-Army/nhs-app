@@ -1,9 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Box does not render if no boxId 1`] = `<div />`;
-
-exports[`Box does not render if no boxTemplateId 1`] = `<div />`;
-
 exports[`Box does not render if unknown boxId - box number too high 1`] = `<div />`;
 
 exports[`Box does not render if unknown boxId 1`] = `<div />`;

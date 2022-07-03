@@ -1,25 +1,20 @@
 /* eslint-disable testing-library/no-node-access */
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import StorageArea from "./StorageArea";
 import "@testing-library/jest-dom";
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
-
-const mockNavigate = jest.fn();
-
-jest.mock("react-router-dom", () => ({
-  ...(jest.requireActual("react-router-dom") as any),
-  useNavigate: () => mockNavigate,
-}));
+import { renderWithProvider } from "./testUtils";
+import { PARTIAL_CONTENTS, ZERO_CONTENTS } from "./testData";
 
 describe("StorageArea", () => {
   it("renders a home page", async () => {
-    renderWithRoute();
+    renderWithProvider(<StorageArea />);
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
 
-    const boxButtons = await screen.findAllByRole("button");
+    const boxButtons = await screen.findAllByRole("button", {
+      name: "check box",
+    });
 
     expect(
       boxButtons.map((boxButton) => boxButton.nextSibling!.textContent)
@@ -38,33 +33,33 @@ describe("StorageArea", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = renderWithRoute();
+    const { container } = renderWithProvider(<StorageArea />);
 
     expect(container).toMatchSnapshot();
   });
 
   it("navigates to box page", async () => {
-    const { user } = renderWithRoute();
+    const { user, history } = renderWithProvider(<StorageArea />);
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
+    expect(history.location.pathname).toEqual("/");
 
-    const boxButtons = await screen.findAllByRole("button");
+    const boxButtons = await screen.findAllByRole("button", {
+      name: "check box",
+    });
 
     await user.click(boxButtons[3]);
 
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith("/box/0/4");
+    expect(history.location.pathname).toEqual("/box/0/4");
   });
 
-  function renderWithRoute() {
-    const user = userEvent.setup();
-    return {
-      user,
-      ...render(
-        <MemoryRouter initialEntries={["/"]}>
-          <StorageArea />
-        </MemoryRouter>
-      ),
-    };
-  }
+  it("resets all box contents to empty", async () => {
+    const { user, store } = renderWithProvider(<StorageArea />, {
+      preloadedState: { boxContents: PARTIAL_CONTENTS },
+    });
+
+    await user.click(screen.getByRole("button", { name: "restart" }));
+
+    expect(store.getState().boxContents).toEqual(ZERO_CONTENTS);
+  });
 });

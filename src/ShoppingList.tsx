@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { getAreaContents } from "./data/BoxContentsSlice";
 import {
   BoxContents,
@@ -15,6 +16,7 @@ import {
   getItemDisplayName,
   TRAUMA_TOWER_TEMPLATE,
 } from "./data/TraumaTower";
+import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
 
 export type FormValueType = {
   name: string;
@@ -88,6 +90,7 @@ function calculateAreaShoppingList(
 
 function ShoppingList() {
   const areaContents = useAppSelector(getAreaContents);
+  let navigate = useNavigate();
 
   const areaShoppingList = calculateAreaShoppingList(areaContents);
 
@@ -98,27 +101,39 @@ function ShoppingList() {
           <h2>{boxShoppingList.name}</h2>
         </div>
 
-        <dl>
+        <div className="items">
           {boxShoppingList.items.map((item, index) => (
-            <div key={index}>
-              <dt>{getItemDisplayName(item)}</dt>
-              <dd>{item.quantity}</dd>
+            <div key={index} className="item">
+              {`${item.quantity} x ${getItemDisplayName(item)}`}
             </div>
           ))}
-        </dl>
+        </div>
       </div>
     );
   }
 
   return (
-    <div>
-      <h1>Items to replace</h1>
-
-      {areaShoppingList.length ? (
-        areaShoppingList.map(getBoxShoppingList)
-      ) : (
-        <div>Nothing to replace</div>
-      )}
+    <div className="shopping-list">
+      <header>
+        <button
+          type="button"
+          className="back"
+          aria-label="Back"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft />
+        </button>
+        <h1>Items to replace</h1>
+      </header>
+      <main>
+        {areaShoppingList.length ? (
+          <div className="scroll">
+            {areaShoppingList.map(getBoxShoppingList)}
+          </div>
+        ) : (
+          <div className="nothing-to-replace">Nothing to replace</div>
+        )}
+      </main>
     </div>
   );
 }

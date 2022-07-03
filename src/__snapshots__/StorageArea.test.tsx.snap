@@ -9,6 +9,15 @@ exports[`StorageArea renders correctly 1`] = `
       <h1>
         Trauma Tower
       </h1>
+      <button
+        aria-label="restart"
+        class="restart"
+        type="button"
+      >
+        <svg>
+          refresh.svg
+        </svg>
+      </button>
     </header>
     <main>
       <div

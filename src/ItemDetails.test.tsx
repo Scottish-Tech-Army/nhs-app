@@ -2,17 +2,12 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import React from "react";
 
-import { getByText, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { useParams, useNavigate } from "react-router-dom";
-import { Provider } from "react-redux";
+import { getByText, screen } from "@testing-library/react";
+import { Routes, Route } from "react-router-dom";
 
 import ItemDetails from "./ItemDetails";
-import { createStore } from "./data/store";
+import { renderWithProvider } from "./testUtils";
 
-jest.mock("react-router-dom");
-
-const navigate = jest.fn();
 
 describe("ItemDetails", () => {
   it("rendered an item details page with size", async () => {
@@ -72,16 +67,13 @@ describe("ItemDetails", () => {
   it("does not render if no boxTemplateId", async () => {
     const { container } = renderWithRoute("", "3");
 
-    expect(container.children).toHaveLength(1);
-    expect(screen.getByText("Item Details")).toBeDefined();
-
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if no itemNumber", async () => {
     const { container } = renderWithRoute("0", "");
 
-    expect(container.children).toHaveLength(1);
+    expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if unknown boxTemplateId", async () => {
@@ -103,28 +95,27 @@ describe("ItemDetails", () => {
   });
 
   it("can return to previous page", async () => {
-    const { user } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("0", "3");
 
     await user.click(screen.getByRole("button", { name: "Back" }));
 
-    expect(navigate).toHaveBeenCalledTimes(1);
-    expect(navigate).toHaveBeenCalledWith(-1);
+    expect(history.location.pathname).toEqual("/box/0/5");
   });
 
   function renderWithRoute(boxTemplateId: string, itemId: string) {
-    const store = createStore();
-    const user = userEvent.setup();
-    (useParams as jest.Mock).mockReturnValue({ boxTemplateId, itemId });
-    (useNavigate as jest.Mock).mockReturnValue(navigate);
-
-    return {
-      store,
-      user,
-      ...render(
-        <Provider store={store}>
-          <ItemDetails />
-        </Provider>
-      ),
-    };
+    // Add routes to get the contents of useParams populated
+    return renderWithProvider(
+      <Routes>
+        <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
+        <Route path="*" element={<div>Unknown path</div>} />
+      </Routes>,
+      {
+        initialRoutes: [
+          "/",
+          `/box/${boxTemplateId}/5`,
+          `/item/${boxTemplateId}/${itemId}`,
+        ],
+      }
+    );
   }
 });

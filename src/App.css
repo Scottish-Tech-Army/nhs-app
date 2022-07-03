@@ -19,50 +19,17 @@
   font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .storage-area header,
-.box-details header {
+.box-details header,
+.shopping-list header {
   background-color: #025bbb;
   color: white;
   min-height: 100px;
 }
 
 .storage-area header h1,
-.box-details header h1 {
+.box-details header h1,
+.shopping-list header h1 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 22px;
   line-height: 29px;
@@ -100,7 +67,8 @@
 }
 
 .box-details,
-.storage-area {
+.storage-area,
+.shopping-list {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -113,8 +81,14 @@
   margin-bottom: 104px;
 }
 
+.shopping-list main {
+  flex: 1;
+  position: relative;
+}
+
 .storage-area main .scroll,
-.box-details main .scroll {
+.box-details main .scroll,
+.shopping-list main .scroll {
   position: absolute;
   left: 0;
   top: 0;
@@ -125,7 +99,8 @@
   padding-top: 17px;
 }
 
-.storage-area main .box {
+.storage-area main .box,
+.shopping-list main .box {
   border: 1px solid rgba(2, 91, 187, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
@@ -153,6 +128,17 @@
 
 .storage-area main .box {
   min-height: 70px;
+}
+
+.shopping-list main .box {
+  flex-direction: column;
+  padding: 16px;
+}
+
+.shopping-list main .box h2 {
+  font-size: 16px;
+  line-height: 130%;
+  margin-top: 0;
 }
 
 .storage-area main .box button.check-box {
@@ -296,7 +282,8 @@
 }
 
 .item-details button.back,
-.box-details button.back {
+.box-details button.back,
+.shopping-list button.back {
   position: absolute;
   width: 48px;
   height: 48px;
@@ -307,6 +294,20 @@
   padding: 0;
   margin: 0;
   background-color: white;
+}
+
+.storage-area button.restart {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  right: 26px;
+  top: 26px;
+  border: 1px solid rgba(2, 91, 187, 0.2);
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  color: #025bbb;
 }
 
 .box-details button.back {

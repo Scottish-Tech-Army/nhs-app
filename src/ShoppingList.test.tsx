@@ -13,30 +13,23 @@ import {
 } from "./testData";
 
 describe("ShoppingList", () => {
-  const EXPECTED_ALL_ITEMS: ExpectedItem[] = [
-    {
-      name: "Blunt dissection chest drainage insertion pack (28Fg)",
-      quantity: 1,
-    },
-    { name: "Sterile gloves (Small)", quantity: 1 },
-    { name: "Sterile gloves (Medium)", quantity: 1 },
-    { name: "Sterile gloves (Large)", quantity: 1 },
-    { name: "Chest drain catheter (28Fr)", quantity: 1 },
-    { name: "Chest drain catheter (32Fr)", quantity: 1 },
-    { name: "Chest drain catheter (36Fr)", quantity: 1 },
-    { name: "ChloraPrep applicator", quantity: 2 },
-    { name: "Lidocaine 1% (5ml / 50mg)", quantity: 2 },
-    { name: "Standard suture pack (Standard)", quantity: 1 },
-    { name: "Mefix roll (5cm x 10m)", quantity: 1 },
-    { name: "Chest drain bottle", quantity: 1 },
-    { name: "Chest drain tubing", quantity: 1 },
-    {
-      name: "Sterile water (H20) bottle (1000ml bottle)",
-      quantity: 1,
-    },
-    { name: "Spencer wells forceps (Straight 20cm)", quantity: 1 },
+  const EXPECTED_ALL_ITEMS: string[] = [
+    "1 x Blunt dissection chest drainage insertion pack (28Fg)",
+    "1 x Sterile gloves (Small)",
+    "1 x Sterile gloves (Medium)",
+    "1 x Sterile gloves (Large)",
+    "1 x Chest drain catheter (28Fr)",
+    "1 x Chest drain catheter (32Fr)",
+    "1 x Chest drain catheter (36Fr)",
+    "2 x ChloraPrep applicator",
+    "2 x Lidocaine 1% (5ml / 50mg)",
+    "1 x Standard suture pack (Standard)",
+    "1 x Mefix roll (5cm x 10m)",
+    "1 x Chest drain bottle",
+    "1 x Chest drain tubing",
+    "1 x Sterile water (H20) bottle (1000ml bottle)",
+    "1 x Spencer wells forceps (Straight 20cm)",
   ];
-
   it("rendered a shopping list page for empty store - ie all items shown", async () => {
     renderWithProvider(<ShoppingList />, {
       preloadedState: { boxContents: EMPTY_CONTENTS },
@@ -130,18 +123,15 @@ describe("ShoppingList", () => {
       {
         name: "Trauma Chest Drain - Box 3",
         items: [
-          { name: "Sterile gloves (Medium)", quantity: 1 },
-          { name: "Sterile gloves (Large)", quantity: 1 },
-          { name: "Chest drain catheter (28Fr)", quantity: 1 },
-          { name: "Chest drain catheter (32Fr)", quantity: 1 },
-          { name: "ChloraPrep applicator", quantity: 2 },
-          { name: "Lidocaine 1% (5ml / 50mg)", quantity: 1 },
-          { name: "Chest drain bottle", quantity: 1 },
-          { name: "Chest drain tubing", quantity: 1 },
-          {
-            name: "Sterile water (H20) bottle (1000ml bottle)",
-            quantity: 1,
-          },
+          "1 x Sterile gloves (Medium)",
+          "1 x Sterile gloves (Large)",
+          "1 x Chest drain catheter (28Fr)",
+          "1 x Chest drain catheter (32Fr)",
+          "2 x ChloraPrep applicator",
+          "1 x Lidocaine 1% (5ml / 50mg)",
+          "1 x Chest drain bottle",
+          "1 x Chest drain tubing",
+          "1 x Sterile water (H20) bottle (1000ml bottle)",
         ],
       },
       {
@@ -167,14 +157,19 @@ describe("ShoppingList", () => {
     expect(container).toMatchSnapshot();
   });
 
-  type ExpectedItem = {
-    name: string;
-    quantity: number;
-  };
+  it("can return to storage area page", async () => {
+    const { user, history } = renderWithProvider(<ShoppingList />, {initialRoutes: ['/', '/needed']});
+
+    expect(history.location.pathname).toEqual('/needed');
+
+    await user.click(screen.getByRole("button", { name: "Back" }));
+
+    expect(history.location.pathname).toEqual('/');
+  });
 
   type ExpectedBoxContents = {
     name: string;
-    items: ExpectedItem[];
+    items: string[];
   };
 
   function checkShoppingList(expectedBoxes: ExpectedBoxContents[]) {
@@ -185,16 +180,11 @@ describe("ShoppingList", () => {
       const expectedBox = expectedBoxes[index];
       expect(actualBox).toHaveTextContent(expectedBox.name);
 
-      const actualItems = actualBox.querySelectorAll("dl div")!;
+      const actualItems = actualBox.querySelectorAll("div.item")!;
       expect(actualItems).toHaveLength(expectedBox.items.length);
       actualItems.forEach((actualItem, index) => {
         const expectedItem = expectedBox.items[index];
-        expect(actualItem.querySelector("dt")).toHaveTextContent(
-          expectedItem.name
-        );
-        expect(actualItem.querySelector("dd")).toHaveTextContent(
-          expectedItem.quantity.toString()
-        );
+        expect(actualItem).toHaveTextContent(expectedItem);
       });
     });
   }

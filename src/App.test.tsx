@@ -5,26 +5,17 @@ import React from "react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
 import { renderWithProvider } from "./testUtils";
-import { MemoryRouter } from "react-router-dom";
 
 describe("App", () => {
   it("renders default view", () => {
-    renderWithProvider(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProvider(<App />);
     expect(screen.getByText("Trauma Tower")).toBeDefined();
   });
 
   it("renders shopping list view", async () => {
     const user = userEvent.setup();
 
-    renderWithProvider(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProvider(<App />);
 
     await user.click(screen.getByRole("link", { name: "Items needed" }));
 
@@ -34,11 +25,7 @@ describe("App", () => {
   it("renders box view", async () => {
     const user = userEvent.setup();
 
-    renderWithProvider(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProvider(<App />);
 
     await user.click(
       screen.getByText("Trauma Chest Drain - Box 2").previousElementSibling!
@@ -54,11 +41,7 @@ describe("App", () => {
   it("renders item view from box view", async () => {
     const user = userEvent.setup();
 
-    renderWithProvider(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProvider(<App />);
 
     await user.click(
       screen.getByText("Trauma Chest Drain - Box 2").previousElementSibling!

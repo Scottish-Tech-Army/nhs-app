@@ -4,9 +4,13 @@ import { BoxTemplate } from "./data/StorageTypes";
 import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as EditIcon } from "./icons/edit.svg";
+import { ReactComponent as RestartIcon } from "./icons/refresh.svg";
+import { resetAllBoxContents } from "./data/BoxContentsSlice";
+import { useAppDispatch } from "./data/store";
 
 function StorageArea() {
   let navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const getBoxes = (boxTemplate: BoxTemplate) => {
     const result = [];
@@ -31,10 +35,19 @@ function StorageArea() {
     return result;
   };
 
+  // TODO - need a confirm on the restart button
   return (
     <div className="storage-area">
       <header>
         <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
+        <button
+          type="button"
+          className="restart"
+          aria-label="restart"
+          onClick={() => dispatch(resetAllBoxContents())}
+        >
+          <RestartIcon />
+        </button>
       </header>
       <main>
         <div className="scroll">

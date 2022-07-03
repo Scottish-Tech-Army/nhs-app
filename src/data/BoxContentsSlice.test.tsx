@@ -1,5 +1,15 @@
-import { ZERO_CHEST_DRAIN_BOX, ZERO_CONTENTS } from "../testData";
-import reducer, { getBoxContents, setBoxContents } from "./BoxContentsSlice";
+import {
+  ALL_CONTENTS,
+  EMPTY_CONTENTS,
+  PARTIAL_CONTENTS,
+  ZERO_CHEST_DRAIN_BOX,
+  ZERO_CONTENTS,
+} from "../testData";
+import reducer, {
+  getBoxContents,
+  resetAllBoxContents,
+  setBoxContents,
+} from "./BoxContentsSlice";
 import { BoxContents, StorageAreaContents } from "./StorageTypes";
 import { RootState } from "./store";
 import { TRAUMA_TOWER_TEMPLATE } from "./TraumaTower";
@@ -129,6 +139,21 @@ describe("setBoxContents", () => {
 
     expect(reducer(previousState, setBoxContents(boxContents))).toEqual(
       previousState
+    );
+  });
+});
+
+describe("resetAllBoxContents", () => {
+  test("should reset back to initial state", () => {
+    expect(reducer(EMPTY_CONTENTS, resetAllBoxContents)).toEqual(
+      ZERO_CONTENTS
+    );
+    expect(reducer(ALL_CONTENTS, resetAllBoxContents)).toEqual(ZERO_CONTENTS);
+    expect(reducer(PARTIAL_CONTENTS, resetAllBoxContents)).toEqual(
+      ZERO_CONTENTS
+    );
+    expect(reducer(ZERO_CONTENTS, resetAllBoxContents)).toEqual(
+      ZERO_CONTENTS
     );
   });
 });

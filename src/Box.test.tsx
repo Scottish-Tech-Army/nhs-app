@@ -2,18 +2,13 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import React from "react";
 
-import { getByRole, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { useParams, useNavigate } from "react-router-dom";
-import { Provider } from "react-redux";
+import { getByRole, screen } from "@testing-library/react";
+import { Routes, Route } from "react-router-dom";
 
 import Box from "./Box";
-import { createStore } from "./data/store";
 import { FULL_CHEST_DRAIN_BOX } from "./testData";
+import { renderWithProvider } from "./testUtils";
 
-jest.mock("react-router-dom");
-
-const navigate = jest.fn();
 
 describe("Box", () => {
   it("rendered a box page", async () => {
@@ -46,17 +41,13 @@ describe("Box", () => {
   it("does not render if no boxTemplateId", async () => {
     const { container } = renderWithRoute("", "3");
 
-    expect(container.children).toHaveLength(0);
-
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if no boxId", async () => {
     const { container } = renderWithRoute("0", "");
 
-    expect(container.children).toHaveLength(0);
-
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if unknown boxTemplateId", async () => {
@@ -84,7 +75,7 @@ describe("Box", () => {
   });
 
   it("can save item changes", async () => {
-    const { store, user } = renderWithRoute("0", "3");
+    const { store, user, history } = renderWithRoute("0", "3");
 
     const itemLabel = screen.getByText(
       "Blunt dissection chest drainage insertion pack (28Fg)"
@@ -129,12 +120,11 @@ describe("Box", () => {
       { quantity: 0, name: "Spencer wells forceps", size: "Straight 20cm" },
     ]);
 
-    expect(navigate).toHaveBeenCalledTimes(1);
-    expect(navigate).toHaveBeenCalledWith("/");
+    expect(history.location.pathname).toEqual("/");
   });
 
   it("can mark box as full", async () => {
-    const { store, user } = renderWithRoute("0", "3");
+    const { store, user, history } = renderWithRoute("0", "3");
 
     await user.click(screen.getByRole("button", { name: "FULL" }));
 
@@ -143,12 +133,11 @@ describe("Box", () => {
       boxNumber: 3,
     });
 
-    expect(navigate).toHaveBeenCalledTimes(1);
-    expect(navigate).toHaveBeenCalledWith("/");
+    expect(history.location.pathname).toEqual("/");
   });
 
   it("can go to item details", async () => {
-    const { user } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("0", "3");
 
     const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
 
@@ -157,18 +146,15 @@ describe("Box", () => {
     });
     await user.click(infoButton);
 
-    expect(navigate).toHaveBeenCalledTimes(1);
-    expect(navigate).toHaveBeenCalledWith("/item/0/4");
+    expect(history.location.pathname).toEqual("/item/0/4");
   });
 
-
   it("can return to previous page", async () => {
-    const { user } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("0", "3");
 
     await user.click(screen.getByRole("button", { name: "Back" }));
 
-    expect(navigate).toHaveBeenCalledTimes(1);
-    expect(navigate).toHaveBeenCalledWith(-1);
+    expect(history.location.pathname).toEqual("/");
   });
 
   it("renders correctly", () => {
@@ -178,19 +164,13 @@ describe("Box", () => {
   });
 
   function renderWithRoute(boxTemplateId: string, boxId: string) {
-    const store = createStore();
-    const user = userEvent.setup();
-    (useParams as jest.Mock).mockReturnValue({ boxTemplateId, boxId });
-    (useNavigate as jest.Mock).mockReturnValue(navigate);
-
-    return {
-      store,
-      user,
-      ...render(
-        <Provider store={store}>
-          <Box />
-        </Provider>
-      ),
-    };
+    // Add routes to get the contents of useParams populated
+    return renderWithProvider(
+      <Routes>
+        <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
+        <Route path="*" element={<div>Unknown path</div>} />
+      </Routes>,
+      { initialRoutes: ["/", `/box/${boxTemplateId}/${boxId}`] }
+    );
   }
 });

@@ -1,29 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItemDetails does not render if no boxTemplateId 1`] = `
-<div>
-  <div
-    class="item-details"
-  >
-    <header>
-      <button
-        aria-label="Back"
-        class="back"
-        type="button"
-      >
-        <svg>
-          arrow-left.svg
-        </svg>
-      </button>
-      <h1>
-        Item Details
-      </h1>
-    </header>
-    <main />
-  </div>
-</div>
-`;
-
 exports[`ItemDetails rendered an item details page with size 1`] = `
 <div>
   <div

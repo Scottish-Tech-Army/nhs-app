@@ -3,24 +3,26 @@ import { BoxContents, StorageAreaContents } from "./StorageTypes";
 import { RootState } from "./store";
 import { TRAUMA_TOWER_TEMPLATE } from "./TraumaTower";
 
-export const initialState: StorageAreaContents = {
-  storageAreaId: TRAUMA_TOWER_TEMPLATE.storageAreaId,
-  boxes: [],
-};
-
-TRAUMA_TOWER_TEMPLATE.boxes.forEach(({ boxTemplateId, count, items }) => {
-  for (let boxNumber = 1; boxNumber <= count; boxNumber++) {
-    initialState.boxes.push({
-      boxTemplateId,
-      boxNumber,
-      items: items.map(({ name, size }) => ({ name, size, quantity: 0 })),
-    });
-  }
-});
+export function createInitialState() {
+  const result: StorageAreaContents = {
+    storageAreaId: TRAUMA_TOWER_TEMPLATE.storageAreaId,
+    boxes: [],
+  };
+  TRAUMA_TOWER_TEMPLATE.boxes.forEach(({ boxTemplateId, count, items }) => {
+    for (let boxNumber = 1; boxNumber <= count; boxNumber++) {
+      result.boxes.push({
+        boxTemplateId,
+        boxNumber,
+        items: items.map(({ name, size }) => ({ name, size, quantity: 0 })),
+      });
+    }
+  });
+  return result;
+}
 
 export const boxContentsSlice = createSlice({
   name: "boxContents",
-  initialState,
+  initialState: createInitialState(),
   reducers: {
     setBoxContents: (state, action) => {
       const newBoxContents: BoxContents = action.payload;
@@ -34,10 +36,13 @@ export const boxContentsSlice = createSlice({
         state.boxes[boxIndex] = newBoxContents;
       }
     },
+    resetAllBoxContents: (state) => {
+      return createInitialState();
+    },
   },
 });
 
-export const { setBoxContents } = boxContentsSlice.actions;
+export const { setBoxContents, resetAllBoxContents } = boxContentsSlice.actions;
 
 export const getBoxContents = (
   boxTemplateId: string | undefined,
@@ -56,6 +61,6 @@ export const getBoxContents = (
   };
 };
 
-export const getAreaContents = (state:RootState) => state.boxContents;
+export const getAreaContents = (state: RootState) => state.boxContents;
 
 export default boxContentsSlice.reducer;
