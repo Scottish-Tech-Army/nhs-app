@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   getBoxName,
   getItemDisplayName,
@@ -10,6 +10,12 @@ import { getBoxContents, setBoxContents } from "./data/BoxContentsSlice";
 import rfdc from "rfdc";
 import { useAppDispatch, useAppSelector } from "./data/store";
 import "./App.css";
+import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
+import { ReactComponent as InfoCircle } from "./icons/info-circle.svg";
+import { ReactComponent as Plus } from "./icons/add.svg";
+import { ReactComponent as Minus } from "./icons/minus.svg";
+
+// Icons vuesax linear. Licence: https://iconsax.io/#license
 
 const clone = rfdc();
 
@@ -38,9 +44,7 @@ function Box() {
     }
   }, [boxContents]);
 
-  let handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  let handleSubmit = () => {
     const newBoxContents = clone(boxContents)!;
     itemCounts?.forEach(
       (count, index) => (newBoxContents.items[index].quantity = count)
@@ -49,6 +53,14 @@ function Box() {
     dispatch(setBoxContents(newBoxContents));
     navigate("/");
   };
+
+  function preventExtraClickEvents(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    functionToCall: () => void
+  ) {
+    // Repeated fast clicks were being counted more than once
+    event.detail === 1 && functionToCall();
+  }
 
   function getItem(itemTemplate: ItemTemplate, index: number) {
     const expectedQuantity = itemTemplate.quantity || 1;
@@ -59,53 +71,62 @@ function Box() {
     return (
       <div className="item" key={index}>
         <div className="display-name">{getItemDisplayName(itemTemplate)}</div>
-        <button
-          type="button"
-          className="item-details"
-          onClick={() => navigate(`/item/${boxTemplateId}/${index}`)}
-        >
-          i
-        </button>
-        <div className="quantity">
-          <span
-            className={
-              enoughItems ? "actual-quantity-good" : "actual-quantity-bad"
+        <div className="controls">
+          <button
+            type="button"
+            className="item-info"
+            aria-label="item information"
+            onClick={() => navigate(`/item/${boxTemplateId}/${index}`)}
+          >
+            <InfoCircle />
+          </button>
+          <div className="quantity">
+            <span
+              className={
+                enoughItems ? "actual-quantity-good" : "actual-quantity-bad"
+              }
+            >
+              {itemCounts![index]}
+            </span>
+            <span>{` / `}</span>
+            <span className="expected-quantity">
+              {itemTemplate.quantity || 1}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="change-quantity"
+            aria-label="remove item"
+            onClick={(event) =>
+              preventExtraClickEvents(event, () =>
+                setItemCounts((itemCounts) => {
+                  const result = [...itemCounts!];
+                  result![index] = Math.max(0, result![index] - 1);
+                  return result;
+                })
+              )
+            }
+            disabled={itemCounts![index] === 0}
+          >
+            <Minus />
+          </button>
+          <button
+            type="button"
+            className="change-quantity"
+            aria-label="add item"
+            onClick={(event) =>
+              preventExtraClickEvents(event, () =>
+                setItemCounts((itemCounts) => {
+                  const result = [...itemCounts!];
+                  result![index] = result![index] + 1;
+                  return result;
+                })
+              )
             }
           >
-            {itemCounts![index]}
-          </span>
-          <span>{` / `}</span>
-          <span className="expected-quantity">
-            {itemTemplate.quantity || 1}
-          </span>
+            <Plus />
+          </button>
         </div>
-        <button
-          type="button"
-          className="change-quantity"
-          onClick={() =>
-            setItemCounts((itemCounts) => {
-              const result = [...itemCounts!];
-              result![index] = Math.max(0, result![index] - 1);
-              return result;
-            })
-          }
-          disabled={itemCounts![index] === 0}
-        >
-          -
-        </button>
-        <button
-          type="button"
-          className="change-quantity"
-          onClick={() =>
-            setItemCounts((itemCounts) => {
-              const result = [...itemCounts!];
-              result![index] = result![index] + 1;
-              return result;
-            })
-          }
-        >
-          +
-        </button>
       </div>
     );
   }
@@ -116,28 +137,41 @@ function Box() {
 
   return (
     <div className="box-details">
-      <h1>{getBoxName(boxTemplate!.name, boxContents!.boxNumber)}</h1>
-      <button
-        type="button"
-        onClick={() => {
-          const newBoxContents = clone(boxContents)!;
-          boxTemplate.items.forEach(
-            ({ quantity }, index) =>
-              (newBoxContents.items[index].quantity = quantity || 1)
-          );
+      <header>
+        <h1>{getBoxName(boxTemplate!.name, boxContents!.boxNumber)}</h1>
+        <button
+          type="button"
+          className="back"
+          aria-label="Back"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft />
+        </button>
+        <button
+          type="button"
+          className="full"
+          onClick={() => {
+            const newBoxContents = clone(boxContents)!;
+            boxTemplate.items.forEach(
+              ({ quantity }, index) =>
+                (newBoxContents.items[index].quantity = quantity || 1)
+            );
 
-          dispatch(setBoxContents(newBoxContents));
-          navigate("/");
-        }}
-      >
-        Filled
-      </button>
-      <form onSubmit={handleSubmit}>
-        {boxTemplate?.items.map(getItem)}
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+            dispatch(setBoxContents(newBoxContents));
+            navigate("/");
+          }}
+        >
+          FULL
+        </button>
+      </header>
+      <main>
+        <div className="scroll">{boxTemplate?.items.map(getItem)}</div>
+      </main>
+      <footer>
+        <button type="button" className="save" onClick={handleSubmit}>
+          Save
+        </button>
+      </footer>
     </div>
   );
 }

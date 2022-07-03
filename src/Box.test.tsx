@@ -40,7 +40,7 @@ describe("Box", () => {
       "Spencer wells forceps (Straight 20cm)",
     ]);
 
-    expect(screen.getByRole("button", { name: "Submit" })).toBeDefined();
+    expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
   });
 
   it("does not render if no boxTemplateId", async () => {
@@ -83,7 +83,7 @@ describe("Box", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("can submit item changes", async () => {
+  it("can save item changes", async () => {
     const { store, user } = renderWithRoute("0", "3");
 
     const itemLabel = screen.getByText(
@@ -91,17 +91,17 @@ describe("Box", () => {
     );
 
     const increaseButton = getByRole(itemLabel.parentElement!, "button", {
-      name: "+",
+      name: "add item",
     });
     const decreaseButton = getByRole(itemLabel.parentElement!, "button", {
-      name: "-",
+      name: "remove item",
     });
     await user.click(increaseButton);
     await user.click(increaseButton);
     await user.click(increaseButton);
     await user.click(decreaseButton);
 
-    await user.click(screen.getByRole("button", { name: "Submit" }));
+    await user.click(screen.getByRole("button", { name: "Save" }));
 
     expect(store.getState().boxContents.boxes[2].items).toEqual([
       {
@@ -133,10 +133,10 @@ describe("Box", () => {
     expect(navigate).toHaveBeenCalledWith("/");
   });
 
-  it("can mark box as filled", async () => {
+  it("can mark box as full", async () => {
     const { store, user } = renderWithRoute("0", "3");
 
-    await user.click(screen.getByRole("button", { name: "Filled" }));
+    await user.click(screen.getByRole("button", { name: "FULL" }));
 
     expect(store.getState().boxContents.boxes[2]).toEqual({
       ...FULL_CHEST_DRAIN_BOX,
@@ -153,12 +153,22 @@ describe("Box", () => {
     const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
 
     const infoButton = getByRole(itemLabel.parentElement!, "button", {
-      name: "i",
+      name: "item information",
     });
     await user.click(infoButton);
 
     expect(navigate).toHaveBeenCalledTimes(1);
     expect(navigate).toHaveBeenCalledWith("/item/0/4");
+  });
+
+
+  it("can return to previous page", async () => {
+    const { user } = renderWithRoute("0", "3");
+
+    await user.click(screen.getByRole("button", { name: "Back" }));
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+    expect(navigate).toHaveBeenCalledWith(-1);
   });
 
   it("renders correctly", () => {

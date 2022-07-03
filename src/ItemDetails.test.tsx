@@ -50,7 +50,7 @@ describe("ItemDetails", () => {
     expect(
       getByText(document.querySelector("h2.name")!, "ChloraPrep applicator")
     ).toBeDefined();
-    expect(getByText(document.querySelector("div.size")!, "-")).toBeDefined();
+    expect(getByText(document.querySelector("div.size")!, "N/A")).toBeDefined();
     expect(
       getByText(
         document.querySelector("div.description")!,

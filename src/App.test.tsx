@@ -69,7 +69,7 @@ describe("App", () => {
     const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
 
     const infoButton = getByRole(itemLabel.parentElement!, "button", {
-      name: "i",
+      name: "item information",
     });
     await user.click(infoButton);
 
