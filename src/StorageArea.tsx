@@ -2,31 +2,52 @@ import React from "react";
 import "./App.css";
 import { BoxTemplate } from "./data/StorageTypes";
 import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
-import {  Link } from "react-router-dom";
-
-const getBoxes = (boxTemplate: BoxTemplate) => {
-  const result = [];
-  for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
-    const boxId = `${boxTemplate.boxTemplateId}/${boxIndex}`;
-    result.push(
-      <li key={boxId}>
-         <Link to={`/box/${boxTemplate.boxTemplateId}/${boxIndex}`}>{`${boxTemplate.name} - Box ${boxIndex}`}</Link>
-      </li>
-    );
-  }
-  return result;
-};
+import { Link, useNavigate } from "react-router-dom";
+import { ReactComponent as EditIcon } from "./icons/edit.svg";
 
 function StorageArea() {
+  let navigate = useNavigate();
+
+  const getBoxes = (boxTemplate: BoxTemplate) => {
+    const result = [];
+    for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
+      const boxId = `${boxTemplate.boxTemplateId}/${boxIndex}`;
+      result.push(
+        <div className="box" key={boxId}>
+          <button
+            type="button"
+            className="check-box"
+            aria-label="check box"
+            onClick={() =>
+              navigate(`/box/${boxTemplate.boxTemplateId}/${boxIndex}`)
+            }
+          >
+            <EditIcon />
+          </button>
+          <div className="display-name">{`${boxTemplate.name} - Box ${boxIndex}`}</div>
+        </div>
+      );
+    }
+    return result;
+  };
+
   return (
-    <div>
-      <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
-      <ul>
-        {TRAUMA_TOWER_TEMPLATE.boxes.map((boxTemplate) =>
-          getBoxes(boxTemplate)
-        )}
-      </ul>
-      <Link to={"/needed"}>Items needed</Link>
+    <div className="storage-area">
+      <header>
+        <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
+      </header>
+      <main>
+        <div className="scroll">
+          {TRAUMA_TOWER_TEMPLATE.boxes.map((boxTemplate) =>
+            getBoxes(boxTemplate)
+          )}
+        </div>
+      </main>
+      <footer>
+        <Link to={"/needed"} className="needed">
+          Items needed
+        </Link>
+      </footer>
     </div>
   );
 }

@@ -2,59 +2,136 @@
 
 exports[`StorageArea renders correctly 1`] = `
 <div>
-  <div>
-    <h1>
-      Trauma Tower
-    </h1>
-    <ul>
-      <li>
-        <a
-          href="/box/0/1"
+  <div
+    class="storage-area"
+  >
+    <header>
+      <h1>
+        Trauma Tower
+      </h1>
+    </header>
+    <main>
+      <div
+        class="scroll"
+      >
+        <div
+          class="box"
         >
-          Trauma Chest Drain - Box 1
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/0/2"
+          <button
+            aria-label="check box"
+            class="check-box"
+            type="button"
+          >
+            <svg>
+              edit.svg
+            </svg>
+          </button>
+          <div
+            class="display-name"
+          >
+            Trauma Chest Drain - Box 1
+          </div>
+        </div>
+        <div
+          class="box"
         >
-          Trauma Chest Drain - Box 2
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/0/3"
+          <button
+            aria-label="check box"
+            class="check-box"
+            type="button"
+          >
+            <svg>
+              edit.svg
+            </svg>
+          </button>
+          <div
+            class="display-name"
+          >
+            Trauma Chest Drain - Box 2
+          </div>
+        </div>
+        <div
+          class="box"
         >
-          Trauma Chest Drain - Box 3
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/0/4"
+          <button
+            aria-label="check box"
+            class="check-box"
+            type="button"
+          >
+            <svg>
+              edit.svg
+            </svg>
+          </button>
+          <div
+            class="display-name"
+          >
+            Trauma Chest Drain - Box 3
+          </div>
+        </div>
+        <div
+          class="box"
         >
-          Trauma Chest Drain - Box 4
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/0/5"
+          <button
+            aria-label="check box"
+            class="check-box"
+            type="button"
+          >
+            <svg>
+              edit.svg
+            </svg>
+          </button>
+          <div
+            class="display-name"
+          >
+            Trauma Chest Drain - Box 4
+          </div>
+        </div>
+        <div
+          class="box"
         >
-          Trauma Chest Drain - Box 5
-        </a>
-      </li>
-      <li>
-        <a
-          href="/box/0/6"
+          <button
+            aria-label="check box"
+            class="check-box"
+            type="button"
+          >
+            <svg>
+              edit.svg
+            </svg>
+          </button>
+          <div
+            class="display-name"
+          >
+            Trauma Chest Drain - Box 5
+          </div>
+        </div>
+        <div
+          class="box"
         >
-          Trauma Chest Drain - Box 6
-        </a>
-      </li>
-    </ul>
-    <a
-      href="/needed"
-    >
-      Items needed
-    </a>
+          <button
+            aria-label="check box"
+            class="check-box"
+            type="button"
+          >
+            <svg>
+              edit.svg
+            </svg>
+          </button>
+          <div
+            class="display-name"
+          >
+            Trauma Chest Drain - Box 6
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <a
+        class="needed"
+        href="/needed"
+      >
+        Items needed
+      </a>
+    </footer>
   </div>
 </div>
 `;
