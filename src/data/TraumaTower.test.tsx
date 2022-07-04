@@ -79,6 +79,7 @@ describe("getItemTemplate", () => {
   test("unknown boxTemplateId", () => {
     expect(getItemTemplate("unknown", "1")).toBeUndefined();
     expect(getItemTemplate("", "1")).toBeUndefined();
+    expect(getItemTemplate(undefined, "1")).toBeUndefined();
   });
 
   test("unknown itemNumber", () => {
@@ -87,5 +88,6 @@ describe("getItemTemplate", () => {
 
     expect(getItemTemplate("0", "unknown")).toBeUndefined();
     expect(getItemTemplate("0", "")).toBeUndefined();
+    expect(getItemTemplate("0", undefined)).toBeUndefined();
   });
 });

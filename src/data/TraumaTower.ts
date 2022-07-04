@@ -133,9 +133,13 @@ export function getBoxTemplate(boxTemplateId: string) {
 }
 
 export function getItemTemplate(
-  boxTemplateId: string,
-  itemNumberString: string
+  boxTemplateId: string | undefined,
+  itemNumberString: string | undefined
 ) {
+  if (!boxTemplateId || !itemNumberString) {
+    return undefined;
+  }
+
   let itemNumber = -1;
   if (itemNumberString?.match(/^\d+$/)) {
     itemNumber = Number.parseInt(itemNumberString);

@@ -10,10 +10,7 @@ function ItemDetails() {
   let { boxTemplateId, itemId } = useParams();
   let navigate = useNavigate();
 
-  const itemTemplate =
-    boxTemplateId && itemId
-      ? getItemTemplate(boxTemplateId, itemId)
-      : undefined;
+  const itemTemplate = getItemTemplate(boxTemplateId, itemId);
 
   return (
     <div className="item-details">

@@ -11,6 +11,7 @@ import {
   PARTIAL_CONTENTS,
   ZERO_CONTENTS,
 } from "./testData";
+import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
 
 describe("ShoppingList", () => {
   const EXPECTED_ALL_ITEMS: string[] = [
@@ -149,6 +150,46 @@ describe("ShoppingList", () => {
     ]);
   });
 
+  it("rendered a shopping list page for an incomplete store - ie no boxes in store", async () => {
+    renderWithProvider(<ShoppingList />, {
+      preloadedState: {
+        boxContents: {
+          storageAreaId: TRAUMA_TOWER_TEMPLATE.storageAreaId,
+          boxes: [],
+        },
+      },
+    });
+
+    expect(screen.getByText("Items to replace")).toBeDefined();
+
+    checkShoppingList([
+      {
+        name: "Trauma Chest Drain - Box 1",
+        items: EXPECTED_ALL_ITEMS,
+      },
+      {
+        name: "Trauma Chest Drain - Box 2",
+        items: EXPECTED_ALL_ITEMS,
+      },
+      {
+        name: "Trauma Chest Drain - Box 3",
+        items: EXPECTED_ALL_ITEMS,
+      },
+      {
+        name: "Trauma Chest Drain - Box 4",
+        items: EXPECTED_ALL_ITEMS,
+      },
+      {
+        name: "Trauma Chest Drain - Box 5",
+        items: EXPECTED_ALL_ITEMS,
+      },
+      {
+        name: "Trauma Chest Drain - Box 6",
+        items: EXPECTED_ALL_ITEMS,
+      },
+    ]);
+  });
+
   it("renders correctly", () => {
     const { container } = renderWithProvider(<ShoppingList />, {
       preloadedState: { boxContents: PARTIAL_CONTENTS },
@@ -158,13 +199,15 @@ describe("ShoppingList", () => {
   });
 
   it("can return to storage area page", async () => {
-    const { user, history } = renderWithProvider(<ShoppingList />, {initialRoutes: ['/', '/needed']});
+    const { user, history } = renderWithProvider(<ShoppingList />, {
+      initialRoutes: ["/", "/needed"],
+    });
 
-    expect(history.location.pathname).toEqual('/needed');
+    expect(history.location.pathname).toEqual("/needed");
 
     await user.click(screen.getByRole("button", { name: "Back" }));
 
-    expect(history.location.pathname).toEqual('/');
+    expect(history.location.pathname).toEqual("/");
   });
 
   type ExpectedBoxContents = {
