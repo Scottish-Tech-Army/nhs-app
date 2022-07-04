@@ -10,11 +10,13 @@ import reducer, {
   resetAllBoxContents,
   setBoxContents,
   refreshState,
+  setState,
 } from "./BoxContentsSlice";
 import { BoxContents, StorageAreaContents } from "./StorageTypes";
-import { RootState } from "./store";
+import { createStore, RootState } from "./store";
 import { TRAUMA_TOWER_TEMPLATE } from "./TraumaTower";
 import localforage from "localforage";
+import { configureStore } from "@reduxjs/toolkit";
 
 test("should return the initial state", () => {
   expect(reducer(undefined, { type: undefined })).toEqual(ZERO_CONTENTS);
@@ -44,7 +46,7 @@ describe("setBoxContents", () => {
       items: [{ name: "Sterile gloves", size: "Small", quantity: 1 }],
     };
 
-    expect(reducer(previousState, setBoxContents(boxContents))).toEqual({
+    const expectedState = {
       storageAreaId: TRAUMA_TOWER_TEMPLATE.storageAreaId,
       boxes: [
         { ...ZERO_CHEST_DRAIN_BOX, boxNumber: 1 },
@@ -62,7 +64,18 @@ describe("setBoxContents", () => {
         { ...ZERO_CHEST_DRAIN_BOX, boxNumber: 5 },
         { ...ZERO_CHEST_DRAIN_BOX, boxNumber: 6 },
       ],
-    });
+    };
+
+    expect(reducer(previousState, setBoxContents(boxContents))).toEqual(
+      expectedState
+    );
+
+    // Check calls
+    expect(localforage.setItem).toHaveBeenCalledTimes(1);
+    expect(localforage.setItem).toHaveBeenCalledWith(
+      "boxContents",
+      expectedState
+    );
   });
 
   test("should handle a box contents being updated", () => {
@@ -95,7 +108,7 @@ describe("setBoxContents", () => {
       items: [{ name: "Sterile gloves", size: "Small", quantity: 2 }],
     };
 
-    expect(reducer(previousState, setBoxContents(boxContents))).toEqual({
+    const expectedState = {
       storageAreaId: TRAUMA_TOWER_TEMPLATE.storageAreaId,
       boxes: [
         { ...ZERO_CHEST_DRAIN_BOX, boxNumber: 1 },
@@ -113,7 +126,18 @@ describe("setBoxContents", () => {
         { ...ZERO_CHEST_DRAIN_BOX, boxNumber: 5 },
         { ...ZERO_CHEST_DRAIN_BOX, boxNumber: 6 },
       ],
-    });
+    };
+
+    expect(reducer(previousState, setBoxContents(boxContents))).toEqual(
+      expectedState
+    );
+
+    // Check calls
+    expect(localforage.setItem).toHaveBeenCalledTimes(1);
+    expect(localforage.setItem).toHaveBeenCalledWith(
+      "boxContents",
+      expectedState
+    );
   });
 
   test("should ignore unknown box", () => {
@@ -142,19 +166,41 @@ describe("setBoxContents", () => {
     expect(reducer(previousState, setBoxContents(boxContents))).toEqual(
       previousState
     );
+
+    // Check calls
+    expect(localforage.setItem).not.toHaveBeenCalled();
   });
 });
 
 describe("resetAllBoxContents", () => {
   test("should reset back to initial state", () => {
-    expect(reducer(EMPTY_CONTENTS, resetAllBoxContents)).toEqual(
-      ZERO_CONTENTS
-    );
+    expect(reducer(EMPTY_CONTENTS, resetAllBoxContents)).toEqual(ZERO_CONTENTS);
     expect(reducer(ALL_CONTENTS, resetAllBoxContents)).toEqual(ZERO_CONTENTS);
     expect(reducer(PARTIAL_CONTENTS, resetAllBoxContents)).toEqual(
       ZERO_CONTENTS
     );
-    expect(reducer(ZERO_CONTENTS, resetAllBoxContents)).toEqual(
+    expect(reducer(ZERO_CONTENTS, resetAllBoxContents)).toEqual(ZERO_CONTENTS);
+
+    // Check calls
+    expect(localforage.setItem).toHaveBeenCalledTimes(4);
+    expect(localforage.setItem).toHaveBeenNthCalledWith(
+      1,
+      "boxContents",
+      ZERO_CONTENTS
+    );
+    expect(localforage.setItem).toHaveBeenNthCalledWith(
+      2,
+      "boxContents",
+      ZERO_CONTENTS
+    );
+    expect(localforage.setItem).toHaveBeenNthCalledWith(
+      3,
+      "boxContents",
+      ZERO_CONTENTS
+    );
+    expect(localforage.setItem).toHaveBeenNthCalledWith(
+      4,
+      "boxContents",
       ZERO_CONTENTS
     );
   });
@@ -201,57 +247,60 @@ describe("refreshState", () => {
   //   photos: "stored photos",
   // } as unknown as SurveyStoreState;
 
-  function mockLocalForageGetItem(
-    boxContents: StorageAreaContents | null
-  ) {
+  const store = createStore();
+  const dispatch = store.dispatch;
+
+  beforeEach(() => {
+    dispatch(resetAllBoxContents());
+  });
+
+  function mockLocalForageGetItem(boxContents: StorageAreaContents | null) {
     (localforage.getItem as jest.Mock).mockImplementation((itemId) => {
-      
-      if (itemId === 'boxContents') {
+      if (itemId === "boxContents") {
         return Promise.resolve(boxContents);
       }
       return Promise.reject(new Error("Unexpected getItem " + itemId));
     });
   }
 
-
   it("stored box contents", async () => {
     mockLocalForageGetItem(PARTIAL_CONTENTS);
 
-    expect( await reducer( undefined, refreshState())).toEqual(
-     PARTIAL_CONTENTS
-    );
+    await dispatch(refreshState());
+
+    expect(store.getState().boxContents).toEqual(PARTIAL_CONTENTS);
 
     // Check calls
     expect(localforage.getItem).toHaveBeenCalledTimes(1);
     expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
   });
 
-
-
   it("nothing stored", async () => {
     mockLocalForageGetItem(null);
+    dispatch(setState(PARTIAL_CONTENTS));
 
-    expect( await reducer( PARTIAL_CONTENTS, refreshState())).toEqual(
-      PARTIAL_CONTENTS
-     );
+    await dispatch(refreshState());
 
-   // Check calls
-   expect(localforage.getItem).toHaveBeenCalledTimes(1);
-   expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
+    expect(store.getState().boxContents).toEqual(PARTIAL_CONTENTS);
+
+    // Check calls
+    expect(localforage.getItem).toHaveBeenCalledTimes(1);
+    expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
   });
 
   it("read failed - don't refresh state", async () => {
     (localforage.getItem as jest.Mock).mockImplementation((itemId) => {
       return Promise.reject(new Error("GetItem failed " + itemId));
     });
+    dispatch(setState(PARTIAL_CONTENTS));
 
-    expect( await reducer( PARTIAL_CONTENTS, refreshState())).toEqual(
-      PARTIAL_CONTENTS
-     );
+    await dispatch(refreshState());
 
-   // Check calls
-   expect(localforage.getItem).toHaveBeenCalledTimes(1);
-   expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
+    expect(store.getState().boxContents).toEqual(PARTIAL_CONTENTS);
+
+    // Check calls
+    expect(localforage.getItem).toHaveBeenCalledTimes(1);
+    expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
   });
 
   // it("write failed - continue to refresh state", async () => {
@@ -285,21 +334,6 @@ describe("refreshState", () => {
   //   });
   // });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import {
 //   surveyReducer,

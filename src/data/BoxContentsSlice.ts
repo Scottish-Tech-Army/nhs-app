@@ -2,22 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import { BoxContents, StorageAreaContents } from "./StorageTypes";
 import { RootState } from "./store";
 import { TRAUMA_TOWER_TEMPLATE } from "./TraumaTower";
-import localforage from 'localforage';
+import localforage from "localforage";
 import thunk, { ThunkAction } from "redux-thunk";
-import { AnyAction } from 'redux';
+import { AnyAction } from "redux";
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
   AnyAction
-  >;
+>;
 
 localforage.config({
-  name        : 'nhs-inventory',
-  version     : 1.0,
-  storeName   : 'nhsinventory',
-  description : 'small inventory app for A&E'
+  name: "nhs-inventory",
+  version: 1.0,
+  storeName: "nhsinventory",
+  description: "small inventory app for A&E",
 });
 
 export function createInitialState() {
@@ -59,35 +59,29 @@ export const boxContentsSlice = createSlice({
     setState: (state, action) => {
       const newState: StorageAreaContents = action.payload;
       return newState;
-    }, 
+    },
   },
 });
 
 export function refreshState(): AppThunk {
   return function (dispatch, getState) {
-    return 
-      .then(([storedAnswers, storedPhotos]) => {
-        const state = { ...getState(), initialisingState: false };
-        if (storedAnswers === null) {
-          writeAnswers(state).catch((err) => console.error(err));
+    return localforage.getItem("boxContents")
+      .then((storedBoxContents) => {
+        // const state = { ...getState(), initialisingState: false };
+
+        // if (storedBoxContents === null) {
+        //   writePhotos(state).catch((err) => console.error(err));
+        // }
+        if (storedBoxContents) {
+          dispatch(boxContentsSlice.actions.setState(storedBoxContents));
         }
-        if (storedPhotos === null) {
-          writePhotos(state).catch((err) => console.error(err));
-        }
-        dispatch({
-          type: REFRESH_STATE,
-          state: {
-            ...state,
-            ...(storedAnswers !== null ? storedAnswers : {}),
-            ...(storedPhotos !== null ? storedPhotos : {}),
-          },
-        });
       })
       .catch((err) => console.error(err));
   };
 }
 
-export const { setBoxContents, resetAllBoxContents } = boxContentsSlice.actions;
+export const { setBoxContents, resetAllBoxContents, setState } =
+  boxContentsSlice.actions;
 
 export const getBoxContents = (
   boxTemplateId: string | undefined,

@@ -5,6 +5,15 @@
 import "@testing-library/jest-dom";
 jest.mock("localforage");
 
+// eslint-disable-next-line no-global-assign
+console = {
+  ...console,
+  log: jest.fn(),
+  info: jest.fn(),
+  debug: jest.fn(),
+  error: jest.fn(),
+};
+
 beforeEach(() => {
   jest.clearAllMocks();
 });
