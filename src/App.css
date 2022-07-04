@@ -377,6 +377,7 @@
   color: #6b6b6b;
 }
 
+.disclaimer-popup,
 .confirm-reset-popup {
   position: fixed;
   left: 0;
@@ -386,6 +387,7 @@
   z-index: 9;
 
   padding: 10px;
+  padding-bottom: 33px;
 
   border: 3px solid #f1f1f1;
   border-radius: 6px 6px 0 0;
@@ -397,6 +399,7 @@
   align-items: center;
 }
 
+.disclaimer-popup h2,
 .confirm-reset-popup h2 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 18px;
@@ -407,6 +410,7 @@
   border-top: 4px solid #025bbb;
 }
 
+.disclaimer-popup .message,
 .confirm-reset-popup .message {
   flex-grow: 1;
   font-size: 16px;
@@ -414,6 +418,7 @@
   text-align: center;
 }
 
+.disclaimer-popup .confirm-yes,
 .confirm-reset-popup .confirm-yes,
 .confirm-reset-popup .confirm-no {
   width: 230px;
@@ -426,15 +431,15 @@
   letter-spacing: 0.06em;
 }
 
+.disclaimer-popup .confirm-yes,
 .confirm-reset-popup .confirm-yes {
   background: #025bbb;
   margin-top: 13px;
-  margin-bottom: 13px;
 }
 
 .confirm-reset-popup .confirm-no {
   background: rgba(2, 91, 187, 0.5);
-  margin-bottom: 33px;
+  margin-top: 13px;
 }
 
 .modal-overlay {
