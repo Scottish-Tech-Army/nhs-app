@@ -1,19 +1,23 @@
-import React from 'react';
-import { Route, BrowserRouter as Router, Routes} from 'react-router-dom';
-import './App.css';
-import StorageArea from './StorageArea';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import StorageArea from "./StorageArea";
 
-import Box from './Box';
+import Box from "./Box";
+import ShoppingList from "./ShoppingList";
+import ItemDetails from "./ItemDetails";
 
 function App() {
   return (
-    <Router>
+    <div className="root">
       <Routes>
-        <Route path='/' element={<StorageArea />}/>
-        <Route path='box/:boxTemplateId/:boxId' element={<Box setBoxContents={() => {}}/>} />
+        <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
+        <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
+        <Route path="needed" element={<ShoppingList />} />
+        <Route path="*" element={<StorageArea />} />
       </Routes>
-    </Router> 
-      );
+    </div>
+  );
 }
 
 export default App;

@@ -1,6 +1,10 @@
-import { StorageAreaType } from "./StorageTypes";
+import {
+  ItemContents,
+  ItemTemplate,
+  StorageAreaTemplate,
+} from "./StorageTypes";
 
-export const TRAUMA_TOWER_TEMPLATE: StorageAreaType = {
+export const TRAUMA_TOWER_TEMPLATE: StorageAreaTemplate = {
   storageAreaId: "0",
   name: "Trauma Tower",
   boxes: [
@@ -39,29 +43,28 @@ export const TRAUMA_TOWER_TEMPLATE: StorageAreaType = {
           photo: "largesterilegloves.jpg",
         },
         {
-          name: "Chest drain catheter 28Fr",
+          name: "Chest drain catheter",
           size: "28Fr",
           description: "Chest drain catheter - 28Fr",
           location: "Resus store XX",
           photo: "pleuralcatheter.jpg",
         },
         {
-          name: "Chest drain catheter 32Fr",
+          name: "Chest drain catheter",
           size: "32Fr",
-          description: "Chest drain catheter",
+          description: "Chest drain catheter - 32Fr",
           location: "Resus store XX",
           photo: "pleuralcatheter.jpg",
         },
         {
-          name: "Chest drain catheter 36Fr",
+          name: "Chest drain catheter",
           size: "36Fr",
-          description: "Chest drain catheter",
+          description: "Chest drain catheter - 36Fr",
           location: "Resus store XX",
           photo: "pleuralcatheter.jpg",
         },
         {
           name: "ChloraPrep applicator",
-          size: "n/a",
           description:
             "ChloraPrep applicator for cleaning skin for sterile procedure",
           location: "Resus store XX",
@@ -92,14 +95,12 @@ export const TRAUMA_TOWER_TEMPLATE: StorageAreaType = {
         },
         {
           name: "Chest drain bottle",
-          size: "n/a",
           description: "Chest drain bottle for draining air and blood",
           location: "Resus store XX",
           photo: "chestdrainbottle.jpg",
         },
         {
           name: "Chest drain tubing",
-          size: "n/a",
           description:
             "Tubing for connecting chest drain catheter and chest drain bottle",
           location: "Resus store XX",
@@ -124,3 +125,37 @@ export const TRAUMA_TOWER_TEMPLATE: StorageAreaType = {
     },
   ],
 };
+
+export function getBoxTemplate(boxTemplateId: string) {
+  return TRAUMA_TOWER_TEMPLATE.boxes.find(
+    (boxTemplate) => boxTemplate.boxTemplateId === boxTemplateId
+  );
+}
+
+export function getItemTemplate(
+  boxTemplateId: string | undefined,
+  itemNumberString: string | undefined
+) {
+  if (!boxTemplateId || !itemNumberString) {
+    return undefined;
+  }
+
+  let itemNumber = -1;
+  if (itemNumberString?.match(/^\d+$/)) {
+    itemNumber = Number.parseInt(itemNumberString);
+  }
+
+  return getBoxTemplate(boxTemplateId)?.items[itemNumber];
+}
+
+export function getBoxName(boxTemplateName: string, boxNumber: number) {
+  return `${boxTemplateName} - Box ${boxNumber}`;
+}
+
+export function getItemDisplayName(item: ItemTemplate | ItemContents) {
+  let result = item.name;
+  if (item.size) {
+    result += ` (${item.size})`;
+  }
+  return result;
+}

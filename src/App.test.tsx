@@ -1,27 +1,62 @@
-import { render, screen } from "@testing-library/react";
+/* eslint-disable testing-library/prefer-screen-queries */
+/* eslint-disable testing-library/no-node-access */
+import { getByRole, screen } from "@testing-library/react";
 import React from "react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
+import { renderWithProvider } from "./testUtils";
 
-describe("compoent App", () => {
+describe("App", () => {
   it("renders default view", () => {
-    render(<App />);
+    renderWithProvider(<App />);
     expect(screen.getByText("Trauma Tower")).toBeDefined();
+  });
+
+  it("renders shopping list view", async () => {
+    const user = userEvent.setup();
+
+    renderWithProvider(<App />);
+
+    await user.click(screen.getByRole("link", { name: "Items needed" }));
+
+    expect(screen.getByText("Items to replace")).toBeDefined();
   });
 
   it("renders box view", async () => {
     const user = userEvent.setup();
 
-    render(<App />);
+    renderWithProvider(<App />);
 
     await user.click(
-      screen.getByRole("link", { name: "Trauma Chest Drain - Box 2" })
+      screen.getByText("Trauma Chest Drain - Box 2").previousElementSibling!
     );
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
 
     expect(
-      screen.getByText("Blunt dissection chest drainage insertion pack")
+      screen.getByText("Blunt dissection chest drainage insertion pack (28Fg)")
     ).toBeDefined();
+  });
+
+  it("renders item view from box view", async () => {
+    const user = userEvent.setup();
+
+    renderWithProvider(<App />);
+
+    await user.click(
+      screen.getByText("Trauma Chest Drain - Box 2").previousElementSibling!
+    );
+
+    expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
+
+    const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
+
+    const infoButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "item information",
+    });
+    await user.click(infoButton);
+
+    expect(screen.getByText("Item Details")).toBeDefined();
+    expect(screen.getByText("Chest drain catheter")).toBeDefined();
   });
 });
