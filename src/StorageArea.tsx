@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BoxTemplate } from "./data/StorageTypes";
 import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
@@ -11,6 +11,8 @@ import { useAppDispatch } from "./data/store";
 function StorageArea() {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const [confirmReset, setConfirmReset] = useState(false);
 
   const getBoxes = (boxTemplate: BoxTemplate) => {
     const result = [];
@@ -44,7 +46,8 @@ function StorageArea() {
           type="button"
           className="restart"
           aria-label="restart"
-          onClick={() => dispatch(resetAllBoxContents())}
+          onClick={() => setConfirmReset(true)}
+          // onClick={() => dispatch(resetAllBoxContents())}
         >
           <RestartIcon />
         </button>
@@ -61,6 +64,34 @@ function StorageArea() {
           Items needed
         </Link>
       </footer>
+      {confirmReset && (
+        <div className="confirm-reset-popup">
+          <div className="popup-container">
+            <div className="message">
+              Reset all boxes to empty - are you sure?
+            </div>
+            <div className="actions">
+              <button
+                type="button"
+                className="confirm-no"
+                onClick={() => setConfirmReset(false)}
+              >
+                No
+              </button>
+              <button
+                type="button"
+                className="confirm-yes"
+                onClick={() => {
+                  dispatch(resetAllBoxContents());
+                  setConfirmReset(false);
+                }}
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
