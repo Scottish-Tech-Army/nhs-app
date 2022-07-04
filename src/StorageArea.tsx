@@ -67,30 +67,27 @@ function StorageArea() {
       {confirmReset && (
         <>
           <div className="confirm-reset-popup">
-            <div className="popup-container">
-              <div className="message">
-                Reset all boxes to empty - are you sure?
-              </div>
-              <div className="actions">
-                <button
-                  type="button"
-                  className="confirm-no"
-                  onClick={() => setConfirmReset(false)}
-                >
-                  No
-                </button>
-                <button
-                  type="button"
-                  className="confirm-yes"
-                  onClick={() => {
-                    dispatch(resetAllBoxContents());
-                    setConfirmReset(false);
-                  }}
-                >
-                  Yes
-                </button>
-              </div>
+            <h2>Reset</h2>
+            <div className="message">
+              Reset all boxes to empty - are you sure?
             </div>
+            <button
+              type="button"
+              className="confirm-yes"
+              onClick={() => {
+                dispatch(resetAllBoxContents());
+                setConfirmReset(false);
+              }}
+            >
+              YES
+            </button>
+            <button
+              type="button"
+              className="confirm-no"
+              onClick={() => setConfirmReset(false)}
+            >
+              Cancel
+            </button>
           </div>
           <div className="modal-overlay" />
         </>

@@ -144,31 +144,26 @@ exports[`StorageArea refresh popup confirm resets all box contents to empty 1`] 
     <div
       class="confirm-reset-popup"
     >
+      <h2>
+        Reset
+      </h2>
       <div
-        class="popup-container"
+        class="message"
       >
-        <div
-          class="message"
-        >
-          Reset all boxes to empty - are you sure?
-        </div>
-        <div
-          class="actions"
-        >
-          <button
-            class="confirm-no"
-            type="button"
-          >
-            No
-          </button>
-          <button
-            class="confirm-yes"
-            type="button"
-          >
-            Yes
-          </button>
-        </div>
+        Reset all boxes to empty - are you sure?
       </div>
+      <button
+        class="confirm-yes"
+        type="button"
+      >
+        YES
+      </button>
+      <button
+        class="confirm-no"
+        type="button"
+      >
+        Cancel
+      </button>
     </div>
     <div
       class="modal-overlay"

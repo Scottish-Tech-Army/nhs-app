@@ -60,10 +60,12 @@ describe("StorageArea", () => {
 
     await user.click(screen.getByRole("button", { name: "restart" }));
 
-    expect(screen.getByText("Reset all boxes to empty - are you sure?")).toBeDefined();
+    expect(
+      screen.getByText("Reset all boxes to empty - are you sure?")
+    ).toBeDefined();
     expect(container).toMatchSnapshot();
-    
-    await user.click(screen.getByRole("button", { name: "Yes" }));
+
+    await user.click(screen.getByRole("button", { name: "YES" }));
 
     expect(store.getState().boxContents).toEqual(ZERO_CONTENTS);
   });
@@ -75,12 +77,12 @@ describe("StorageArea", () => {
 
     await user.click(screen.getByRole("button", { name: "restart" }));
 
-    expect(screen.getByText("Reset all boxes to empty - are you sure?")).toBeDefined();
+    expect(
+      screen.getByText("Reset all boxes to empty - are you sure?")
+    ).toBeDefined();
 
-    await user.click(screen.getByRole("button", { name: "No" }));
+    await user.click(screen.getByRole("button", { name: "Cancel" }));
 
     expect(store.getState().boxContents).toEqual(PARTIAL_CONTENTS);
   });
-
-  
 });
