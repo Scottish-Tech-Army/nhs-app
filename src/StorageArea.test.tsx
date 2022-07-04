@@ -54,14 +54,15 @@ describe("StorageArea", () => {
   });
 
   it("refresh popup confirm resets all box contents to empty", async () => {
-    const { user, store } = renderWithProvider(<StorageArea />, {
+    const { user, store, container } = renderWithProvider(<StorageArea />, {
       preloadedState: { boxContents: PARTIAL_CONTENTS },
     });
 
     await user.click(screen.getByRole("button", { name: "restart" }));
 
     expect(screen.getByText("Reset all boxes to empty - are you sure?")).toBeDefined();
-
+    expect(container).toMatchSnapshot();
+    
     await user.click(screen.getByRole("button", { name: "Yes" }));
 
     expect(store.getState().boxContents).toEqual(ZERO_CONTENTS);
@@ -80,4 +81,6 @@ describe("StorageArea", () => {
 
     expect(store.getState().boxContents).toEqual(PARTIAL_CONTENTS);
   });
+
+  
 });
