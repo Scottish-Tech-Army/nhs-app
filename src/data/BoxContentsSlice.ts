@@ -3,9 +3,9 @@ import { BoxContents, StorageAreaContents } from "./StorageTypes";
 import { RootState } from "./store";
 import { TRAUMA_TOWER_TEMPLATE } from "./TraumaTower";
 import localforage from "localforage";
-import thunk, { ThunkAction } from "redux-thunk";
+import { ThunkAction } from "redux-thunk";
 import { AnyAction } from "redux";
-import {current} from "immer";
+import { current } from "immer";
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -52,14 +52,12 @@ export const boxContentsSlice = createSlice({
 
       if (boxIndex > -1) {
         state.boxes[boxIndex] = newBoxContents;
-        localforage.setItem("boxContents", current(state))
+        localforage.setItem("boxContents", current(state));
       }
-      
-          
     },
     resetAllBoxContents: (state) => {
-      const newState = createInitialState()
-      localforage.setItem("boxContents", newState)
+      const newState = createInitialState();
+      localforage.setItem("boxContents", newState);
       return newState;
     },
     setState: (state, action) => {
@@ -71,15 +69,13 @@ export const boxContentsSlice = createSlice({
 
 export function refreshState(): AppThunk {
   return function (dispatch, getState) {
-    return localforage.getItem("boxContents")
+    return localforage
+      .getItem("boxContents")
       .then((storedBoxContents) => {
-        // const state = { ...getState(), initialisingState: false };
-
-        // if (storedBoxContents === null) {
-        //   writePhotos(state).catch((err) => console.error(err));
-        // }
         if (storedBoxContents) {
-          dispatch(boxContentsSlice.actions.setState(storedBoxContents));
+         dispatch(boxContentsSlice.actions.setState(storedBoxContents));
+        } else {
+          return localforage.setItem("boxContents", getState().boxContents);
         }
       })
       .catch((err) => console.error(err));

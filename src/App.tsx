@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import StorageArea from "./StorageArea";
+import { useAppDispatch } from "./data/store";
+import { refreshState } from "./data/BoxContentsSlice";
 
 import Box from "./Box";
 import ShoppingList from "./ShoppingList";
 import ItemDetails from "./ItemDetails";
 
+
 function App() {
+  const dispatch = useAppDispatch();
+  
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
+
+  useEffect(() => {
+    dispatch(refreshState());
+  }, [dispatch]);
 
   return (
     <div className="root">

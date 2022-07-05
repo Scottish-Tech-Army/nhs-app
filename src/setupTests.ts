@@ -3,6 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
+import localforage from "localforage";
 jest.mock("localforage");
 
 // eslint-disable-next-line no-global-assign
@@ -16,4 +17,10 @@ console = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  (localforage.getItem as jest.Mock).mockImplementation(() =>
+    Promise.resolve(null)
+  );
+  (localforage.setItem as jest.Mock).mockImplementation(() =>
+    Promise.resolve()
+  );
 });
