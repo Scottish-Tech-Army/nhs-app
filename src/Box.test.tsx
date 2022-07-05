@@ -1,68 +1,58 @@
+/* eslint-disable testing-library/no-node-access */
+/* eslint-disable testing-library/prefer-screen-queries */
 import React from "react";
 
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { useParams } from "react-router-dom";
+import { getByRole, screen } from "@testing-library/react";
+import { Routes, Route } from "react-router-dom";
 
 import Box from "./Box";
+import { FULL_CHEST_DRAIN_BOX } from "./testData";
+import { renderWithProvider } from "./testUtils";
 
-const setBoxContents = jest.fn();
-
-jest.mock("react-router-dom");
 
 describe("Box", () => {
   it("rendered a box page", async () => {
     renderWithRoute("0", "3");
     expect(screen.getByText("Trauma Chest Drain - Box 3")).toBeDefined();
 
-    const inputFields = screen.getAllByRole("spinbutton");
+    const inputFields = Array.from(document.querySelectorAll(".display-name"));
 
-    expect(
-      // eslint-disable-next-line testing-library/no-node-access
-      inputFields.map((input) => input.parentElement!.textContent)
-    ).toEqual([
-      "Blunt dissection chest drainage insertion pack",
-      "Sterile gloves",
-      "Sterile gloves",
-      "Sterile gloves",
-      "Chest drain catheter 28Fr",
-      "Chest drain catheter 32Fr",
-      "Chest drain catheter 36Fr",
+    expect(inputFields.map((input) => input.textContent)).toEqual([
+      "Blunt dissection chest drainage insertion pack (28Fg)",
+      "Sterile gloves (Small)",
+      "Sterile gloves (Medium)",
+      "Sterile gloves (Large)",
+      "Chest drain catheter (28Fr)",
+      "Chest drain catheter (32Fr)",
+      "Chest drain catheter (36Fr)",
       "ChloraPrep applicator",
-      "Lidocaine 1%",
-      "Standard suture pack",
-      "Mefix roll",
+      "Lidocaine 1% (5ml / 50mg)",
+      "Standard suture pack (Standard)",
+      "Mefix roll (5cm x 10m)",
       "Chest drain bottle",
       "Chest drain tubing",
-      "Sterile water (H20) bottle",
-      "Spencer wells forceps",
+      "Sterile water (H20) bottle (1000ml bottle)",
+      "Spencer wells forceps (Straight 20cm)",
     ]);
 
-    expect(screen.getByRole("button", { name: "Submit" })).toBeDefined();
+    expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
   });
 
   it("does not render if no boxTemplateId", async () => {
     const { container } = renderWithRoute("", "3");
 
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(container.children).toHaveLength(0);
-
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if no boxId", async () => {
     const { container } = renderWithRoute("0", "");
 
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(container.children).toHaveLength(0);
-
-    expect(container).toMatchSnapshot();
+    expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if unknown boxTemplateId", async () => {
     const { container } = renderWithRoute("Unknown", "4");
 
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.children).toHaveLength(0);
 
     expect(container).toMatchSnapshot();
@@ -71,7 +61,6 @@ describe("Box", () => {
   it("does not render if unknown boxId", async () => {
     const { container } = renderWithRoute("0", "Unknown");
 
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.children).toHaveLength(0);
 
     expect(container).toMatchSnapshot();
@@ -80,45 +69,92 @@ describe("Box", () => {
   it("does not render if unknown boxId - box number too high", async () => {
     const { container } = renderWithRoute("0", "7");
 
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.children).toHaveLength(0);
 
     expect(container).toMatchSnapshot();
   });
 
-  it("can submit changes", async () => {
-    const user = userEvent.setup();
-    jest.spyOn(window, "alert").mockImplementation(() => {});
+  it("can save item changes", async () => {
+    const { store, user, history } = renderWithRoute("0", "3");
 
-    renderWithRoute("0", "3");
+    const itemLabel = screen.getByText(
+      "Blunt dissection chest drainage insertion pack (28Fg)"
+    );
 
-    const inputField = screen.getByRole("spinbutton", {
-      name: "Blunt dissection chest drainage insertion pack",
+    const increaseButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "add item",
+    });
+    const decreaseButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "remove item",
+    });
+    await user.click(increaseButton);
+    await user.click(increaseButton);
+    await user.click(increaseButton);
+    await user.click(decreaseButton);
+
+    await user.click(screen.getByRole("button", { name: "Save" }));
+
+    expect(store.getState().boxContents.boxes[2].items).toEqual([
+      {
+        quantity: 2,
+        name: "Blunt dissection chest drainage insertion pack",
+        size: "28Fg",
+      },
+      { quantity: 0, name: "Sterile gloves", size: "Small" },
+      { quantity: 0, name: "Sterile gloves", size: "Medium" },
+      { quantity: 0, name: "Sterile gloves", size: "Large" },
+      { quantity: 0, name: "Chest drain catheter", size: "28Fr" },
+      { quantity: 0, name: "Chest drain catheter", size: "32Fr" },
+      { quantity: 0, name: "Chest drain catheter", size: "36Fr" },
+      { quantity: 0, name: "ChloraPrep applicator" },
+      { quantity: 0, name: "Lidocaine 1%", size: "5ml / 50mg" },
+      { quantity: 0, name: "Standard suture pack", size: "Standard" },
+      { quantity: 0, name: "Mefix roll", size: "5cm x 10m" },
+      { quantity: 0, name: "Chest drain bottle" },
+      { quantity: 0, name: "Chest drain tubing" },
+      {
+        quantity: 0,
+        name: "Sterile water (H20) bottle",
+        size: "1000ml bottle",
+      },
+      { quantity: 0, name: "Spencer wells forceps", size: "Straight 20cm" },
+    ]);
+
+    expect(history.location.pathname).toEqual("/");
+  });
+
+  it("can mark box as full", async () => {
+    const { store, user, history } = renderWithRoute("0", "3");
+
+    await user.click(screen.getByRole("button", { name: "FULL" }));
+
+    expect(store.getState().boxContents.boxes[2]).toEqual({
+      ...FULL_CHEST_DRAIN_BOX,
+      boxNumber: 3,
     });
 
-    await user.type(inputField, "5");
-    await user.click(screen.getByRole("button", { name: "Submit" }));
+    expect(history.location.pathname).toEqual("/");
+  });
 
-    expect(inputField).toHaveDisplayValue("5");
+  it("can go to item details", async () => {
+    const { user, history } = renderWithRoute("0", "3");
 
-    expect(setBoxContents).toHaveBeenCalledTimes(1);
-    expect(setBoxContents).toHaveBeenCalledWith("0", 3, [
-      { count: 5, name: "Blunt dissection chest drainage insertion pack" },
-      { count: 0, name: "Sterile gloves" },
-      { count: 0, name: "Sterile gloves" },
-      { count: 0, name: "Sterile gloves" },
-      { count: 0, name: "Chest drain catheter 28Fr" },
-      { count: 0, name: "Chest drain catheter 32Fr" },
-      { count: 0, name: "Chest drain catheter 36Fr" },
-      { count: 0, name: "ChloraPrep applicator" },
-      { count: 0, name: "Lidocaine 1%" },
-      { count: 0, name: "Standard suture pack" },
-      { count: 0, name: "Mefix roll" },
-      { count: 0, name: "Chest drain bottle" },
-      { count: 0, name: "Chest drain tubing" },
-      { count: 0, name: "Sterile water (H20) bottle" },
-      { count: 0, name: "Spencer wells forceps" },
-    ]);
+    const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
+
+    const infoButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "item information",
+    });
+    await user.click(infoButton);
+
+    expect(history.location.pathname).toEqual("/item/0/4");
+  });
+
+  it("can return to previous page", async () => {
+    const { user, history } = renderWithRoute("0", "3");
+
+    await user.click(screen.getByRole("button", { name: "Back" }));
+
+    expect(history.location.pathname).toEqual("/");
   });
 
   it("renders correctly", () => {
@@ -128,7 +164,13 @@ describe("Box", () => {
   });
 
   function renderWithRoute(boxTemplateId: string, boxId: string) {
-    (useParams as jest.Mock).mockReturnValue({ boxTemplateId, boxId });
-    return render(<Box setBoxContents={setBoxContents} />);
+    // Add routes to get the contents of useParams populated
+    return renderWithProvider(
+      <Routes>
+        <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
+        <Route path="*" element={<div>Unknown path</div>} />
+      </Routes>,
+      { initialRoutes: ["/", `/box/${boxTemplateId}/${boxId}`] }
+    );
   }
 });

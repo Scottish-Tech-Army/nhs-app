@@ -1,95 +1,180 @@
-import React, { FormEvent, useState } from "react";
-import { TRAUMA_TOWER_TEMPLATE } from "./data/traumaTower";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  getBoxName,
+  getItemDisplayName,
+  TRAUMA_TOWER_TEMPLATE,
+} from "./data/TraumaTower";
+import { useNavigate, useParams } from "react-router-dom";
+import { BoxTemplate, ItemTemplate } from "./data/StorageTypes";
+import { getBoxContents, setBoxContents } from "./data/BoxContentsSlice";
+import rfdc from "rfdc";
+import { useAppDispatch, useAppSelector } from "./data/store";
+import "./App.css";
+import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
+import { ReactComponent as InfoCircle } from "./icons/info-circle.svg";
+import { ReactComponent as Plus } from "./icons/add.svg";
+import { ReactComponent as Minus } from "./icons/minus.svg";
 
-export type FormValueType = {
-  name: string;
-  count: number;
-};
+// Icons vuesax linear. Licence: https://iconsax.io/#license
 
-export interface BoxProps {
-  setBoxContents: (boxTemplateId: string, boxNumber: number, contents: FormValueType[]) => void;
-}
+const clone = rfdc();
 
-function Box({ setBoxContents }: BoxProps) {
+function Box() {
+  //init variables
+  //destructure nested routes from useParams 
+        let {boxTemplateId, boxId} = useParams();
+      
+  let navigate = useNavigate();
 
-//init variables
-  //destructure nested routes from useParams  
-  let { boxTemplateId, boxId } = useParams();
-  //init boxTemplate var finding boxTemplateId from TRAUMA_TOWER_TEMPLATE Doc
-  const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find(
-    (box) => box.boxTemplateId === boxTemplateId
-  );
-  //init var of mapped items in template creating obj of name and count/amount of each
-  const startingArrayOfObjects: FormValueType[] =
-      boxTemplate?.items.map(({ name }) => ({ name, count: 0 })) || [];
-  //init- useState hook using mapped items stored as init value  
-  const [formValues, setFormValues] = useState<FormValueType[]>(
-    startingArrayOfObjects
-  );
-  //init boxNumber to zero   
-    let boxNumber = 0;
-  //check boxId matches string of starting digit/end digit  
-    //parse boxId as Int
-    //it should so continue(maybe integrate fail condition?)
-  if (boxId?.match(/^\d+$/)) {
-    boxNumber = Number.parseInt(boxId);
+  const boxContents = useAppSelector(getBoxContents(boxTemplateId, boxId));
+  const dispatch = useAppDispatch();
+
+  const [boxTemplate, setBoxTemplate] = useState<BoxTemplate>();
+  const [itemCounts, setItemCounts] = useState<number[]>();
+
+  useEffect(() => {
+    if (boxContents) {
+      setBoxTemplate(
+        TRAUMA_TOWER_TEMPLATE.boxes.find(
+          (box) => box.boxTemplateId === boxContents.boxTemplateId
+        )
+      );
+
+      setItemCounts(boxContents.items.map((item) => item.quantity));
+    } else {
+      setBoxTemplate(undefined);
+      setItemCounts([]);
+    }
+  }, [boxContents]);
+
+  let handleSubmit = () => {
+    const newBoxContents = clone(boxContents)!;
+    itemCounts?.forEach(
+      (count, index) => (newBoxContents.items[index].quantity = count)
+    );
+
+    dispatch(setBoxContents(newBoxContents));
+    navigate("/");
+  };
+
+  function preventExtraClickEvents(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    functionToCall: () => void
+  ) {
+    // Repeated fast clicks were being counted more than once
+    event.detail === 1 && functionToCall();
   }
-  //check- no boxTemplate OR boxNumber less than 1 OR boxNumber is more than boxTemplate count/value
-    //if true return null (probably should return Error)
-    //if false continue
-  if (!boxTemplate || boxNumber < 1 || boxNumber > boxTemplate.count) {
+
+  function getItem(itemTemplate: ItemTemplate, index: number) {
+    const expectedQuantity = itemTemplate.quantity || 1;
+    const actualQuantity = itemCounts![index];
+    // TODO are too many items bad?
+    const enoughItems = actualQuantity - expectedQuantity >= 0;
+
+    return (
+      <div className="item" key={index}>
+        <div className="display-name">{getItemDisplayName(itemTemplate)}</div>
+        <div className="controls">
+          <button
+            type="button"
+            className="item-info"
+            aria-label="item information"
+            onClick={() => navigate(`/item/${boxTemplateId}/${index}`)}
+          >
+            <InfoCircle />
+          </button>
+          <div className="quantity">
+            <span
+              className={
+                enoughItems ? "actual-quantity-good" : "actual-quantity-bad"
+              }
+            >
+              {itemCounts![index]}
+            </span>
+            <span>{` / `}</span>
+            <span className="expected-quantity">
+              {itemTemplate.quantity || 1}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="change-quantity"
+            aria-label="remove item"
+            onClick={(event) =>
+              preventExtraClickEvents(event, () =>
+                setItemCounts((itemCounts) => {
+                  const result = [...itemCounts!];
+                  result![index] = Math.max(0, result![index] - 1);
+                  return result;
+                })
+              )
+            }
+            disabled={itemCounts![index] === 0}
+          >
+            <Minus />
+          </button>
+          <button
+            type="button"
+            className="change-quantity"
+            aria-label="add item"
+            onClick={(event) =>
+              preventExtraClickEvents(event, () =>
+                setItemCounts((itemCounts) => {
+                  const result = [...itemCounts!];
+                  result![index] = result![index] + 1;
+                  return result;
+                })
+              )
+            }
+          >
+            <Plus />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!boxTemplate) {
     return null;
   }
 
-  //Functions for storing form values on user input- form change/submit
-    //handle change- capture change to useState, set change to setFormValues
-        //init- form new form values to array
-        //process values to Int
-        //set to form values state
-  let handleChange = (index: number, target: HTMLInputElement) => {
-    let newFormValues = [...formValues];
-
-    newFormValues[index].count = Number.parseInt(target!.value);
-
-    setFormValues(newFormValues);
-  };
-
-   //handleSubmit- pass router values and inputted state values  
-        //handle browser event to keep inputted data
-        //pass router values and inputted form values to setBoxContents function
-  let handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setBoxContents(boxTemplateId!, boxNumber, formValues);
-  };
-
   return (
-    <div>
-      <h1>{`${boxTemplate.name} - Box ${boxId}`}</h1>
+    <div className="box-details">
+      <header>
+        <h1>{getBoxName(boxTemplate!.name, boxContents!.boxNumber)}</h1>
+        <button
+          type="button"
+          className="back"
+          aria-label="Back"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft />
+        </button>
+        <button
+          type="button"
+          className="full"
+          onClick={() => {
+            const newBoxContents = clone(boxContents)!;
+            boxTemplate.items.forEach(
+              ({ quantity }, index) =>
+                (newBoxContents.items[index].quantity = quantity || 1)
+            );
 
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {boxTemplate.items.map((item, index) => (
-            <li key={index}>
-              <label>
-                {item.name}
-                <input
-                  name={item.name}
-                  type="number"
-                  max="10"
-                  min="0"
-                  step="1"
-                  value={formValues[index].count || 0}
-                  onChange={({ target }) => handleChange(index, target)}
-                />
-              </label>
-            </li>
-          ))}
-        </ul>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+            dispatch(setBoxContents(newBoxContents));
+            navigate("/");
+          }}
+        >
+          FULL
+        </button>
+      </header>
+      <main>
+        <div className="scroll">{boxTemplate?.items.map(getItem)}</div>
+      </main>
+      <footer>
+        <button type="button" className="save" onClick={handleSubmit}>
+          Save
+        </button>
+      </footer>
     </div>
   );
 }
