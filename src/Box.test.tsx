@@ -5,10 +5,10 @@ import React from "react";
 import { getByRole, screen } from "@testing-library/react";
 import { Routes, Route } from "react-router-dom";
 
-import Box from "./Box";
 import { FULL_CHEST_DRAIN_BOX } from "./testData";
 import { renderWithProvider } from "./testUtils";
 
+import Box from "./Box";
 
 describe("Box", () => {
   it("rendered a box page", async () => {

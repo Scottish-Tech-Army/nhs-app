@@ -1,12 +1,14 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import type { RenderOptions } from "@testing-library/react";
-import { configureStore } from "@reduxjs/toolkit";
-import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import userEvent from "@testing-library/user-event";
+
 import { createMemoryHistory } from "history";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+
+import type { RenderOptions, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+import { configureStore } from "@reduxjs/toolkit";
+import type { PreloadedState } from "@reduxjs/toolkit";
 
 import type { AppStore, RootState } from "./data/store";
 import boxContentsReducer, {
