@@ -5,7 +5,10 @@
     "declaration": true,
     "noEmit": true,
     "outDir": "dist",
+    "types": ["jest"],
     "esModuleInterop": true,
     "resolveJsonModule": true
-  }
+  },
+  "include": ["src/*.ts","src/*.tsx"],
+  "exclude": ["src/*.test.ts","src/*.test.tsx"],
 }

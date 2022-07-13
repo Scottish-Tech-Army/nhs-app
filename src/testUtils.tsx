@@ -4,7 +4,8 @@ import { Provider } from "react-redux";
 import { createMemoryHistory } from "history";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
-import type { RenderOptions, render } from "@testing-library/react";
+import type { RenderOptions } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { configureStore } from "@reduxjs/toolkit";
