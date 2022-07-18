@@ -1,45 +1,87 @@
 /// <reference types="cypress" />
 
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
+const DISCLAIMER_TEXT =
+  "This application is for demo use only. It is not intended for real life use.";
+const STORAGE_AREA_TITLE = "Trauma Tower";
+const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
 
-describe('example to-do app', () => {
+describe("disclaimer pop-up", () => {
   beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
-    cy.visit('http://localhost:3000')
-  })
+    cy.visit("http://localhost:3001");
+    cy.contains(DISCLAIMER_TEXT);
+  });
 
- 
-  it('can check off an item as completed', () => {
-    // In addition to using the `get` command to get an element by selector,
-    // we can also use the `contains` command to get an element by its contents.
-    // However, this will yield the <label>, which is lowest-level element that contains the text.
-    // In order to check the item, we'll find the <input> element for this <label>
-    // by traversing up the dom to the parent element. From there, we can `find`
-    // the child checkbox <input> element and use the `check` command to check it.
-    cy.contains('Pay electric bill')
+  it("clicking accept button disengages disclaimer", () => {
+    cy.contains("Accept").click();
+    cy.contains(DISCLAIMER_TEXT).should("not.exist");
+  });
+
+  it("clicking anywhere on gray screen does nothing", () => {
+    cy.root().click(100, 100);
+    cy.contains(DISCLAIMER_TEXT);
+  });
+});
+
+describe("storage area", () => {
+  beforeEach(() => {
+    cy.visit("http://localhost:3001");
+    cy.contains("Accept").click();
+    cy.contains(STORAGE_AREA_TITLE);
+  });
+
+  it("select box", () => {
+    cy.contains(BOX_FOUR_TITLE)
       .parent()
-      .find('input[type=checkbox]')
-      .check()
+      .find(".check-box")
+      .click();
+    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+    cy.contains(BOX_FOUR_TITLE);
+    cy.contains("Sterile gloves (Small)");
+  });
 
-    // Now that we've checked the button, we can go ahead and make sure
-    // that the list element is now marked as completed.
-    // Again we'll use `contains` to find the <label> element and then use the `parents` command
-    // to traverse multiple levels up the dom until we find the corresponding <li> element.
-    // Once we get that element, we can assert that it has the completed class.
-    cy.contains('Pay electric bill')
-      .parents('li')
-      .should('have.class', 'completed')
-  })
-})
+  it("navigated to items needed", () => {
+    cy.contains("Items needed").click();
+    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+    cy.contains("Items to replace");
+  });
+
+  it("reset boxes", () => {
+    fillBoxFour();
+    resetButton().click();
+    cy.contains("YES").click();
+    cy.contains("Items needed").click();
+    cy.contains(BOX_FOUR_TITLE);
+  });
+
+  it("cancel reset boxes", () => {
+    fillBoxFour()
+    resetButton().click();
+    cy.contains("Cancel").click();
+    cy.contains("Items needed").click();
+    cy.contains(BOX_FOUR_TITLE).should("not.exist");
+  });
+
+  it("clicking anywhere on gray screen does nothing", () => {
+    resetButton().click();
+    cy.contains("Reset");
+    cy.root().click(100, 100);
+    cy.contains("Reset");
+  });
+
+  function fillBoxFour() {
+    cy.contains(BOX_FOUR_TITLE)
+        .parent()
+        .find(".check-box")
+        .click();
+      cy.contains("FULL").click();
+      cy.contains("Items needed").click();
+      cy.contains(BOX_FOUR_TITLE).should("not.exist");
+      cy.get('[aria-label="Back"]').click()
+  }
+  
+  function resetButton() {
+    return cy.get('[aria-label="restart"]');
+  }
+});
+
+
