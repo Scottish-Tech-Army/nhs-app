@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemDetails rendered an item details page with size 1`] = `
+<div>
+  <div
+    class="item-details"
+  >
+    <header>
+      <button
+        aria-label="Back"
+        class="back"
+        type="button"
+      >
+        <svg>
+          arrow-left.svg
+        </svg>
+      </button>
+      <h1>
+        Item Details
+      </h1>
+    </header>
+    <main>
+      <img
+        alt=""
+        class="item-photo"
+        src="/items/standardsuture.jpg"
+      />
+      <h2
+        class="name"
+      >
+        Standard suture pack
+      </h2>
+      <dl
+        class="details"
+      >
+        <div
+          class="description"
+        >
+          <dt>
+            Description
+          </dt>
+          <dd>
+            Pack of equipment for suturing
+          </dd>
+        </div>
+        <div
+          class="size"
+        >
+          <dt>
+            Size
+          </dt>
+          <dd>
+            Standard
+          </dd>
+        </div>
+        <div
+          class="location"
+        >
+          <dt>
+            Location
+          </dt>
+          <dd>
+            Resus store XX
+          </dd>
+        </div>
+      </dl>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`ItemDetails rendered an item details page without size 1`] = `
+<div>
+  <div
+    class="item-details"
+  >
+    <header>
+      <button
+        aria-label="Back"
+        class="back"
+        type="button"
+      >
+        <svg>
+          arrow-left.svg
+        </svg>
+      </button>
+      <h1>
+        Item Details
+      </h1>
+    </header>
+    <main>
+      <img
+        alt=""
+        class="item-photo"
+        src="/items/chloraprep.jpg"
+      />
+      <h2
+        class="name"
+      >
+        ChloraPrep applicator
+      </h2>
+      <dl
+        class="details"
+      >
+        <div
+          class="description"
+        >
+          <dt>
+            Description
+          </dt>
+          <dd>
+            ChloraPrep applicator for cleaning skin for sterile procedure
+          </dd>
+        </div>
+        <div
+          class="size"
+        >
+          <dt>
+            Size
+          </dt>
+          <dd>
+            N/A
+          </dd>
+        </div>
+        <div
+          class="location"
+        >
+          <dt>
+            Location
+          </dt>
+          <dd>
+            Resus store XX
+          </dd>
+        </div>
+      </dl>
+    </main>
+  </div>
+</div>
+`;

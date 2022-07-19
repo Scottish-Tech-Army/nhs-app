@@ -5,6 +5,10 @@ const dynamodb = require("aws-cdk-lib/aws-dynamodb");
 const { NodejsFunction } = require("aws-cdk-lib/aws-lambda-nodejs");
 const lambda = require("aws-cdk-lib/aws-lambda");
 const apigateway = require("aws-cdk-lib/aws-apigateway");
+const { Bucket } = require("aws-cdk-lib/aws-s3");
+const cloudfront = require("aws-cdk-lib/aws-cloudfront");
+const origins = require("aws-cdk-lib/aws-cloudfront-origins");
+const s3deploy = require("aws-cdk-lib/aws-s3-deployment");
 
 const app = new cdk.App();
 const envStageName = app.node.tryGetContext("env");
@@ -16,13 +20,63 @@ if (!envStageName) {
   );
 }
 
-const stackId = "EmergencyInventory-Backend-" + envStageName;
-const resourcePrefix = "EmergencyInventory-" + envStageName;
+
+const frontendStackId = "STA-NHS-Inventory-Frontend-" + envStageName;
+
+// S3 has a global name restriction per region.
+// If someone grabs the default bucket name, change it here.
+const FRONTEND_BUCKET_NAME = frontendStackId;
+const FRONTEND_DISTRIBUTION_NAME = frontendStackId + "-Distribution";
+const FRONTEND_DEPLOY_NAME = frontendStackId + "-DeployWithInvalidation";
+
+
+class CdkFrontendStack extends cdk.Stack {
+
+  constructor(scope) {
+    super(scope, frontendStackId);
+
+    // S3 bucket to host web client files
+
+    const bucket = new Bucket(this, FRONTEND_BUCKET_NAME, {});
+
+    // CloudFront distribution for website
+
+    const distribution = new cloudfront.Distribution(
+      this,
+      FRONTEND_DISTRIBUTION_NAME,
+      {
+        defaultBehavior: {
+          origin: new origins.S3Origin(bucket),
+          allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+          viewerProtocolPolicy:
+            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        },
+        defaultRootObject: "index.html",
+      }
+    );
+
+    new s3deploy.BucketDeployment(this, FRONTEND_DEPLOY_NAME, {
+      sources: [s3deploy.Source.asset("../build")],
+      destinationBucket: bucket,
+      distribution,
+    });
+
+    new cdk.CfnOutput(this, frontendStackId + " URL", {
+      value: "https://" + distribution.domainName,
+      description: "External URL for " + frontendStackId + " website",
+    });
+  }
+}
+
+
+
+const backendStackId = "STA-NHS-Inventory-Backend-" + envStageName;
+const resourcePrefix = "STA-NHS-Inventory-" + envStageName;
 
 class CdkBackendStack extends cdk.Stack {
 
   constructor(scope) {
-    super(scope, stackId);
+    super(scope, backendStackId);
 
     // Common resources
     const stack = cdk.Stack.of(this);
@@ -104,5 +158,7 @@ class CdkBackendStack extends cdk.Stack {
   }
 }
 
+const frontendStack = new CdkFrontendStack(app);
 const backendStack = new CdkBackendStack(app);
+cdk.Tags.of(frontendStack).add("DeployEnvironment", envStageName);
 cdk.Tags.of(backendStack).add("DeployEnvironment", envStageName);
