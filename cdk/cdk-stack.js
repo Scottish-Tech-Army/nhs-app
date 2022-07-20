@@ -82,27 +82,17 @@ class CdkBackendStack extends cdk.Stack {
     const stack = cdk.Stack.of(this);
     const region = stack.region;
 
-    const RACKS_TABLE_NAME = resourcePrefix + "-Racks";
-    const CHECKS_TABLE_NAME = resourcePrefix + "-Checks";
+    const BOXES_TABLE_NAME = resourcePrefix + "-Boxes";
 
     // Database tables for locations and units
 
-    const racksTable = new dynamodb.Table(this, "Racks", {
-      tableName: RACKS_TABLE_NAME,
-      partitionKey: { name: "rackId", type: dynamodb.AttributeType.STRING },
+    const boxesTable = new dynamodb.Table(this, "Boxes", {
+      tableName: BOXES_TABLE_NAME,
+      partitionKey: { name: "boxTemplateId#boxId", type: dynamodb.AttributeType.STRING },
     });
-    new cdk.CfnOutput(this, "Racks table", {
-      value: racksTable.tableName,
-      description: "DynamoDB table containing rack contents",
-    });
-
-    const checksTable = new dynamodb.Table(this, "Checks", {
-      tableName: CHECKS_TABLE_NAME,
-      partitionKey: { name: "checkId", type: dynamodb.AttributeType.STRING },
-    });
-    new cdk.CfnOutput(this, "Checks table", {
-      value: checksTable.tableName,
-      description: "DynamoDB table containing box checks",
+    new cdk.CfnOutput(this, "Boxes table", {
+      value: boxesTable.tableName,
+      description: "DynamoDB table containing box contents",
     });
 
     // Lambda to process user API requests
@@ -113,8 +103,7 @@ class CdkBackendStack extends cdk.Stack {
       handler: "handler",
       environment: {
         REGION: region,
-        RACKS_TABLE_NAME,
-        CHECKS_TABLE_NAME
+        BOXES_TABLE_NAME,
       },
       timeout: cdk.Duration.seconds(30),
       commandHooks: {
@@ -124,8 +113,7 @@ class CdkBackendStack extends cdk.Stack {
       },
     });
 
-    racksTable.grant(inventoryLambda, "dynamodb:GetItem", "dynamodb:Scan");
-    checksTable.grant(inventoryLambda, "dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Scan");
+    boxesTable.grant(inventoryLambda, "dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Scan");
 
     // API gateway
 
@@ -148,8 +136,8 @@ class CdkBackendStack extends cdk.Stack {
       description: "API Gateway endpoint for Emergency Inventory API",
     });
 
-    // API GET /racks
-    const racksApiResource = restApi.root.addResource("racks");
+    // API GET /boxes
+    const racksApiResource = restApi.root.addResource("boxes");
     racksApiResource.addMethod("GET");
 
     // API POST /check
