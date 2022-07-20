@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BoxContents, StorageAreaContents } from "./StorageTypes";
+import { StorageAreaContents } from "./StorageTypes";
 import { RootState } from "./store";
 import { TRAUMA_TOWER_TEMPLATE } from "./TraumaTower";
 import localforage from "localforage";
 import { ThunkAction } from "redux-thunk";
 import { AnyAction } from "redux";
-import { current } from "immer";
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -42,25 +41,7 @@ export const boxContentsSlice = createSlice({
   name: "boxContents",
   initialState: createInitialState(),
   reducers: {
-    setBoxContents: (state, action) => {
-      const newBoxContents: BoxContents = action.payload;
-      const boxIndex = state.boxes.findIndex(
-        (box) =>
-          box.boxTemplateId === newBoxContents.boxTemplateId &&
-          box.boxNumber === newBoxContents.boxNumber
-      );
-
-      if (boxIndex > -1) {
-        state.boxes[boxIndex] = newBoxContents;
-        localforage.setItem("boxContents", current(state));
-      }
-    },
-    resetAllBoxContents: (state) => {
-      const newState = createInitialState();
-      localforage.setItem("boxContents", newState);
-      return newState;
-    },
-    setState: (state, action) => {
+    setState: (_state, action) => {
       const newState: StorageAreaContents = action.payload;
       return newState;
     },
@@ -82,25 +63,13 @@ export function refreshState(): AppThunk {
   };
 }
 
-export const { setBoxContents, resetAllBoxContents, setState } =
+export const {  setState } =
   boxContentsSlice.actions;
 
-export const getBoxContents = (
-  boxTemplateId: string | undefined,
-  boxNumberString: string | undefined
-) => {
-  let boxNumber = 0;
-  if (boxNumberString?.match(/^\d+$/)) {
-    boxNumber = Number.parseInt(boxNumberString);
-  }
 
-  return (state: RootState) => {
-    return state.boxContents.boxes.find(
-      (box) =>
-        box.boxTemplateId === boxTemplateId && box.boxNumber === boxNumber
-    );
-  };
-};
+
+// TODO implemetn
+export const getCurrentUser = () =>   (state: RootState) => "Bob";
 
 export const getAreaContents = (state: RootState) => state.boxContents;
 

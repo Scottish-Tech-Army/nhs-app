@@ -15,7 +15,7 @@ export type EIMissingBoxItem = {
 export type EIBoxInput = {
   checker: string;
   boxTemplateId: string;
-  boxId: string;
+  boxNumber: number;
   name: string;
   missingItems: EIMissingBoxItem[];
   isFull: boolean;
@@ -85,8 +85,8 @@ export const handler = async (
     if (!payload.boxTemplateId) {
       return errorResponse(400, "boxTemplateId missing");
     }
-    if (!payload.boxId) {
-      return errorResponse(400, "boxId missing");
+    if (payload.boxNumber === undefined) {
+      return errorResponse(400, "boxNumber missing");
     }
     if (!payload.checker) {
       return errorResponse(400, "checker missing");
@@ -101,7 +101,7 @@ export const handler = async (
 
     await addBox(box);
     console.log(
-      `Box ${box.name}, ${box.boxId} checked by ${box.checker} at ${box.checkTime}`
+      `Box ${box.name}, ${box.boxNumber} checked by ${box.checker} at ${box.checkTime}`
     );
 
     return { headers, statusCode: 200, body: "" };

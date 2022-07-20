@@ -4,8 +4,8 @@ const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
 const STORAGE_AREA_TITLE = "Trauma Tower";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
-const   LOCAL_HOST_PORT =  "http://localhost:3000"
-    
+const LOCAL_HOST_PORT = "http://localhost:3000";
+
 describe("disclaimer pop-up", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
@@ -31,10 +31,7 @@ describe("storage area", () => {
   });
 
   it("select box", () => {
-    cy.contains(BOX_FOUR_TITLE)
-      .parent()
-      .find(".check-box")
-      .click();
+    cy.contains(BOX_FOUR_TITLE).parent().find(".check-box").click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains(BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
@@ -45,44 +42,4 @@ describe("storage area", () => {
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("Items to replace");
   });
-
-  it("reset boxes", () => {
-    fillBoxFour();
-    resetButton().click();
-    cy.contains("YES").click();
-    cy.contains("Items needed").click();
-    cy.contains(BOX_FOUR_TITLE);
-  });
-
-  it("cancel reset boxes", () => {
-    fillBoxFour()
-    resetButton().click();
-    cy.contains("Cancel").click();
-    cy.contains("Items needed").click();
-    cy.contains(BOX_FOUR_TITLE).should("not.exist");
-  });
-
-  it("clicking anywhere on gray screen does nothing", () => {
-    resetButton().click();
-    cy.contains("Reset");
-    cy.root().click(100, 100);
-    cy.contains("Reset");
-  });
-
-  function fillBoxFour() {
-    cy.contains(BOX_FOUR_TITLE)
-        .parent()
-        .find(".check-box")
-        .click();
-      cy.contains("FULL").click();
-      cy.contains("Items needed").click();
-      cy.contains(BOX_FOUR_TITLE).should("not.exist");
-      cy.get('[aria-label="Back"]').click()
-  }
-  
-  function resetButton() {
-    return cy.get('[aria-label="restart"]');
-  }
 });
-
-

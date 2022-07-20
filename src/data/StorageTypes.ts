@@ -37,11 +37,22 @@ export type StorageAreaContents = {
   boxes: BoxContents[];
 };
 
-export type ItemShoppingList = ItemContents;
+export type EIMissingBoxItem = {
+  name: string;
+  size?: string;
+  quantity: number;
+};
 
-export type BoxShoppingList = {
+export type EIBoxInput = {
+  checker: string;
   boxTemplateId: string;
   boxNumber: number;
   name: string;
-  items: ItemShoppingList[];
+  missingItems: EIMissingBoxItem[];
+  isFull: boolean;
+};
+
+export type EIBox = EIBoxInput & {
+  checkId: string;
+  checkTime: string;
 };

@@ -88,7 +88,8 @@ class CdkBackendStack extends cdk.Stack {
 
     const boxesTable = new dynamodb.Table(this, "Boxes", {
       tableName: BOXES_TABLE_NAME,
-      partitionKey: { name: "boxTemplateId#boxId", type: dynamodb.AttributeType.STRING },
+      partitionKey: { name: "boxTemplateId", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "boxNumber", type: dynamodb.AttributeType.NUMBER },
     });
     new cdk.CfnOutput(this, "Boxes table", {
       value: boxesTable.tableName,

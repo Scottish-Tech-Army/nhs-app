@@ -296,20 +296,6 @@
   background-color: white;
 }
 
-.storage-area button.restart {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  right: 26px;
-  top: 26px;
-  border: 1px solid rgba(2, 91, 187, 0.2);
-  border-radius: 50%;
-  padding: 0;
-  margin: 0;
-  background-color: white;
-  color: #025bbb;
-}
-
 .box-details button.back {
   color: #025bbb;
 }

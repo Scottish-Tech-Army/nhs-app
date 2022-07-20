@@ -5,10 +5,14 @@ import {
   TRAUMA_TOWER_TEMPLATE,
 } from "./data/TraumaTower";
 import { useNavigate, useParams } from "react-router-dom";
-import { BoxTemplate, ItemTemplate } from "./data/StorageTypes";
-import { getBoxContents, setBoxContents } from "./data/BoxContentsSlice";
-import rfdc from "rfdc";
-import { useAppDispatch, useAppSelector } from "./data/store";
+import {
+  BoxTemplate,
+  EIBoxInput,
+  EIMissingBoxItem,
+  ItemTemplate,
+} from "./data/StorageTypes";
+import { getCurrentUser } from "./data/BoxContentsSlice";
+import { useAppSelector } from "./data/store";
 import "./App.css";
 import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
 import { ReactComponent as InfoCircle } from "./icons/info-circle.svg";
@@ -17,42 +21,99 @@ import { ReactComponent as Minus } from "./icons/minus.svg";
 
 // Icons vuesax linear. Licence: https://iconsax.io/#license
 
-const clone = rfdc();
+const CHECK_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}check`;
+
+function calculateMissingItem(
+  itemTemplate: ItemTemplate,
+  currentQuantity: number
+): EIMissingBoxItem | undefined {
+  const quantityToGet = (itemTemplate.quantity || 1) - currentQuantity;
+
+  return quantityToGet > 0
+    ? {
+        name: itemTemplate.name,
+        size: itemTemplate.size,
+        quantity: quantityToGet,
+      }
+    : undefined;
+}
+
+function calculateBoxMissingItems(
+  boxTemplate: BoxTemplate,
+  boxNumber: number,
+  itemCounts: number[],
+  currentUser: string
+): EIBoxInput {
+  const missingItems = boxTemplate?.items
+    .map((itemTemplate, index) =>
+      calculateMissingItem(itemTemplate, itemCounts[index])
+    )
+    .filter(Boolean) as EIMissingBoxItem[];
+
+  return {
+    boxTemplateId: boxTemplate.boxTemplateId,
+    boxNumber,
+    name: boxTemplate.name,
+    missingItems,
+    isFull: !missingItems.length,
+    checker: currentUser,
+  };
+}
 
 function Box() {
   let { boxTemplateId, boxId } = useParams();
   let navigate = useNavigate();
 
-  const boxContents = useAppSelector(getBoxContents(boxTemplateId, boxId));
-  const dispatch = useAppDispatch();
+  let boxNumber = 0;
+  if (boxId?.match(/^\d+$/)) {
+    boxNumber = Number.parseInt(boxId);
+  }
+
+  const currentUser = useAppSelector(getCurrentUser());
 
   const [boxTemplate, setBoxTemplate] = useState<BoxTemplate>();
   const [itemCounts, setItemCounts] = useState<number[]>();
 
   useEffect(() => {
-    if (boxContents) {
-      setBoxTemplate(
-        TRAUMA_TOWER_TEMPLATE.boxes.find(
-          (box) => box.boxTemplateId === boxContents.boxTemplateId
-        )
-      );
-
-      setItemCounts(boxContents.items.map((item) => item.quantity));
+    const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find(
+      (box) => box.boxTemplateId === boxTemplateId
+    );
+    if (boxTemplate) {
+      setBoxTemplate(boxTemplate);
+      setItemCounts(boxTemplate.items.map(() => 0));
     } else {
       setBoxTemplate(undefined);
       setItemCounts([]);
     }
-  }, [boxContents]);
+  }, [boxTemplateId, boxNumber]);
 
-  let handleSubmit = () => {
-    const newBoxContents = clone(boxContents)!;
-    itemCounts?.forEach(
-      (count, index) => (newBoxContents.items[index].quantity = count)
-    );
+  async function handleSubmit() {
+    await fetch(CHECK_API_ENDPONT, {
+      method: "POST",
+      body: JSON.stringify(
+        calculateBoxMissingItems(
+          boxTemplate!,
+          boxNumber,
+          itemCounts!,
+          currentUser
+        )
+      ),
+    }).then(({ status }) => status === 200 && navigate("/"));
+  }
 
-    dispatch(setBoxContents(newBoxContents));
-    navigate("/");
-  };
+  async function handleClickFull() {
+    await fetch(CHECK_API_ENDPONT, {
+      method: "POST",
+      body: JSON.stringify({
+        boxTemplateId: boxTemplate!.boxTemplateId,
+        boxNumber,
+        name: boxTemplate!.name,
+        missingItems: [],
+        isFull: true,
+        checker: currentUser,
+      }),
+    }).then(({ status }) => status === 200 && navigate("/"));
+  }
 
   function preventExtraClickEvents(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -131,14 +192,14 @@ function Box() {
     );
   }
 
-  if (!boxTemplate) {
+  if (!boxTemplate || boxNumber <= 0 || boxNumber > boxTemplate.count) {
     return null;
   }
 
   return (
     <div className="box-details">
       <header>
-        <h1>{getBoxName(boxTemplate!.name, boxContents!.boxNumber)}</h1>
+        <h1>{getBoxName(boxTemplate!.name, boxNumber)}</h1>
         <button
           type="button"
           className="back"
@@ -147,20 +208,7 @@ function Box() {
         >
           <ArrowLeft />
         </button>
-        <button
-          type="button"
-          className="full"
-          onClick={() => {
-            const newBoxContents = clone(boxContents)!;
-            boxTemplate.items.forEach(
-              ({ quantity }, index) =>
-                (newBoxContents.items[index].quantity = quantity || 1)
-            );
-
-            dispatch(setBoxContents(newBoxContents));
-            navigate("/");
-          }}
-        >
+        <button type="button" className="full" onClick={handleClickFull}>
           FULL
         </button>
       </header>

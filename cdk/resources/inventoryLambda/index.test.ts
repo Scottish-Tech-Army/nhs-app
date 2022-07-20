@@ -14,7 +14,7 @@ const INPUT_BOXES: EIBoxInput[] = [
   {
     name: "Trauma Chest Drain",
     boxTemplateId: "0",
-    boxId: "2",
+    boxNumber: 2,
     missingItems: [
       {
         name: "Sterile gloves",
@@ -41,7 +41,7 @@ const INPUT_BOXES: EIBoxInput[] = [
   {
     name: "Trauma Chest Drain",
     boxTemplateId: "0",
-    boxId: "4",
+    boxNumber: 4,
     missingItems: [],
     isFull: true,
     checker: "Bob",
@@ -50,7 +50,7 @@ const INPUT_BOXES: EIBoxInput[] = [
 
 const BOXES: EIBox[] = [
   {
-    boxId: "2",
+    boxNumber: 2,
     boxTemplateId: "0",
     checkId: UUID,
     checkTime: TIMESTAMP,
@@ -79,7 +79,7 @@ const BOXES: EIBox[] = [
     name: "Trauma Chest Drain",
   },
   {
-    boxId: "4",
+    boxNumber: 4,
     boxTemplateId: "0",
     checkId: UUID,
     checkTime: TIMESTAMP,
@@ -93,7 +93,7 @@ const BOXES: EIBox[] = [
 
 const DYNAMO_BOXES = [
   {
-    boxId: { S: "2" },
+    boxNumber: { N: "2" },
     boxTemplateId: { S: "0" },
     checkId: { S: "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5" },
     checkTime: { S: "2022-06-23T09:18:06.324Z" },
@@ -123,7 +123,7 @@ const DYNAMO_BOXES = [
   },
 
   {
-    boxId: { S: "4" },
+    boxNumber: { N: "4" },
     boxTemplateId: { S: "0" },
     checkId: { S: "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5" },
     checkTime: { S: "2022-06-23T09:18:06.324Z" },
@@ -239,7 +239,7 @@ describe("api call POST /check", () => {
   it("failure response on missing input boxTemplateId", async () => {
     const input = {
       name: "Trauma Chest Drain",
-      boxId: "4",
+      boxNumber: 4,
       missingItems: [],
       isFull: true,
       checker: "Bob",
@@ -262,7 +262,7 @@ describe("api call POST /check", () => {
     );
   });
 
-  it("failure response on missing input boxId", async () => {
+  it("failure response on missing input boxNumber", async () => {
     const input = {
       name: "Trauma Chest Drain",
       boxTemplateId: "0",
@@ -279,7 +279,7 @@ describe("api call POST /check", () => {
     expect(result.statusCode).toEqual(400);
     expect(result.body).toEqual(
       JSON.stringify({
-        message: "boxId missing",
+        message: "boxNumber missing",
         request: {
           body: JSON.stringify(input),
           resource: "/check",
@@ -292,7 +292,7 @@ describe("api call POST /check", () => {
     const input = {
       name: "Trauma Chest Drain",
       boxTemplateId: "0",
-      boxId: "4",
+      boxNumber: 4,
       missingItems: [],
       isFull: true,
     };

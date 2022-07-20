@@ -1,200 +1,84 @@
 /* eslint-disable testing-library/no-node-access */
 import React from "react";
 
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 
 import ShoppingList from "./ShoppingList";
 import { renderWithProvider } from "./testUtils";
-import {
-  ALL_CONTENTS,
-  EMPTY_CONTENTS,
-  PARTIAL_CONTENTS,
-  ZERO_CONTENTS,
-} from "./testData";
-import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
+import { EIBox } from "./data/StorageTypes";
+
+const TIMESTAMP = "2022-06-23T09:18:06.324Z";
+const UUID = "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5";
+
+const BOXES: EIBox[] = [
+  {
+    boxNumber: 2,
+    boxTemplateId: "0",
+    checkId: UUID,
+    checkTime: TIMESTAMP,
+    checker: "Bob",
+    isFull: false,
+    missingItems: [
+      { name: "Sterile gloves", quantity: 1, size: "Medium" },
+      { name: "ChloraPrep applicator", quantity: 1 },
+      { name: "Lidocaine 1%", quantity: 2, size: "5ml / 50mg" },
+      { name: "Chest drain bottle", quantity: 1 },
+    ],
+    name: "Trauma Chest Drain",
+  },
+  {
+    boxNumber: 4,
+    boxTemplateId: "0",
+    checkId: UUID,
+    checkTime: TIMESTAMP,
+    checker: "Bob",
+    isFull: true,
+    missingItems: [],
+    name: "Trauma Chest Drain",
+  },
+];
 
 describe("ShoppingList", () => {
-  const EXPECTED_ALL_ITEMS: string[] = [
-    "1 x Blunt dissection chest drainage insertion pack (28Fg)",
-    "1 x Sterile gloves (Small)",
-    "1 x Sterile gloves (Medium)",
-    "1 x Sterile gloves (Large)",
-    "1 x Chest drain catheter (28Fr)",
-    "1 x Chest drain catheter (32Fr)",
-    "1 x Chest drain catheter (36Fr)",
-    "2 x ChloraPrep applicator",
-    "2 x Lidocaine 1% (5ml / 50mg)",
-    "1 x Standard suture pack (Standard)",
-    "1 x Mefix roll (5cm x 10m)",
-    "1 x Chest drain bottle",
-    "1 x Chest drain tubing",
-    "1 x Sterile water (H20) bottle (1000ml bottle)",
-    "1 x Spencer wells forceps (Straight 20cm)",
-  ];
-  it("rendered a shopping list page for empty store - ie all items shown", async () => {
-    renderWithProvider(<ShoppingList />, {
-      preloadedState: { boxContents: EMPTY_CONTENTS },
-    });
-
-    expect(screen.getByText("Items to replace")).toBeDefined();
-
-    checkShoppingList([
-      {
-        name: "Trauma Chest Drain - Box 1",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 2",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 3",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 4",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 5",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 6",
-        items: EXPECTED_ALL_ITEMS,
-      },
-    ]);
-  });
-
-  it("rendered a shopping list page for zero quantity items store - ie all items shown", async () => {
-    renderWithProvider(<ShoppingList />, {
-      preloadedState: { boxContents: ZERO_CONTENTS },
-    });
-
-    expect(screen.getByText("Items to replace")).toBeDefined();
-
-    checkShoppingList([
-      {
-        name: "Trauma Chest Drain - Box 1",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 2",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 3",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 4",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 5",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 6",
-        items: EXPECTED_ALL_ITEMS,
-      },
-    ]);
-  });
-
   it("rendered a shopping list page for filled store - ie no items shown", async () => {
-    renderWithProvider(<ShoppingList />, {
-      preloadedState: { boxContents: ALL_CONTENTS },
-    });
+    fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
+
+    renderWithProvider(<ShoppingList />);
 
     expect(screen.getByText("Items to replace")).toBeDefined();
 
     expect(screen.getByText("Nothing to replace")).toBeDefined();
 
-    checkShoppingList([]);
+    await checkShoppingList([]);
   });
 
   it("rendered a shopping list page for partially filled store - ie some items shown", async () => {
-    renderWithProvider(<ShoppingList />, {
-      preloadedState: { boxContents: PARTIAL_CONTENTS },
-    });
+    fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
+
+    renderWithProvider(<ShoppingList />);
 
     expect(screen.getByText("Items to replace")).toBeDefined();
 
-    checkShoppingList([
-      {
-        name: "Trauma Chest Drain - Box 3",
-        items: [
-          "1 x Sterile gloves (Medium)",
-          "1 x Sterile gloves (Large)",
-          "1 x Chest drain catheter (28Fr)",
-          "1 x Chest drain catheter (32Fr)",
-          "2 x ChloraPrep applicator",
-          "1 x Lidocaine 1% (5ml / 50mg)",
-          "1 x Chest drain bottle",
-          "1 x Chest drain tubing",
-          "1 x Sterile water (H20) bottle (1000ml bottle)",
-        ],
-      },
-      {
-        name: "Trauma Chest Drain - Box 4",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 5",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 6",
-        items: EXPECTED_ALL_ITEMS,
-      },
-    ]);
-  });
-
-  it("rendered a shopping list page for an incomplete store - ie no boxes in store", async () => {
-    renderWithProvider(<ShoppingList />, {
-      preloadedState: {
-        boxContents: {
-          storageAreaId: TRAUMA_TOWER_TEMPLATE.storageAreaId,
-          boxes: [],
-        },
-      },
-    });
-
-    expect(screen.getByText("Items to replace")).toBeDefined();
-
-    checkShoppingList([
-      {
-        name: "Trauma Chest Drain - Box 1",
-        items: EXPECTED_ALL_ITEMS,
-      },
+    await checkShoppingList([
       {
         name: "Trauma Chest Drain - Box 2",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 3",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 4",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 5",
-        items: EXPECTED_ALL_ITEMS,
-      },
-      {
-        name: "Trauma Chest Drain - Box 6",
-        items: EXPECTED_ALL_ITEMS,
+        items: [
+          "1 x Sterile gloves (Medium)",
+          "1 x ChloraPrep applicator",
+          "2 x Lidocaine 1% (5ml / 50mg)",
+          "1 x Chest drain bottle",
+        ],
       },
     ]);
   });
 
-  it("renders correctly", () => {
-    const { container } = renderWithProvider(<ShoppingList />, {
-      preloadedState: { boxContents: PARTIAL_CONTENTS },
-    });
+  it("renders correctly", async () => {
+    fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
 
+    const { container } = renderWithProvider(<ShoppingList />);
+
+    await waitFor(() =>
+      expect(document.querySelectorAll("div.box")!).toHaveLength(1)
+    );
     expect(container).toMatchSnapshot();
   });
 
@@ -215,19 +99,21 @@ describe("ShoppingList", () => {
     items: string[];
   };
 
-  function checkShoppingList(expectedBoxes: ExpectedBoxContents[]) {
-    const actualBoxes = document.querySelectorAll("div.box")!;
+  async function checkShoppingList(expectedBoxes: ExpectedBoxContents[]) {
+    await waitFor(() => {
+      const actualBoxes = document.querySelectorAll("div.box")!;
 
-    expect(actualBoxes).toHaveLength(expectedBoxes.length);
-    actualBoxes.forEach((actualBox, index) => {
-      const expectedBox = expectedBoxes[index];
-      expect(actualBox).toHaveTextContent(expectedBox.name);
+      expect(actualBoxes).toHaveLength(expectedBoxes.length);
+      actualBoxes.forEach((actualBox, index) => {
+        const expectedBox = expectedBoxes[index];
+        expect(actualBox).toHaveTextContent(expectedBox.name);
 
-      const actualItems = actualBox.querySelectorAll("div.item")!;
-      expect(actualItems).toHaveLength(expectedBox.items.length);
-      actualItems.forEach((actualItem, index) => {
-        const expectedItem = expectedBox.items[index];
-        expect(actualItem).toHaveTextContent(expectedItem);
+        const actualItems = actualBox.querySelectorAll("div.item")!;
+        expect(actualItems).toHaveLength(expectedBox.items.length);
+        actualItems.forEach((actualItem, index) => {
+          const expectedItem = expectedBox.items[index];
+          expect(actualItem).toHaveTextContent(expectedItem);
+        });
       });
     });
   }
