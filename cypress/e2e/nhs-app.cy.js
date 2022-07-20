@@ -4,10 +4,11 @@ const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
 const STORAGE_AREA_TITLE = "Trauma Tower";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
-
+// const   LOAD_PAGE =  cy.visit("http://localhost:3000");
+    
 describe("disclaimer pop-up", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3001");
+    cy.visit("http://localhost:3000");
     cy.contains(DISCLAIMER_TEXT);
   });
 
@@ -24,7 +25,7 @@ describe("disclaimer pop-up", () => {
 
 describe("storage area", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3001");
+    cy.visit("http://localhost:3002");
     cy.contains("Accept").click();
     cy.contains(STORAGE_AREA_TITLE);
   });
