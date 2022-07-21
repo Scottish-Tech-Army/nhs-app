@@ -20,9 +20,11 @@ describe("App", () => {
     const { user } = renderWithProvider(<App />);
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(screen.getByRole("link", { name: "Items needed" }));
+    await user.click(screen.getByRole("link", { name: "Summary" }));
 
-    expect(screen.getByText("Items to replace")).toBeDefined();
+    expect(screen.queryByText("Trauma Tower")).toBeNull();
+    expect(screen.getByText("Summary")).toBeDefined();
+
   });
 
   it("renders box view", async () => {

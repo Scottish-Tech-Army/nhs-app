@@ -126,10 +126,10 @@ exports[`StorageArea renders correctly 1`] = `
     </main>
     <footer>
       <a
-        class="needed"
-        href="/needed"
+        class="summary"
+        href="/summary"
       >
-        Items needed
+        Summary
       </a>
     </footer>
   </div>

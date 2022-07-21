@@ -37,9 +37,13 @@ describe("storage area", () => {
     cy.contains("Sterile gloves (Small)");
   });
 
-  it("navigated to items needed", () => {
-    cy.contains("Items needed").click();
+  it("navigated to summary", () => {
+    cy.contains("Summary").click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-    cy.contains("Items to replace");
+    cy.contains("h1", "Summary");
   });
 });
+
+/* describe("", () => {
+
+}); */

@@ -58,7 +58,7 @@ function ShoppingList() {
         >
           <ArrowLeft />
         </button>
-        <h1>Items to replace</h1>
+        <h1>Summary</h1>
       </header>
       <main>
         {boxes.length ? (

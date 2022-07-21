@@ -43,8 +43,8 @@ function StorageArea() {
         </div>
       </main>
       <footer>
-        <Link to={"/needed"} className="needed">
-          Items needed
+        <Link to={"/summary"} className="summary">
+          Summary
         </Link>
       </footer>
     </div>

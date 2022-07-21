@@ -245,7 +245,7 @@
   align-items: center;
 }
 
-.storage-area footer a.needed,
+.storage-area footer a.summary,
 .box-details footer button.save {
   margin-left: 24px;
   margin-right: 24px;
@@ -260,7 +260,7 @@
   line-height: 16px;
 }
 
-.storage-area footer a.needed {
+.storage-area footer a.summary {
   text-decoration: none;
   text-align: center;
   padding-top: 20px;

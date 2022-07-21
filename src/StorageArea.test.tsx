@@ -26,9 +26,9 @@ describe("StorageArea", () => {
       "Trauma Chest Drain - Box 6",
     ]);
 
-    const neededLink = await screen.findByRole("link");
-    expect(neededLink).toHaveAttribute("href", "/needed");
-    expect(neededLink).toHaveTextContent("Items needed");
+    const summaryLink = await screen.findByRole("link");
+    expect(summaryLink).toHaveAttribute("href", "/summary");
+    expect(summaryLink).toHaveTextContent("Summary");
   });
 
   it("renders correctly", () => {
@@ -51,4 +51,5 @@ describe("StorageArea", () => {
 
     expect(history.location.pathname).toEqual("/box/0/4");
   });
+
 });

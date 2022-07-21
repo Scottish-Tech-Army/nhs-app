@@ -44,7 +44,7 @@ describe("ShoppingList", () => {
 
     renderWithProvider(<ShoppingList />);
 
-    expect(screen.getByText("Items to replace")).toBeDefined();
+    expect(screen.getByText("Summary")).toBeDefined();
 
     expect(screen.getByText("Nothing to replace")).toBeDefined();
 
@@ -56,7 +56,7 @@ describe("ShoppingList", () => {
 
     renderWithProvider(<ShoppingList />);
 
-    expect(screen.getByText("Items to replace")).toBeDefined();
+    expect(screen.getByText("Summary")).toBeDefined();
 
     await checkShoppingList([
       {

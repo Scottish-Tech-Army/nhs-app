@@ -16,7 +16,7 @@ exports[`ShoppingList renders correctly 1`] = `
         </svg>
       </button>
       <h1>
-        Items to replace
+        Summary
       </h1>
     </header>
     <main>
