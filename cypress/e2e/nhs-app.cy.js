@@ -44,6 +44,52 @@ describe("storage area", () => {
   });
 });
 
-/* describe("", () => {
+describe("summary", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    cy.contains(STORAGE_AREA_TITLE);
+    markAllBoxesFull();
+  });
 
-}); */
+  it("empty summary page", () => {
+    cy.contains("Summary").click();
+    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+    cy.contains("h1", "Summary");
+
+    cy.contains("No Items");
+  });
+
+  it("populated summary page", () => {
+     markAllBoxesFull();
+
+     cy.contains(BOX_FOUR_TITLE).parent().find(".check-box").click();
+     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+     cy.contains(BOX_FOUR_TITLE);
+     cy.contains("Sterile gloves (Small)");
+     cy.contains("Save").click();
+
+     cy.contains(BOX_TWO_TITLE).parent().find(".check-box").click();
+     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+     cy.contains(BOX_TWO_TITLE);
+     cy.contains("Sterile gloves (Small)").parent().find('.controls > [aria-label="add item"]').click();
+     cy.contains("Sterile gloves (Medium)").parent().find('.controls > [aria-label="add item"]').click();
+     cy.contains("Sterile gloves (Large)").parent().find('.controls > [aria-label="add item"]').click();
+     cy.contains("Save").click();
+
+
+     cy.contains("Summary").click();
+     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+     cy.contains("h1", "Summary");
+ 
+ 
+     cy.contains(BOX_FOUR_TITLE).parent().find("1 x Sterile gloves (Small)");
+     cy.contains(BOX_FOUR_TITLE).parent().find("1 x Sterile gloves (Medium)");
+     cy.contains(BOX_FOUR_TITLE).parent().find("1 x Sterile gloves (Large)");
+    });
+
+  function markAllBoxesFull() {
+
+
+  }
+});
