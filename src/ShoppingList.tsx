@@ -15,11 +15,16 @@ const BOXES_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}boxes`
 
 function ShoppingList() {
   const [boxes, setBoxes] = useState<EIBox[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const partiallyFullBoxes = boxes.filter((box) => !box.isFull);
 
   useEffect(() => {
     fetch(BOXES_API_ENDPONT)
       .then((response) => response.json())
-      .then(setBoxes)
+      .then((data) => {
+        setBoxes(data);
+        setLoading(false);
+      })
       .catch((error) => {
         console.error(error);
         setBoxes([]);
@@ -46,7 +51,6 @@ function ShoppingList() {
       </div>
     );
   }
-
   return (
     <div className="shopping-list">
       <header>
@@ -61,12 +65,14 @@ function ShoppingList() {
         <h1>Summary</h1>
       </header>
       <main>
-        {boxes.length ? (
+        {loading ? (
+          <div>Fetching Items</div>
+        ) : partiallyFullBoxes.length ? (
           <div className="scroll">
-            {boxes.filter((box) => !box.isFull).map(getBoxShoppingList)}
+            {partiallyFullBoxes.map(getBoxShoppingList)}
           </div>
         ) : (
-          <div className="nothing-to-replace">Nothing to replace</div>
+          <div className="nothing-to-replace">No Items</div>
         )}
       </main>
     </div>

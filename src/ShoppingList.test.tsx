@@ -6,6 +6,7 @@ import { screen, waitFor } from "@testing-library/react";
 import ShoppingList from "./ShoppingList";
 import { renderWithProvider } from "./testUtils";
 import { EIBox } from "./data/StorageTypes";
+import {TEST_INVENTORY_API_ENDPOINT} from './setupTests';
 
 const TIMESTAMP = "2022-06-23T09:18:06.324Z";
 const UUID = "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5";
@@ -39,14 +40,57 @@ const BOXES: EIBox[] = [
 ];
 
 describe("ShoppingList", () => {
-  it("rendered a shopping list page for filled store - ie no items shown", async () => {
+  it("rendered a shopping list page for filled store - no boxes recorded", async () => {
     fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
 
     renderWithProvider(<ShoppingList />);
 
     expect(screen.getByText("Summary")).toBeDefined();
 
-    expect(screen.getByText("Nothing to replace")).toBeDefined();
+    await waitFor(() => expect(screen.getByText("No Items")).toBeDefined());
+
+    await checkShoppingList([]);
+  });
+
+  it("rendered a shopping list page - loading", async () => {
+    fetchMock.mockResponse('', { status: 500 });
+
+    renderWithProvider(<ShoppingList />);
+
+    expect(screen.getByText("Summary")).toBeDefined();
+
+    expect(screen.getByText("Fetching Items")).toBeDefined();
+
+    await checkShoppingList([]);
+  });
+
+  it("rendered a shopping list and all boxes full", async () => {
+    fetchMock.mockResponse(JSON.stringify([{
+      boxNumber: 4,
+      boxTemplateId: "0",
+      checkId: UUID,
+      checkTime: TIMESTAMP,
+      checker: "Bob",
+      isFull: true,
+      missingItems: [],
+      name: "Trauma Chest Drain",
+    },{
+      boxNumber: 5,
+      boxTemplateId: "0",
+      checkId: UUID,
+      checkTime: TIMESTAMP,
+      checker: "Bob",
+      isFull: true,
+      missingItems: [],
+      name: "Trauma Chest Drain",
+    },]), { status: 200 });
+
+    renderWithProvider(<ShoppingList />);
+    await waitFor(() => expect(fetchMock).toBeCalledTimes(1))
+    expect(fetchMock).toBeCalledWith(TEST_INVENTORY_API_ENDPOINT + "boxes");
+
+    expect(screen.getByText("Summary")).toBeDefined();
+    await waitFor(() => expect(screen.getByText("No Items")).toBeDefined());
 
     await checkShoppingList([]);
   });

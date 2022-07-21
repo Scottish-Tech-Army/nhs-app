@@ -103,6 +103,7 @@ describe("summary", () => {
       .parent()
       .parent()
       .within(() => {
+        cy.contains("Checked by bob at 10:00 on 1/1/21");
         cy.contains("1 x Sterile gloves (Small)");
         cy.contains("1 x Sterile gloves (Medium)");
         cy.contains("1 x Sterile gloves (Large)");
@@ -112,6 +113,7 @@ describe("summary", () => {
       .parent()
       .parent()
       .within(() => {
+        cy.contains("Checked by bob at 10:00 on 1/1/21");
         cy.contains("1 x Sterile gloves (Small)").should("not.exist");
         cy.contains("1 x Sterile gloves (Medium)").should("not.exist");
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
