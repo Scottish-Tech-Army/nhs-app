@@ -146,12 +146,12 @@ describe("ShoppingList", () => {
   async function checkShoppingList(expectedBoxes: ExpectedBoxContents[]) {
     await waitFor(() => {
       const actualBoxes = document.querySelectorAll("div.box")!;
-
+      
       expect(actualBoxes).toHaveLength(expectedBoxes.length);
       actualBoxes.forEach((actualBox, index) => {
         const expectedBox = expectedBoxes[index];
         expect(actualBox).toHaveTextContent(expectedBox.name);
-
+        const checkNameAndDate = expect(actualBox).toHaveTextContent(expectedBox.name);
         const actualItems = actualBox.querySelectorAll("div.item")!;
         expect(actualItems).toHaveLength(expectedBox.items.length);
         actualItems.forEach((actualItem, index) => {
