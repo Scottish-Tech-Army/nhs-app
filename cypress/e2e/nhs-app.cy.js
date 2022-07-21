@@ -4,9 +4,16 @@ const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
 const STORAGE_AREA_TITLE = "Trauma Tower";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
-const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2"
+const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
 const LOCAL_HOST_PORT = "http://localhost:3000";
-const BOX_TITLES = ["Trauma Chest Drain - Box 1", "Trauma Chest Drain - Box 2", "Trauma Chest Drain - Box 3", "Trauma Chest Drain - Box 4", "Trauma Chest Drain - Box 5", "Trauma Chest Drain - Box 6"];
+const BOX_TITLES = [
+  "Trauma Chest Drain - Box 1",
+  "Trauma Chest Drain - Box 2",
+  "Trauma Chest Drain - Box 3",
+  "Trauma Chest Drain - Box 4",
+  "Trauma Chest Drain - Box 5",
+  "Trauma Chest Drain - Box 6",
+];
 
 describe("disclaimer pop-up", () => {
   beforeEach(() => {
@@ -92,24 +99,31 @@ describe("summary", () => {
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
 
-    cy.contains(BOX_FOUR_TITLE).parent().parent().find("1 x Sterile gloves (Small)");
-    cy.contains(BOX_FOUR_TITLE).parent().parent().find("1 x Sterile gloves (Medium)");
-    cy.contains(BOX_FOUR_TITLE).parent().parent().find("1 x Sterile gloves (Large)");
+    cy.contains(BOX_FOUR_TITLE)
+      .parent()
+      .parent()
+      .within(() => {
+        cy.contains("1 x Sterile gloves (Small)");
+        cy.contains("1 x Sterile gloves (Medium)");
+        cy.contains("1 x Sterile gloves (Large)");
+      });
 
-    cy.contains(BOX_TWO_TITLE).parent().parent().within
-      .find("1 x Sterile gloves (Small)").should("not.exist");
-    cy.contains(BOX_TWO_TITLE).parent().parent().find("1 x Sterile gloves (Medium)").should("not.exist");
-    cy.contains(BOX_TWO_TITLE).parent().parent().find("1 x Sterile gloves (Large)").should("not.exist");
+    cy.contains(BOX_TWO_TITLE)
+      .parent()
+      .parent()
+      .within(() => {
+        cy.contains("1 x Sterile gloves (Small)").should("not.exist");
+        cy.contains("1 x Sterile gloves (Medium)").should("not.exist");
+        cy.contains("1 x Sterile gloves (Large)").should("not.exist");
+      });
   });
 
   function markAllBoxesFull() {
-
-    BOX_TITLES.forEach(title => {
+    BOX_TITLES.forEach((title) => {
       cy.contains(title).parent().find(".check-box").click();
       cy.contains(STORAGE_AREA_TITLE).should("not.exist");
       cy.contains(title);
-      cy.contains('FULL').click();
+      cy.contains("FULL").click();
     });
   }
-
 });
