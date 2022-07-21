@@ -30,6 +30,11 @@ exports[`ShoppingList renders correctly 1`] = `
             <h2>
               Trauma Chest Drain - Box 2
             </h2>
+            <div
+              class="checker"
+            >
+              Checked by Bob on Thu 23/6/2022 at 10:18
+            </div>
           </div>
           <div
             class="items"

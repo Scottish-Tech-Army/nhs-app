@@ -1,3 +1,4 @@
+import { format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAreaContents } from "./data/BoxContentsSlice";
@@ -34,11 +35,17 @@ function ShoppingList() {
   useAppSelector(getAreaContents);
   let navigate = useNavigate();
 
+  function getDisplayTime(isoDateTime: string) {
+    const timestamp = parseISO(isoDateTime)
+    return format(timestamp, "EEE d/M/yyyy 'at' HH:mm")
+  }
+
   function getBoxShoppingList(box: EIBox, index: number) {
     return (
       <div key={index} className="box">
         <div>
-          <h2>{`${box.name} - Box ${box.boxNumber}`}</h2>
+        <h2>{`${box.name} - Box ${box.boxNumber}`}</h2>
+        <div className="checker">{`Checked by ${box.checker} on ${getDisplayTime(box.checkTime)}`}</div>
         </div>
 
         <div className="items">

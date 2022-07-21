@@ -6,9 +6,11 @@ import { screen, waitFor } from "@testing-library/react";
 import ShoppingList from "./ShoppingList";
 import { renderWithProvider } from "./testUtils";
 import { EIBox } from "./data/StorageTypes";
-import {TEST_INVENTORY_API_ENDPOINT} from './setupTests';
+import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
 
 const TIMESTAMP = "2022-06-23T09:18:06.324Z";
+const DISPLAY_TIMESTAMP = "Thu 23/6/2022 at 10:18";
+
 const UUID = "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5";
 
 const BOXES: EIBox[] = [
@@ -53,7 +55,7 @@ describe("ShoppingList", () => {
   });
 
   it("rendered a shopping list page - loading", async () => {
-    fetchMock.mockResponse('', { status: 500 });
+    fetchMock.mockResponse("", { status: 500 });
 
     renderWithProvider(<ShoppingList />);
 
@@ -65,28 +67,34 @@ describe("ShoppingList", () => {
   });
 
   it("rendered a shopping list and all boxes full", async () => {
-    fetchMock.mockResponse(JSON.stringify([{
-      boxNumber: 4,
-      boxTemplateId: "0",
-      checkId: UUID,
-      checkTime: TIMESTAMP,
-      checker: "Bob",
-      isFull: true,
-      missingItems: [],
-      name: "Trauma Chest Drain",
-    },{
-      boxNumber: 5,
-      boxTemplateId: "0",
-      checkId: UUID,
-      checkTime: TIMESTAMP,
-      checker: "Bob",
-      isFull: true,
-      missingItems: [],
-      name: "Trauma Chest Drain",
-    },]), { status: 200 });
+    fetchMock.mockResponse(
+      JSON.stringify([
+        {
+          boxNumber: 4,
+          boxTemplateId: "0",
+          checkId: UUID,
+          checkTime: TIMESTAMP,
+          checker: "Bob",
+          isFull: true,
+          missingItems: [],
+          name: "Trauma Chest Drain",
+        },
+        {
+          boxNumber: 5,
+          boxTemplateId: "0",
+          checkId: UUID,
+          checkTime: TIMESTAMP,
+          checker: "Bob",
+          isFull: true,
+          missingItems: [],
+          name: "Trauma Chest Drain",
+        },
+      ]),
+      { status: 200 }
+    );
 
     renderWithProvider(<ShoppingList />);
-    await waitFor(() => expect(fetchMock).toBeCalledTimes(1))
+    await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
     expect(fetchMock).toBeCalledWith(TEST_INVENTORY_API_ENDPOINT + "boxes");
 
     expect(screen.getByText("Summary")).toBeDefined();
@@ -105,6 +113,7 @@ describe("ShoppingList", () => {
     await checkShoppingList([
       {
         name: "Trauma Chest Drain - Box 2",
+        checkNameAndDate: `Checked by Bob on ${DISPLAY_TIMESTAMP}`,
         items: [
           "1 x Sterile gloves (Medium)",
           "1 x ChloraPrep applicator",
@@ -140,18 +149,20 @@ describe("ShoppingList", () => {
 
   type ExpectedBoxContents = {
     name: string;
+    checkNameAndDate: string;
     items: string[];
   };
 
   async function checkShoppingList(expectedBoxes: ExpectedBoxContents[]) {
     await waitFor(() => {
       const actualBoxes = document.querySelectorAll("div.box")!;
-      
+
       expect(actualBoxes).toHaveLength(expectedBoxes.length);
       actualBoxes.forEach((actualBox, index) => {
         const expectedBox = expectedBoxes[index];
         expect(actualBox).toHaveTextContent(expectedBox.name);
-        const checkNameAndDate = expect(actualBox).toHaveTextContent(expectedBox.name);
+        expect(actualBox).toHaveTextContent(expectedBox.checkNameAndDate);
+
         const actualItems = actualBox.querySelectorAll("div.item")!;
         expect(actualItems).toHaveLength(expectedBox.items.length);
         actualItems.forEach((actualItem, index) => {

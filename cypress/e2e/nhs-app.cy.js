@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+const { format } = require("date-fns");
+
 const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
 const STORAGE_AREA_TITLE = "Trauma Tower";
@@ -95,6 +97,8 @@ describe("summary", () => {
       .click();
     cy.contains("Save").click();
 
+    const checkerString = `Checked by Bob on ${format(Date.now(), "EEE d/M/yyyy 'at' HH:")}`
+
     cy.contains("Summary").click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
@@ -103,7 +107,7 @@ describe("summary", () => {
       .parent()
       .parent()
       .within(() => {
-        cy.contains("Checked by bob at 10:00 on 1/1/21");
+        cy.contains(checkerString);
         cy.contains("1 x Sterile gloves (Small)");
         cy.contains("1 x Sterile gloves (Medium)");
         cy.contains("1 x Sterile gloves (Large)");
@@ -113,7 +117,7 @@ describe("summary", () => {
       .parent()
       .parent()
       .within(() => {
-        cy.contains("Checked by bob at 10:00 on 1/1/21");
+        cy.contains(checkerString);
         cy.contains("1 x Sterile gloves (Small)").should("not.exist");
         cy.contains("1 x Sterile gloves (Medium)").should("not.exist");
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
