@@ -4,7 +4,6 @@ import StorageArea from "./StorageArea";
 import "@testing-library/jest-dom";
 import React from "react";
 import { renderWithProvider } from "./testUtils";
-import { PARTIAL_CONTENTS, ZERO_CONTENTS } from "./testData";
 
 describe("StorageArea", () => {
   it("renders a home page", async () => {
@@ -12,24 +11,20 @@ describe("StorageArea", () => {
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
 
-    const boxButtons = await screen.findAllByRole("button", {
-      name: "check box",
-    });
-
-    expect(
-      boxButtons.map((boxButton) => boxButton.nextSibling!.textContent)
-    ).toEqual([
+    [
       "Trauma Chest Drain - Box 1",
       "Trauma Chest Drain - Box 2",
       "Trauma Chest Drain - Box 3",
       "Trauma Chest Drain - Box 4",
       "Trauma Chest Drain - Box 5",
       "Trauma Chest Drain - Box 6",
-    ]);
+    ].forEach((title) => {
+      expect(screen.getByText(title)).toBeDefined();
+    });
 
-    const neededLink = await screen.findByRole("link");
-    expect(neededLink).toHaveAttribute("href", "/needed");
-    expect(neededLink).toHaveTextContent("Items needed");
+    const summaryLink = await screen.findByRole("link");
+    expect(summaryLink).toHaveAttribute("href", "/summary");
+    expect(summaryLink).toHaveTextContent("Summary");
   });
 
   it("renders correctly", () => {
@@ -44,45 +39,10 @@ describe("StorageArea", () => {
     expect(screen.getByText("Trauma Tower")).toBeDefined();
     expect(history.location.pathname).toEqual("/");
 
-    const boxButtons = await screen.findAllByRole("button", {
-      name: "check box",
-    });
+    const boxFour = await screen.findByText("Trauma Chest Drain - Box 4");
 
-    await user.click(boxButtons[3]);
+    await user.click(boxFour);
 
     expect(history.location.pathname).toEqual("/box/0/4");
-  });
-
-  it("refresh popup confirm resets all box contents to empty", async () => {
-    const { user, store, container } = renderWithProvider(<StorageArea />, {
-      preloadedState: { boxContents: PARTIAL_CONTENTS },
-    });
-
-    await user.click(screen.getByRole("button", { name: "restart" }));
-
-    expect(
-      screen.getByText("Reset all boxes to empty - are you sure?")
-    ).toBeDefined();
-    expect(container).toMatchSnapshot();
-
-    await user.click(screen.getByRole("button", { name: "YES" }));
-
-    expect(store.getState().boxContents).toEqual(ZERO_CONTENTS);
-  });
-
-  it("refresh popup cancel leaves box contents unchanged", async () => {
-    const { user, store } = renderWithProvider(<StorageArea />, {
-      preloadedState: { boxContents: PARTIAL_CONTENTS },
-    });
-
-    await user.click(screen.getByRole("button", { name: "restart" }));
-
-    expect(
-      screen.getByText("Reset all boxes to empty - are you sure?")
-    ).toBeDefined();
-
-    await user.click(screen.getByRole("button", { name: "Cancel" }));
-
-    expect(store.getState().boxContents).toEqual(PARTIAL_CONTENTS);
   });
 });

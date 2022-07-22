@@ -24,7 +24,7 @@ function App() {
       <Routes>
         <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
         <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
-        <Route path="needed" element={<ShoppingList />} />
+        <Route path="summary" element={<ShoppingList />} />
         <Route path="*" element={<StorageArea />} />
       </Routes>
       {!disclaimerAccepted && (

@@ -2,13 +2,17 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import React from "react";
 
-import { getByRole, screen } from "@testing-library/react";
+import { getByRole, screen, waitFor } from "@testing-library/react";
 import { Routes, Route } from "react-router-dom";
 
-import { FULL_CHEST_DRAIN_BOX } from "./testData";
 import { renderWithProvider } from "./testUtils";
+import fetchMock from "jest-fetch-mock";
 
 import Box from "./Box";
+import { EIBoxInput } from "./data/StorageTypes";
+import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
+
+const CHECK_API_ENDPONT = TEST_INVENTORY_API_ENDPOINT + "check";
 
 describe("Box", () => {
   it("rendered a box page", async () => {
@@ -74,8 +78,10 @@ describe("Box", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("can save item changes", async () => {
-    const { store, user, history } = renderWithRoute("0", "3");
+  it("can save item changes - success", async () => {
+    fetchMock.mockResponse("", { status: 200 });
+
+    const { user, history } = renderWithRoute("0", "3");
 
     const itemLabel = screen.getByText(
       "Blunt dissection chest drainage insertion pack (28Fg)"
@@ -94,46 +100,172 @@ describe("Box", () => {
 
     await user.click(screen.getByRole("button", { name: "Save" }));
 
-    expect(store.getState().boxContents.boxes[2].items).toEqual([
-      {
-        quantity: 2,
-        name: "Blunt dissection chest drainage insertion pack",
-        size: "28Fg",
-      },
-      { quantity: 0, name: "Sterile gloves", size: "Small" },
-      { quantity: 0, name: "Sterile gloves", size: "Medium" },
-      { quantity: 0, name: "Sterile gloves", size: "Large" },
-      { quantity: 0, name: "Chest drain catheter", size: "28Fr" },
-      { quantity: 0, name: "Chest drain catheter", size: "32Fr" },
-      { quantity: 0, name: "Chest drain catheter", size: "36Fr" },
-      { quantity: 0, name: "ChloraPrep applicator" },
-      { quantity: 0, name: "Lidocaine 1%", size: "5ml / 50mg" },
-      { quantity: 0, name: "Standard suture pack", size: "Standard" },
-      { quantity: 0, name: "Mefix roll", size: "5cm x 10m" },
-      { quantity: 0, name: "Chest drain bottle" },
-      { quantity: 0, name: "Chest drain tubing" },
-      {
-        quantity: 0,
-        name: "Sterile water (H20) bottle",
-        size: "1000ml bottle",
-      },
-      { quantity: 0, name: "Spencer wells forceps", size: "Straight 20cm" },
-    ]);
+    const expectedPayload: EIBoxInput = {
+      boxTemplateId: "0",
+      boxNumber: 3,
+      name: "Trauma Chest Drain",
+      missingItems: [
+        { quantity: 1, name: "Sterile gloves", size: "Small" },
+        { quantity: 1, name: "Sterile gloves", size: "Medium" },
+        { quantity: 1, name: "Sterile gloves", size: "Large" },
+        { quantity: 1, name: "Chest drain catheter", size: "28Fr" },
+        { quantity: 1, name: "Chest drain catheter", size: "32Fr" },
+        { quantity: 1, name: "Chest drain catheter", size: "36Fr" },
+        { quantity: 2, name: "ChloraPrep applicator" },
+        { quantity: 2, name: "Lidocaine 1%", size: "5ml / 50mg" },
+        { quantity: 1, name: "Standard suture pack", size: "Standard" },
+        { quantity: 1, name: "Mefix roll", size: "5cm x 10m" },
+        { quantity: 1, name: "Chest drain bottle" },
+        { quantity: 1, name: "Chest drain tubing" },
+        {
+          quantity: 1,
+          name: "Sterile water (H20) bottle",
+          size: "1000ml bottle",
+        },
+        { quantity: 1, name: "Spencer wells forceps", size: "Straight 20cm" },
+      ],
+      isFull: false,
+      checker: "Bob",
+    };
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    expect(fetchMock).toHaveBeenCalledWith(
+      CHECK_API_ENDPONT,
+      expect.objectContaining({
+        method: "POST",
+      })
+    );
+    const actualPayload = JSON.parse(
+      fetchMock.mock.calls[0][1]!.body! as string
+    );
+    expect(actualPayload).toEqual(expectedPayload);
 
     expect(history.location.pathname).toEqual("/");
   });
 
-  it("can mark box as full", async () => {
-    const { store, user, history } = renderWithRoute("0", "3");
+  it("can save item changes - failure", async () => {
+    fetchMock.mockResponse("", { status: 500 });
+
+    const { user, history } = renderWithRoute("0", "3");
+
+    const itemLabel = screen.getByText(
+      "Blunt dissection chest drainage insertion pack (28Fg)"
+    );
+
+    const increaseButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "add item",
+    });
+    const decreaseButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "remove item",
+    });
+    await user.click(increaseButton);
+    await user.click(increaseButton);
+    await user.click(increaseButton);
+    await user.click(decreaseButton);
+
+    await user.click(screen.getByRole("button", { name: "Save" }));
+
+    const expectedPayload: EIBoxInput = {
+      boxTemplateId: "0",
+      boxNumber: 3,
+      name: "Trauma Chest Drain",
+      missingItems: [
+        { quantity: 1, name: "Sterile gloves", size: "Small" },
+        { quantity: 1, name: "Sterile gloves", size: "Medium" },
+        { quantity: 1, name: "Sterile gloves", size: "Large" },
+        { quantity: 1, name: "Chest drain catheter", size: "28Fr" },
+        { quantity: 1, name: "Chest drain catheter", size: "32Fr" },
+        { quantity: 1, name: "Chest drain catheter", size: "36Fr" },
+        { quantity: 2, name: "ChloraPrep applicator" },
+        { quantity: 2, name: "Lidocaine 1%", size: "5ml / 50mg" },
+        { quantity: 1, name: "Standard suture pack", size: "Standard" },
+        { quantity: 1, name: "Mefix roll", size: "5cm x 10m" },
+        { quantity: 1, name: "Chest drain bottle" },
+        { quantity: 1, name: "Chest drain tubing" },
+        {
+          quantity: 1,
+          name: "Sterile water (H20) bottle",
+          size: "1000ml bottle",
+        },
+        { quantity: 1, name: "Spencer wells forceps", size: "Straight 20cm" },
+      ],
+      isFull: false,
+      checker: "Bob",
+    };
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    expect(fetchMock).toHaveBeenCalledWith(
+      CHECK_API_ENDPONT,
+      expect.objectContaining({
+        method: "POST",
+      })
+    );
+    const actualPayload = JSON.parse(
+      fetchMock.mock.calls[0][1]!.body! as string
+    );
+    expect(actualPayload).toEqual(expectedPayload);
+
+    expect(history.location.pathname).toEqual("/box/0/3");
+  });
+
+  it("can mark box as full - success", async () => {
+    fetchMock.mockResponse("", { status: 200 });
+    const { user, history } = renderWithRoute("0", "3");
 
     await user.click(screen.getByRole("button", { name: "FULL" }));
 
-    expect(store.getState().boxContents.boxes[2]).toEqual({
-      ...FULL_CHEST_DRAIN_BOX,
+    const expectedPayload: EIBoxInput = {
+      boxTemplateId: "0",
       boxNumber: 3,
-    });
+      name: "Trauma Chest Drain",
+      missingItems: [],
+      isFull: true,
+      checker: "Bob",
+    };
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    expect(fetchMock).toHaveBeenCalledWith(
+      CHECK_API_ENDPONT,
+      expect.objectContaining({
+        method: "POST",
+      })
+    );
+    const actualPayload = JSON.parse(
+      fetchMock.mock.calls[0][1]!.body! as string
+    );
+    expect(actualPayload).toEqual(expectedPayload);
 
     expect(history.location.pathname).toEqual("/");
+  });
+
+  it("can mark box as full - failure", async () => {
+    fetchMock.mockResponse("", { status: 500 });
+    const { user, history } = renderWithRoute("0", "3");
+
+    await user.click(screen.getByRole("button", { name: "FULL" }));
+
+    const expectedPayload: EIBoxInput = {
+      boxTemplateId: "0",
+      boxNumber: 3,
+      name: "Trauma Chest Drain",
+      missingItems: [],
+      isFull: true,
+      checker: "Bob",
+    };
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    expect(fetchMock).toHaveBeenCalledWith(
+      CHECK_API_ENDPONT,
+      expect.objectContaining({
+        method: "POST",
+      })
+    );
+    const actualPayload = JSON.parse(
+      fetchMock.mock.calls[0][1]!.body! as string
+    );
+    expect(actualPayload).toEqual(expectedPayload);
+
+    expect(history.location.pathname).toEqual("/box/0/3");
   });
 
   it("can go to item details", async () => {

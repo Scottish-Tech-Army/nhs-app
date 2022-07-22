@@ -1,21 +1,10 @@
-import React from "react";
+import { format, parseISO } from "date-fns";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAreaContents } from "./data/BoxContentsSlice";
-import {
-  BoxContents,
-  BoxShoppingList,
-  BoxTemplate,
-  ItemContents,
-  ItemShoppingList,
-  ItemTemplate,
-  StorageAreaContents,
-} from "./data/StorageTypes";
+import { EIBox } from "./data/StorageTypes";
 import { useAppSelector } from "./data/store";
-import {
-  getBoxName,
-  getItemDisplayName,
-  TRAUMA_TOWER_TEMPLATE,
-} from "./data/TraumaTower";
+import { getItemDisplayName } from "./data/TraumaTower";
 import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
 
 export type FormValueType = {
@@ -23,86 +12,44 @@ export type FormValueType = {
   count: number;
 };
 
-function calculateItemShoppingList(
-  itemTemplate: ItemTemplate,
-  boxContents: BoxContents
-): ItemShoppingList | undefined {
-  const currentQuantity =
-    boxContents.items.find(
-      (itemContents) =>
-        itemTemplate.name === itemContents.name &&
-        itemTemplate.size === itemContents.size
-    )?.quantity || 0;
-  const quantityToGet = (itemTemplate.quantity || 1) - currentQuantity;
-
-  return quantityToGet > 0
-    ? {
-        name: itemTemplate.name,
-        size: itemTemplate.size,
-        quantity: quantityToGet,
-      }
-    : undefined;
-}
-
-function calculateBoxShoppingList(
-  boxTemplate: BoxTemplate,
-  boxNumber: number,
-  areaContents: StorageAreaContents
-): BoxShoppingList | undefined {
-  const boxContents = areaContents.boxes.find(
-    (boxContents) =>
-      boxContents.boxNumber === boxNumber &&
-      boxContents.boxTemplateId === boxTemplate.boxTemplateId
-  ) || {
-    boxTemplateId: boxTemplate.boxTemplateId,
-    boxNumber,
-    items: [],
-  };
-
-  const itemsToGet = boxTemplate?.items
-    .map((itemTemplate) => calculateItemShoppingList(itemTemplate, boxContents))
-    .filter(Boolean) as ItemContents[];
-
-  return itemsToGet.length
-    ? {
-        boxTemplateId: boxTemplate.boxTemplateId,
-        boxNumber,
-        name: getBoxName(boxTemplate.name, boxNumber),
-        items: itemsToGet,
-      }
-    : undefined;
-}
-
-function calculateAreaShoppingList(
-  areaContents: StorageAreaContents
-): BoxShoppingList[] {
-  const areaShoppingList: (BoxShoppingList | undefined)[] = [];
-  TRAUMA_TOWER_TEMPLATE.boxes.forEach((boxTemplate) => {
-    for (let boxNumber = 1; boxNumber <= boxTemplate.count; boxNumber++) {
-      areaShoppingList.push(
-        calculateBoxShoppingList(boxTemplate, boxNumber, areaContents)
-      );
-    }
-  });
-
-  return areaShoppingList.filter(Boolean) as BoxShoppingList[];
-}
+const BOXES_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}boxes`;
 
 function ShoppingList() {
-  const areaContents = useAppSelector(getAreaContents);
+  const [boxes, setBoxes] = useState<EIBox[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const partiallyFullBoxes = boxes.filter((box) => !box.isFull);
+
+  useEffect(() => {
+    fetch(BOXES_API_ENDPONT)
+      .then((response) => response.json())
+      .then((data) => {
+        setBoxes(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setBoxes([]);
+      });
+  }, []);
+
+  useAppSelector(getAreaContents);
   let navigate = useNavigate();
 
-  const areaShoppingList = calculateAreaShoppingList(areaContents);
+  function getDisplayTime(isoDateTime: string) {
+    const timestamp = parseISO(isoDateTime)
+    return format(timestamp, "EEE d/M/yyyy 'at' HH:mm")
+  }
 
-  function getBoxShoppingList(boxShoppingList: BoxShoppingList, index: number) {
+  function getBoxShoppingList(box: EIBox, index: number) {
     return (
       <div key={index} className="box">
         <div>
-          <h2>{boxShoppingList.name}</h2>
+        <h2>{`${box.name} - Box ${box.boxNumber}`}</h2>
+        <div className="checker">{`Checked by ${box.checker} on ${getDisplayTime(box.checkTime)}`}</div>
         </div>
 
         <div className="items">
-          {boxShoppingList.items.map((item, index) => (
+          {box.missingItems.map((item, index) => (
             <div key={index} className="item">
               {`${item.quantity} x ${getItemDisplayName(item)}`}
             </div>
@@ -111,7 +58,6 @@ function ShoppingList() {
       </div>
     );
   }
-
   return (
     <div className="shopping-list">
       <header>
@@ -123,15 +69,17 @@ function ShoppingList() {
         >
           <ArrowLeft />
         </button>
-        <h1>Items to replace</h1>
+        <h1>Summary</h1>
       </header>
       <main>
-        {areaShoppingList.length ? (
+        {loading ? (
+          <div>Fetching Items</div>
+        ) : partiallyFullBoxes.length ? (
           <div className="scroll">
-            {areaShoppingList.map(getBoxShoppingList)}
+            {partiallyFullBoxes.map(getBoxShoppingList)}
           </div>
         ) : (
-          <div className="nothing-to-replace">Nothing to replace</div>
+          <div className="nothing-to-replace">No Items</div>
         )}
       </main>
     </div>

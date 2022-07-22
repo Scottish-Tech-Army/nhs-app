@@ -1,177 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StorageArea refresh popup confirm resets all box contents to empty 1`] = `
-<div>
-  <div
-    class="storage-area"
-  >
-    <header>
-      <h1>
-        Trauma Tower
-      </h1>
-      <button
-        aria-label="restart"
-        class="restart"
-        type="button"
-      >
-        <svg>
-          refresh.svg
-        </svg>
-      </button>
-    </header>
-    <main>
-      <div
-        class="scroll"
-      >
-        <div
-          class="box"
-        >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 1
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 2
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 3
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 4
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 5
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 6
-          </div>
-        </div>
-      </div>
-    </main>
-    <footer>
-      <a
-        class="needed"
-        href="/needed"
-      >
-        Items needed
-      </a>
-    </footer>
-    <div
-      class="confirm-reset-popup"
-    >
-      <h2>
-        Reset
-      </h2>
-      <div
-        class="message"
-      >
-        Reset all boxes to empty - are you sure?
-      </div>
-      <button
-        class="confirm-yes"
-        type="button"
-      >
-        YES
-      </button>
-      <button
-        class="confirm-no"
-        type="button"
-      >
-        Cancel
-      </button>
-    </div>
-    <div
-      class="modal-overlay"
-    />
-  </div>
-</div>
-`;
-
 exports[`StorageArea renders correctly 1`] = `
 <div>
   <div
@@ -181,15 +9,6 @@ exports[`StorageArea renders correctly 1`] = `
       <h1>
         Trauma Tower
       </h1>
-      <button
-        aria-label="restart"
-        class="restart"
-        type="button"
-      >
-        <svg>
-          refresh.svg
-        </svg>
-      </button>
     </header>
     <main>
       <div
@@ -198,15 +17,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -216,15 +29,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -234,15 +41,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -252,15 +53,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -270,15 +65,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -288,15 +77,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -307,10 +90,10 @@ exports[`StorageArea renders correctly 1`] = `
     </main>
     <footer>
       <a
-        class="needed"
-        href="/needed"
+        class="summary"
+        href="/summary"
       >
-        Items needed
+        Summary
       </a>
     </footer>
   </div>
