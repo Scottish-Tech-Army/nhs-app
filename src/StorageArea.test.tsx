@@ -43,11 +43,9 @@ describe("StorageArea", () => {
     expect(screen.getByText("Trauma Tower")).toBeDefined();
     expect(history.location.pathname).toEqual("/");
 
-    const boxButtons = await screen.findAllByRole("button", {
-      name: "check box",
-    });
+    const boxFour = await screen.findByText("Trauma Chest Drain - Box 4");
 
-    await user.click(boxButtons[3]);
+    await user.click(boxFour);
 
     expect(history.location.pathname).toEqual("/box/0/4");
   });

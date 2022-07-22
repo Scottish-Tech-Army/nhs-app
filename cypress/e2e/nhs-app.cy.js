@@ -42,7 +42,7 @@ describe("storage area", () => {
   });
 
   it("select box", () => {
-    cy.contains(BOX_FOUR_TITLE).parent().find(".check-box").click();
+    cy.contains(BOX_FOUR_TITLE).click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains(BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
@@ -74,13 +74,13 @@ describe("summary", () => {
   it("populated summary page", () => {
     markAllBoxesFull();
 
-    cy.contains(BOX_FOUR_TITLE).parent().find(".check-box").click();
+    cy.contains(BOX_FOUR_TITLE).click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains(BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
     cy.contains("Save").click();
 
-    cy.contains(BOX_TWO_TITLE).parent().find(".check-box").click();
+    cy.contains(BOX_TWO_TITLE).click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains(BOX_TWO_TITLE);
     cy.contains("Sterile gloves (Small)")
@@ -126,7 +126,7 @@ describe("summary", () => {
 
   function markAllBoxesFull() {
     BOX_TITLES.forEach((title) => {
-      cy.contains(title).parent().find(".check-box").click();
+      cy.contains(title).click();
       cy.contains(STORAGE_AREA_TITLE).should("not.exist");
       cy.contains(title);
       cy.contains("FULL").click();
