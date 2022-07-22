@@ -20,7 +20,7 @@ describe("App", () => {
     const { user } = renderWithProvider(<App />);
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(screen.getByRole("link", { name: "Summary" }));
+    await user.click(screen.getByRole("link", { name: "summary" }));
 
     expect(screen.queryByText("Trauma Tower")).toBeNull();
     expect(screen.getByText("Summary")).toBeDefined();

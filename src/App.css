@@ -19,6 +19,7 @@
   font-style: normal;
 }
 
+
 .storage-area header,
 .box-details header,
 .shopping-list header {
@@ -234,27 +235,36 @@
   align-items: center;
 }
 
-.storage-area footer a.summary,
+
 .box-details footer button.save {
   margin-left: 24px;
   margin-right: 24px;
   height: 56px;
-  flex-grow: 1;
   background: #025bbb;
   color: white;
   border-radius: 15px;
+}
 
-  font-family: "HindSemiBold", sans-serif;
-  font-size: 16px;
-  line-height: 16px;
+
+.storage-area footer a.summary:hover{
+  color: #025bbb ;
 }
 
 .storage-area footer a.summary {
+  margin-left: 24px;
+  margin-right: 24px;
+  height: 56px;
+  color: white;
+  border-radius: 15px;
   text-decoration: none;
   text-align: center;
-  padding-top: 20px;
-  height: 36px;
+  padding: 10px 10px 5px 10px;
+  height: 20px;
+  fill: currentColor;
+  color: #999999;
+  font-size: 9px;
 }
+
 
 .item-details {
   display: flex;

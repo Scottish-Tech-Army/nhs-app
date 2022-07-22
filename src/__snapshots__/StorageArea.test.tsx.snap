@@ -90,10 +90,13 @@ exports[`StorageArea renders correctly 1`] = `
     </main>
     <footer>
       <a
+        aria-label="summary"
         class="summary"
         href="/summary"
       >
-        Summary
+        <svg>
+          checklist.svg
+        </svg>
       </a>
     </footer>
   </div>

@@ -4,6 +4,9 @@ import { BoxTemplate } from "./data/StorageTypes";
 import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as EditIcon } from "./icons/edit.svg";
+import { ReactComponent as ChecklistIcon } from "./icons/checklist.svg";
+// Icon SVGs downloaded from https://fonts.google.com/icons?icon.style=Filled&icon.set=Material+Icons under Apache licence
+
 
 function StorageArea() {
   let navigate = useNavigate();
@@ -40,8 +43,8 @@ function StorageArea() {
         </div>
       </main>
       <footer>
-        <Link to={"/summary"} className="summary">
-          Summary
+        <Link aria-label='summary' to={"/summary"} className="summary">
+          <ChecklistIcon  /><div>Summary</div>
         </Link>
       </footer>
     </div>

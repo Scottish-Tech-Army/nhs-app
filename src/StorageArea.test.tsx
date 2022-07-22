@@ -22,9 +22,8 @@ describe("StorageArea", () => {
       expect(screen.getByText(title)).toBeDefined();
     });
 
-    const summaryLink = await screen.findByRole("link");
+    const summaryLink = await screen.findByRole("link", {name:'summary'});
     expect(summaryLink).toHaveAttribute("href", "/summary");
-    expect(summaryLink).toHaveTextContent("Summary");
   });
 
   it("renders correctly", () => {

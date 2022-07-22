@@ -49,10 +49,11 @@ describe("storage area", () => {
   });
 
   it("navigated to summary", () => {
-    cy.contains("Summary").click();
+    cy.root().find('[aria-label="summary"]').click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
   });
+
 });
 
 describe("summary", () => {
@@ -64,7 +65,7 @@ describe("summary", () => {
   });
 
   it("empty summary page", () => {
-    cy.contains("Summary").click();
+    cy.root().find('[aria-label="summary"]').click()
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
 
@@ -99,7 +100,7 @@ describe("summary", () => {
 
     const checkerString = `Checked by Bob on ${format(Date.now(), "EEE d/M/yyyy 'at' HH:")}`
 
-    cy.contains("Summary").click();
+    cy.root().find('[aria-label="summary"]').click()
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
 
@@ -123,6 +124,7 @@ describe("summary", () => {
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
       });
   });
+
 
   function markAllBoxesFull() {
     BOX_TITLES.forEach((title) => {
