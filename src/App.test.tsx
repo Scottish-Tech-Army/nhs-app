@@ -32,7 +32,7 @@ describe("App", () => {
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(
-      screen.getByText("Trauma Chest Drain - Box 2").previousElementSibling!
+      screen.getByText("Trauma Chest Drain - Box 2")
     );
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
@@ -47,7 +47,7 @@ describe("App", () => {
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(
-      screen.getByText("Trauma Chest Drain - Box 2").previousElementSibling!
+      screen.getByText("Trauma Chest Drain - Box 2")
     );
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();

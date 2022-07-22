@@ -17,15 +17,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -35,15 +29,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -53,15 +41,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -71,15 +53,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -89,15 +65,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >
@@ -107,15 +77,9 @@ exports[`StorageArea renders correctly 1`] = `
         <div
           class="box"
         >
-          <button
-            aria-label="check box"
-            class="check-box"
-            type="button"
-          >
-            <svg>
-              edit.svg
-            </svg>
-          </button>
+          <svg>
+            edit.svg
+          </svg>
           <div
             class="display-name"
           >

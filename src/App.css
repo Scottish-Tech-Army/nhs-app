@@ -141,25 +141,13 @@
   margin-top: 0;
 }
 
-.storage-area main .box button.check-box {
-  position: absolute;
-  width: 38px;
-  height: 38px;
-  left: 18px;
-  top: 16px;
-
-  margin: 0;
-  background: #025bbb;
-  color: white;
-  border-radius: 7.2px;
-}
-
-.storage-area main .box button.check-box svg {
+.storage-area main .box svg {
   position: absolute;
   width: 20px;
   height: 20px;
-  left: 9px;
-  top: 7px;
+  left: 27px;
+  top: 23px;
+  color: #025bbb;
 }
 
 .storage-area main .box .display-name {
@@ -430,7 +418,7 @@
 
 .modal-overlay {
   z-index: 8;
-  background-color: #2C373B;
+  background-color: #2c373b;
   opacity: 30%;
   position: fixed;
   top: 0;

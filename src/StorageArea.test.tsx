@@ -11,20 +11,16 @@ describe("StorageArea", () => {
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
 
-    const boxButtons = await screen.findAllByRole("button", {
-      name: "check box",
-    });
-
-    expect(
-      boxButtons.map((boxButton) => boxButton.nextSibling!.textContent)
-    ).toEqual([
+    [
       "Trauma Chest Drain - Box 1",
       "Trauma Chest Drain - Box 2",
       "Trauma Chest Drain - Box 3",
       "Trauma Chest Drain - Box 4",
       "Trauma Chest Drain - Box 5",
       "Trauma Chest Drain - Box 6",
-    ]);
+    ].forEach((title) => {
+      expect(screen.getByText(title)).toBeDefined();
+    });
 
     const summaryLink = await screen.findByRole("link");
     expect(summaryLink).toHaveAttribute("href", "/summary");
@@ -49,5 +45,4 @@ describe("StorageArea", () => {
 
     expect(history.location.pathname).toEqual("/box/0/4");
   });
-
 });

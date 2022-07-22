@@ -12,17 +12,14 @@ function StorageArea() {
     const result = [];
     for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
       result.push(
-        <div className="box" key={`${boxTemplate.boxTemplateId}/${boxIndex}`}>
-          <button
-            type="button"
-            className="check-box"
-            aria-label="check box"
-            onClick={() =>
-              navigate(`/box/${boxTemplate.boxTemplateId}/${boxIndex}`)
-            }
-          >
-            <EditIcon />
-          </button>
+        <div
+          className="box"
+          key={`${boxTemplate.boxTemplateId}/${boxIndex}`}
+          onClick={() =>
+            navigate(`/box/${boxTemplate.boxTemplateId}/${boxIndex}`)
+          }
+        >
+          <EditIcon />
           <div className="display-name">{`${boxTemplate.name} - Box ${boxIndex}`}</div>
         </div>
       );
