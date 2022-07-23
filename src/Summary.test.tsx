@@ -145,14 +145,14 @@ describe("Summary", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("can return to storage area page", async () => {
+  it("can return to directory page", async () => {
     const { user, history } = renderWithProvider(<Summary />, {
       initialRoutes: ["/needed"],
     });
 
     expect(history.location.pathname).toEqual("/needed");
 
-    await user.click(screen.getByRole("link", { name: "storage area" }));
+    await user.click(screen.getByRole("link", { name: "directory" }));
 
     expect(history.location.pathname).toEqual("/");
   });

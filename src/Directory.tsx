@@ -7,7 +7,7 @@ import { ReactComponent as EditIcon } from "./icons/edit.svg";
 import Navbar from "./Navbar";
 // Icon SVGs downloaded from https://fonts.google.com/icons?icon.style=Filled&icon.set=Material+Icons under Apache licence
 
-function StorageArea() {
+function Directory() {
   let navigate = useNavigate();
 
   const getBoxes = (boxTemplate: BoxTemplate) => {
@@ -30,7 +30,7 @@ function StorageArea() {
   };
 
   return (
-    <div className="storage-area">
+    <div className="directory">
       <header>
         <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
       </header>
@@ -48,4 +48,4 @@ function StorageArea() {
   );
 }
 
-export default StorageArea;
+export default Directory;

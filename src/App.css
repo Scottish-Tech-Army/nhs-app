@@ -19,7 +19,7 @@
   font-style: normal;
 }
 
-.storage-area header,
+.directory header,
 .box-details header,
 .summary-list header {
   background-color: #025bbb;
@@ -27,7 +27,7 @@
   min-height: 100px;
 }
 
-.storage-area header h1,
+.directory header h1,
 .box-details header h1,
 .summary-list header h1 {
   font-family: "HindSemiBold", sans-serif;
@@ -67,14 +67,14 @@
 }
 
 .box-details,
-.storage-area,
+.directory,
 .summary-list {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.storage-area main,
+.directory main,
 .box-details main,
 .summary-list main {
   flex: 1;
@@ -87,7 +87,7 @@
   position: relative;
 }
 
-.storage-area main .scroll,
+.directory main .scroll,
 .box-details main .scroll,
 .summary-list main .scroll {
   position: absolute;
@@ -100,7 +100,7 @@
   padding-top: 17px;
 }
 
-.storage-area main .box,
+.directory main .box,
 .summary-list main .box {
   border: 1px solid rgba(2, 91, 187, 0.25);
   border-radius: 12px;
@@ -127,7 +127,7 @@
   position: relative;
 }
 
-.storage-area main .box {
+.directory main .box {
   min-height: 70px;
   cursor: pointer;
 }
@@ -143,7 +143,7 @@
   margin-top: 0;
 }
 
-.storage-area main .box svg {
+.directory main .box svg {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -152,7 +152,7 @@
   color: #025bbb;
 }
 
-.storage-area main .box .display-name {
+.directory main .box .display-name {
   font-size: 14px;
   line-height: 130%;
   padding-left: 74px;
@@ -219,7 +219,7 @@
   height: 20px;
 }
 
-.storage-area footer,
+.directory footer,
 .summary-list footer,
 .box-details footer {
   position: absolute;
@@ -232,7 +232,7 @@
   height: 104px;
 }
 
-.storage-area footer nav,
+.directory footer nav,
 .summary-list footer nav,
 .box-details footer {
   display: flex;

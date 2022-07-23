@@ -10,18 +10,18 @@ describe("Navbar", () => {
       initialRoutes: ["/summary"],
     });
 
-    expect(screen.getByRole("link", { name: "storage area" })).not.toHaveClass(
+    expect(screen.getByRole("link", { name: "directory" })).not.toHaveClass(
       "active"
     );
     expect(screen.getByRole("link", { name: "summary" })).toHaveClass("active");
   });
 
-  it("renders for storage area", () => {
+  it("renders for directory", () => {
     const { container } = renderWithProvider(<Navbar />, {
       initialRoutes: ["/"],
     });
 
-    expect(screen.getByRole("link", { name: "storage area" })).toHaveClass(
+    expect(screen.getByRole("link", { name: "directory" })).toHaveClass(
       "active"
     );
     expect(screen.getByRole("link", { name: "summary" })).not.toHaveClass(
@@ -40,17 +40,17 @@ describe("Navbar", () => {
 
     expect(history.location.pathname).toEqual("/summary");
 
-    await user.click(screen.getByRole("link", { name: "storage area" }));
+    await user.click(screen.getByRole("link", { name: "directory" }));
 
     expect(history.location.pathname).toEqual("/");
   });
 
-  it("navigates from storage area page", async () => {
+  it("navigates from directory page", async () => {
     const { user, history } = renderWithProvider(<Navbar />, {
       initialRoutes: ["/"],
     });
 
-    await user.click(screen.getByRole("link", { name: "storage area" }));
+    await user.click(screen.getByRole("link", { name: "directory" }));
 
     expect(history.location.pathname).toEqual("/");
 

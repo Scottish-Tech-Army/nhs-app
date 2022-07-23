@@ -16,7 +16,7 @@ describe("App", () => {
     expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
   });
 
-  it("renders shopping list view", async () => {
+  it("renders summary view", async () => {
     const { user } = renderWithProvider(<App />);
     await user.click(screen.getByRole("button", { name: "Accept" }));
 

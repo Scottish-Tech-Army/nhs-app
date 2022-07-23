@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StorageArea renders correctly 1`] = `
+exports[`Directory renders correctly 1`] = `
 <div>
   <div
-    class="storage-area"
+    class="directory"
   >
     <header>
       <h1>
@@ -92,7 +92,7 @@ exports[`StorageArea renders correctly 1`] = `
       <nav>
         <a
           aria-current="page"
-          aria-label="storage area"
+          aria-label="directory"
           class="navicon active"
           href="/"
         >
@@ -100,7 +100,7 @@ exports[`StorageArea renders correctly 1`] = `
             home.svg
           </svg>
           <div>
-            Storage Area
+            Directory
           </div>
         </a>
         <a
