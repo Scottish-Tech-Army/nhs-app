@@ -123,6 +123,10 @@ describe("summary", () => {
         cy.contains("1 x Sterile gloves (Medium)").should("not.exist");
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
       });
+    
+    cy.root().find('[aria-label="storage area"]').click();
+    cy.contains(STORAGE_AREA_TITLE);
+
   });
 
 

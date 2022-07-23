@@ -142,7 +142,7 @@ describe("ShoppingList", () => {
 
     expect(history.location.pathname).toEqual("/needed");
 
-    await user.click(screen.getByRole("button", { name: "Back" }));
+    await user.click(screen.getByRole("button", { name: "storage area" }));
 
     expect(history.location.pathname).toEqual("/");
   });

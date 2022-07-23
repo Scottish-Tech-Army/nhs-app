@@ -7,7 +7,7 @@ exports[`ShoppingList renders correctly 1`] = `
   >
     <header>
       <button
-        aria-label="Back"
+        aria-label="back"
         class="back"
         type="button"
       >
