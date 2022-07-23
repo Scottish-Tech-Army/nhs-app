@@ -60,7 +60,7 @@ function Summary() {
     );
   }
   return (
-    <div className="shopping-list">
+    <div className="summary-list">
       <header>
         <h1>Summary</h1>
       </header>

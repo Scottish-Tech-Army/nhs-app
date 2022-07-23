@@ -21,7 +21,7 @@
 
 .storage-area header,
 .box-details header,
-.shopping-list header {
+.summary-list header {
   background-color: #025bbb;
   color: white;
   min-height: 100px;
@@ -29,7 +29,7 @@
 
 .storage-area header h1,
 .box-details header h1,
-.shopping-list header h1 {
+.summary-list header h1 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 22px;
   line-height: 29px;
@@ -68,7 +68,7 @@
 
 .box-details,
 .storage-area,
-.shopping-list {
+.summary-list {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -76,20 +76,20 @@
 
 .storage-area main,
 .box-details main,
-.shopping-list main {
+.summary-list main {
   flex: 1;
   position: relative;
   margin-bottom: 104px;
 }
 
-.shopping-list main {
+.summary-list main {
   flex: 1;
   position: relative;
 }
 
 .storage-area main .scroll,
 .box-details main .scroll,
-.shopping-list main .scroll {
+.summary-list main .scroll {
   position: absolute;
   left: 0;
   top: 0;
@@ -101,7 +101,7 @@
 }
 
 .storage-area main .box,
-.shopping-list main .box {
+.summary-list main .box {
   border: 1px solid rgba(2, 91, 187, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
@@ -132,12 +132,12 @@
   cursor: pointer;
 }
 
-.shopping-list main .box {
+.summary-list main .box {
   flex-direction: column;
   padding: 16px;
 }
 
-.shopping-list main .box h2 {
+.summary-list main .box h2 {
   font-size: 16px;
   line-height: 130%;
   margin-top: 0;
@@ -220,7 +220,7 @@
 }
 
 .storage-area footer,
-.shopping-list footer,
+.summary-list footer,
 .box-details footer {
   position: absolute;
   left: 0%;
@@ -233,7 +233,7 @@
 }
 
 .storage-area footer nav,
-.shopping-list footer nav,
+.summary-list footer nav,
 .box-details footer {
   display: flex;
   flex-direction: row;
@@ -291,7 +291,7 @@ footer nav .navicon svg {
 
 .item-details button.back,
 .box-details button.back,
-.shopping-list button.back {
+.summary-list button.back {
   position: absolute;
   width: 48px;
   height: 48px;
