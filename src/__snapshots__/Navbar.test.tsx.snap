@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar renders for storage area 1`] = `
+<div>
+  <nav>
+    <a
+      aria-current="page"
+      aria-label="storage area"
+      class="navicon active"
+      href="/"
+    >
+      <svg>
+        home.svg
+      </svg>
+      <div>
+        Storage Area
+      </div>
+    </a>
+    <a
+      aria-label="summary"
+      class="navicon"
+      href="/summary"
+    >
+      <svg>
+        checklist.svg
+      </svg>
+      <div>
+        Summary
+      </div>
+    </a>
+  </nav>
+</div>
+`;

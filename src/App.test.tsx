@@ -20,20 +20,17 @@ describe("App", () => {
     const { user } = renderWithProvider(<App />);
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(screen.getByRole("link", { name: "Summary" }));
+    await user.click(screen.getByRole("link", { name: "summary" }));
 
     expect(screen.queryByText("Trauma Tower")).toBeNull();
-    expect(screen.getByText("Summary")).toBeDefined();
-
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
   });
 
   it("renders box view", async () => {
     const { user } = renderWithProvider(<App />);
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(
-      screen.getByText("Trauma Chest Drain - Box 2")
-    );
+    await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
 
@@ -46,9 +43,7 @@ describe("App", () => {
     const { user } = renderWithProvider(<App />);
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(
-      screen.getByText("Trauma Chest Drain - Box 2")
-    );
+    await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
 

@@ -45,11 +45,13 @@ describe("ShoppingList", () => {
   it("rendered a shopping list page for filled store - no boxes recorded", async () => {
     fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
 
-    renderWithProvider(<ShoppingList />);
+    renderWithProvider(<ShoppingList />, {
+      initialRoutes: ["/summary"],
+    });
 
-    expect(screen.getByText("Summary")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
 
-    await waitFor(() => expect(screen.getByText("No Items")).toBeDefined());
+    expect(await screen.findByText("No Items")).toBeDefined();
 
     await checkShoppingList([]);
   });
@@ -57,9 +59,11 @@ describe("ShoppingList", () => {
   it("rendered a shopping list page - loading", async () => {
     fetchMock.mockResponse("", { status: 500 });
 
-    renderWithProvider(<ShoppingList />);
+    renderWithProvider(<ShoppingList />, {
+      initialRoutes: ["/summary"],
+    });
 
-    expect(screen.getByText("Summary")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
 
     expect(screen.getByText("Fetching Items")).toBeDefined();
 
@@ -93,12 +97,14 @@ describe("ShoppingList", () => {
       { status: 200 }
     );
 
-    renderWithProvider(<ShoppingList />);
+    renderWithProvider(<ShoppingList />, {
+      initialRoutes: ["/summary"],
+    });
     await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
     expect(fetchMock).toBeCalledWith(TEST_INVENTORY_API_ENDPOINT + "boxes");
 
-    expect(screen.getByText("Summary")).toBeDefined();
-    await waitFor(() => expect(screen.getByText("No Items")).toBeDefined());
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(await screen.findByText("No Items")).toBeDefined();
 
     await checkShoppingList([]);
   });
@@ -106,9 +112,11 @@ describe("ShoppingList", () => {
   it("rendered a shopping list page for partially filled store - ie some items shown", async () => {
     fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
 
-    renderWithProvider(<ShoppingList />);
+    renderWithProvider(<ShoppingList />, {
+      initialRoutes: ["/summary"],
+    });
 
-    expect(screen.getByText("Summary")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
 
     await checkShoppingList([
       {
@@ -127,7 +135,9 @@ describe("ShoppingList", () => {
   it("renders correctly", async () => {
     fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
 
-    const { container } = renderWithProvider(<ShoppingList />);
+    const { container } = renderWithProvider(<ShoppingList />, {
+      initialRoutes: ["/summary"],
+    });
 
     await waitFor(() =>
       expect(document.querySelectorAll("div.box")!).toHaveLength(1)
@@ -137,12 +147,12 @@ describe("ShoppingList", () => {
 
   it("can return to storage area page", async () => {
     const { user, history } = renderWithProvider(<ShoppingList />, {
-      initialRoutes: ["/", "/needed"],
+      initialRoutes: ["/needed"],
     });
 
     expect(history.location.pathname).toEqual("/needed");
 
-    await user.click(screen.getByRole("button", { name: "Back" }));
+    await user.click(screen.getByRole("link", { name: "storage area" }));
 
     expect(history.location.pathname).toEqual("/");
   });

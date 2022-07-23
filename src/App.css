@@ -75,7 +75,8 @@
 }
 
 .storage-area main,
-.box-details main {
+.box-details main,
+.shopping-list main {
   flex: 1;
   position: relative;
   margin-bottom: 104px;
@@ -219,6 +220,7 @@
 }
 
 .storage-area footer,
+.shopping-list footer,
 .box-details footer {
   position: absolute;
   left: 0%;
@@ -228,32 +230,49 @@
   border-top: 1px solid rgba(160, 160, 160, 0.25);
   box-shadow: 0px 4px 120px rgba(193, 193, 197, 0.15);
   height: 104px;
+}
+
+.storage-area footer nav,
+.shopping-list footer nav,
+.box-details footer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.storage-area footer a.summary,
 .box-details footer button.save {
   margin-left: 24px;
   margin-right: 24px;
   height: 56px;
-  flex-grow: 1;
   background: #025bbb;
   color: white;
   border-radius: 15px;
-
-  font-family: "HindSemiBold", sans-serif;
-  font-size: 16px;
-  line-height: 16px;
+  flex-grow: 1;
 }
 
-.storage-area footer a.summary {
+footer .navicon {
+  margin-left: 24px;
+  margin-right: 24px;
+  height: 56px;
+  color: white;
+  border-radius: 15px;
   text-decoration: none;
   text-align: center;
-  padding-top: 20px;
-  height: 36px;
+  padding: 10px 10px 5px 10px;
+  height: 20px;
+  fill: currentColor;
+  color: #999999;
+  font-size: 9px;
+}
+
+footer nav .navicon:hover,
+footer nav .navicon.active {
+  color: #025bbb;
+}
+
+footer nav .navicon svg {
+  fill: currentColor;
 }
 
 .item-details {
