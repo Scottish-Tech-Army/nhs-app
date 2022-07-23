@@ -243,14 +243,12 @@
   background: #025bbb;
   color: white;
   border-radius: 15px;
+  flex-grow: 1;
 }
 
 
-.storage-area footer a.summary:hover{
-  color: #025bbb ;
-}
 
-.storage-area footer a.summary {
+.storage-area footer .navicon {
   margin-left: 24px;
   margin-right: 24px;
   height: 56px;
@@ -263,6 +261,15 @@
   fill: currentColor;
   color: #999999;
   font-size: 9px;
+}
+
+.storage-area footer .navicon:hover,
+.storage-area footer .navicon.selected {
+  color: #025bbb ;
+}
+
+.storage-area footer .navicon svg {
+  fill: currentColor;
 }
 
 
