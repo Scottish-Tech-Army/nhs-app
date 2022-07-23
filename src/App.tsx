@@ -6,7 +6,7 @@ import { useAppDispatch } from "./data/store";
 import { refreshState } from "./data/BoxContentsSlice";
 
 import Box from "./Box";
-import ShoppingList from "./ShoppingList";
+import ShoppingList from "./Summary";
 import ItemDetails from "./ItemDetails";
 
 

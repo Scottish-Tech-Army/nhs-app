@@ -3,7 +3,7 @@ import React from "react";
 
 import { screen, waitFor } from "@testing-library/react";
 
-import ShoppingList from "./ShoppingList";
+import ShoppingList from "./Summary";
 import { renderWithProvider } from "./testUtils";
 import { EIBox } from "./data/StorageTypes";
 import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
