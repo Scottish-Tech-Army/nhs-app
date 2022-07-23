@@ -230,6 +230,11 @@
   border-top: 1px solid rgba(160, 160, 160, 0.25);
   box-shadow: 0px 4px 120px rgba(193, 193, 197, 0.15);
   height: 104px;
+}
+
+.storage-area footer nav,
+.shopping-list footer nav,
+.box-details footer {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -261,12 +266,12 @@ footer .navicon {
   font-size: 9px;
 }
 
-footer .navicon:hover,
-footer .navicon.selected {
+footer nav .navicon:hover,
+footer nav .navicon.active {
   color: #025bbb;
 }
 
-footer .navicon svg {
+footer nav .navicon svg {
   fill: currentColor;
 }
 

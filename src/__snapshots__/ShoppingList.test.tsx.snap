@@ -55,29 +55,33 @@ exports[`ShoppingList renders correctly 1`] = `
       </div>
     </main>
     <footer>
-      <a
-        aria-label="storage area"
-        class="navicon"
-        href="/"
-      >
-        <svg>
-          home.svg
-        </svg>
-        <div>
-          Storage Area
-        </div>
-      </a>
-      <div
-        aria-label="summary"
-        class="navicon selected"
-      >
-        <svg>
-          checklist.svg
-        </svg>
-        <div>
-          Summary
-        </div>
-      </div>
+      <nav>
+        <a
+          aria-label="storage area"
+          class="navicon"
+          href="/"
+        >
+          <svg>
+            home.svg
+          </svg>
+          <div>
+            Storage Area
+          </div>
+        </a>
+        <a
+          aria-current="page"
+          aria-label="summary"
+          class="navicon active"
+          href="/summary"
+        >
+          <svg>
+            checklist.svg
+          </svg>
+          <div>
+            Summary
+          </div>
+        </a>
+      </nav>
     </footer>
   </div>
 </div>

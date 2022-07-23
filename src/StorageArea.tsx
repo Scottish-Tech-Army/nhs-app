@@ -2,10 +2,9 @@ import React from "react";
 import "./App.css";
 import { BoxTemplate } from "./data/StorageTypes";
 import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as EditIcon } from "./icons/edit.svg";
-import { ReactComponent as HomeIcon } from "./icons/home.svg";
-import { ReactComponent as ChecklistIcon } from "./icons/checklist.svg";
+import Navbar from "./Navbar";
 // Icon SVGs downloaded from https://fonts.google.com/icons?icon.style=Filled&icon.set=Material+Icons under Apache licence
 
 function StorageArea() {
@@ -43,14 +42,7 @@ function StorageArea() {
         </div>
       </main>
       <footer>
-        <div aria-label="storage area" className="navicon selected">
-          <HomeIcon />
-          <div>Storage Area</div>
-        </div>
-        <Link aria-label="summary" to={"/summary"} className="navicon summary">
-          <ChecklistIcon />
-          <div>Summary</div>
-        </Link>
+        <Navbar />
       </footer>
     </div>
   );

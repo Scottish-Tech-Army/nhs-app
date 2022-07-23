@@ -89,29 +89,33 @@ exports[`StorageArea renders correctly 1`] = `
       </div>
     </main>
     <footer>
-      <div
-        aria-label="storage area"
-        class="navicon selected"
-      >
-        <svg>
-          home.svg
-        </svg>
-        <div>
-          Storage Area
-        </div>
-      </div>
-      <a
-        aria-label="summary"
-        class="navicon summary"
-        href="/summary"
-      >
-        <svg>
-          checklist.svg
-        </svg>
-        <div>
-          Summary
-        </div>
-      </a>
+      <nav>
+        <a
+          aria-current="page"
+          aria-label="storage area"
+          class="navicon active"
+          href="/"
+        >
+          <svg>
+            home.svg
+          </svg>
+          <div>
+            Storage Area
+          </div>
+        </a>
+        <a
+          aria-label="summary"
+          class="navicon"
+          href="/summary"
+        >
+          <svg>
+            checklist.svg
+          </svg>
+          <div>
+            Summary
+          </div>
+        </a>
+      </nav>
     </footer>
   </div>
 </div>

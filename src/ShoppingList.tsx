@@ -1,12 +1,11 @@
 import { format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { getAreaContents } from "./data/BoxContentsSlice";
 import { EIBox } from "./data/StorageTypes";
 import { useAppSelector } from "./data/store";
 import { getItemDisplayName } from "./data/TraumaTower";
-import { ReactComponent as HomeIcon } from "./icons/home.svg";
-import { ReactComponent as ChecklistIcon } from "./icons/checklist.svg";
+
+import Navbar from "./Navbar";
 
 export type FormValueType = {
   name: string;
@@ -63,7 +62,7 @@ function ShoppingList() {
   return (
     <div className="shopping-list">
       <header>
-         <h1>Summary</h1>
+        <h1>Summary</h1>
       </header>
       <main>
         {loading ? (
@@ -77,14 +76,7 @@ function ShoppingList() {
         )}
       </main>
       <footer>
-        <Link aria-label="storage area" to={"/"} className="navicon">
-          <HomeIcon />
-          <div>Storage Area</div>
-        </Link>
-        <div aria-label="summary" className="navicon selected">
-          <ChecklistIcon />
-          <div>Summary</div>
-        </div>
+        <Navbar />
       </footer>
     </div>
   );
