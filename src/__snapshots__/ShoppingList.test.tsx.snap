@@ -6,15 +6,6 @@ exports[`ShoppingList renders correctly 1`] = `
     class="shopping-list"
   >
     <header>
-      <button
-        aria-label="back"
-        class="back"
-        type="button"
-      >
-        <svg>
-          arrow-left.svg
-        </svg>
-      </button>
       <h1>
         Summary
       </h1>
@@ -63,6 +54,31 @@ exports[`ShoppingList renders correctly 1`] = `
         </div>
       </div>
     </main>
+    <footer>
+      <a
+        aria-label="storage area"
+        class="navicon"
+        href="/"
+      >
+        <svg>
+          home.svg
+        </svg>
+        <div>
+          Storage Area
+        </div>
+      </a>
+      <div
+        aria-label="summary"
+        class="navicon selected"
+      >
+        <svg>
+          checklist.svg
+        </svg>
+        <div>
+          Summary
+        </div>
+      </div>
+    </footer>
   </div>
 </div>
 `;

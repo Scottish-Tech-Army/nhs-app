@@ -19,7 +19,6 @@
   font-style: normal;
 }
 
-
 .storage-area header,
 .box-details header,
 .shopping-list header {
@@ -76,7 +75,8 @@
 }
 
 .storage-area main,
-.box-details main {
+.box-details main,
+.shopping-list main {
   flex: 1;
   position: relative;
   margin-bottom: 104px;
@@ -220,6 +220,7 @@
 }
 
 .storage-area footer,
+.shopping-list footer,
 .box-details footer {
   position: absolute;
   left: 0%;
@@ -235,7 +236,6 @@
   align-items: center;
 }
 
-
 .box-details footer button.save {
   margin-left: 24px;
   margin-right: 24px;
@@ -246,9 +246,7 @@
   flex-grow: 1;
 }
 
-
-
-.storage-area footer .navicon {
+footer .navicon {
   margin-left: 24px;
   margin-right: 24px;
   height: 56px;
@@ -263,15 +261,14 @@
   font-size: 9px;
 }
 
-.storage-area footer .navicon:hover,
-.storage-area footer .navicon.selected {
-  color: #025bbb ;
+footer .navicon:hover,
+footer .navicon.selected {
+  color: #025bbb;
 }
 
-.storage-area footer .navicon svg {
+footer .navicon svg {
   fill: currentColor;
 }
-
 
 .item-details {
   display: flex;

@@ -47,9 +47,9 @@ describe("ShoppingList", () => {
 
     renderWithProvider(<ShoppingList />);
 
-    expect(screen.getByText("Summary")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
 
-    await waitFor(() => expect(screen.getByText("No Items")).toBeDefined());
+    expect(await screen.findByText("No Items")).toBeDefined();
 
     await checkShoppingList([]);
   });
@@ -59,7 +59,7 @@ describe("ShoppingList", () => {
 
     renderWithProvider(<ShoppingList />);
 
-    expect(screen.getByText("Summary")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
 
     expect(screen.getByText("Fetching Items")).toBeDefined();
 
@@ -97,8 +97,8 @@ describe("ShoppingList", () => {
     await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
     expect(fetchMock).toBeCalledWith(TEST_INVENTORY_API_ENDPOINT + "boxes");
 
-    expect(screen.getByText("Summary")).toBeDefined();
-    await waitFor(() => expect(screen.getByText("No Items")).toBeDefined());
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(await screen.findByText("No Items")).toBeDefined();
 
     await checkShoppingList([]);
   });
@@ -108,7 +108,7 @@ describe("ShoppingList", () => {
 
     renderWithProvider(<ShoppingList />);
 
-    expect(screen.getByText("Summary")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
 
     await checkShoppingList([
       {
@@ -142,7 +142,7 @@ describe("ShoppingList", () => {
 
     expect(history.location.pathname).toEqual("/needed");
 
-    await user.click(screen.getByRole("button", { name: "storage area" }));
+    await user.click(screen.getByRole("link", { name: "storage area" }));
 
     expect(history.location.pathname).toEqual("/");
   });

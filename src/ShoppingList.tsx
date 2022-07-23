@@ -1,11 +1,12 @@
 import { format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getAreaContents } from "./data/BoxContentsSlice";
 import { EIBox } from "./data/StorageTypes";
 import { useAppSelector } from "./data/store";
 import { getItemDisplayName } from "./data/TraumaTower";
-import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
+import { ReactComponent as HomeIcon } from "./icons/home.svg";
+import { ReactComponent as ChecklistIcon } from "./icons/checklist.svg";
 
 export type FormValueType = {
   name: string;
@@ -33,19 +34,20 @@ function ShoppingList() {
   }, []);
 
   useAppSelector(getAreaContents);
-  let navigate = useNavigate();
 
   function getDisplayTime(isoDateTime: string) {
-    const timestamp = parseISO(isoDateTime)
-    return format(timestamp, "EEE d/M/yyyy 'at' HH:mm")
+    const timestamp = parseISO(isoDateTime);
+    return format(timestamp, "EEE d/M/yyyy 'at' HH:mm");
   }
 
   function getBoxShoppingList(box: EIBox, index: number) {
     return (
       <div key={index} className="box">
         <div>
-        <h2>{`${box.name} - Box ${box.boxNumber}`}</h2>
-        <div className="checker">{`Checked by ${box.checker} on ${getDisplayTime(box.checkTime)}`}</div>
+          <h2>{`${box.name} - Box ${box.boxNumber}`}</h2>
+          <div className="checker">{`Checked by ${
+            box.checker
+          } on ${getDisplayTime(box.checkTime)}`}</div>
         </div>
 
         <div className="items">
@@ -61,15 +63,7 @@ function ShoppingList() {
   return (
     <div className="shopping-list">
       <header>
-        <button
-          type="button"
-          className="back"
-          aria-label="back"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft />
-        </button>
-        <h1>Summary</h1>
+         <h1>Summary</h1>
       </header>
       <main>
         {loading ? (
@@ -82,6 +76,16 @@ function ShoppingList() {
           <div className="nothing-to-replace">No Items</div>
         )}
       </main>
+      <footer>
+        <Link aria-label="storage area" to={"/"} className="navicon">
+          <HomeIcon />
+          <div>Storage Area</div>
+        </Link>
+        <div aria-label="summary" className="navicon selected">
+          <ChecklistIcon />
+          <div>Summary</div>
+        </div>
+      </footer>
     </div>
   );
 }
