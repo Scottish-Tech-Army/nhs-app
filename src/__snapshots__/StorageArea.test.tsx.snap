@@ -115,6 +115,18 @@ exports[`StorageArea renders correctly 1`] = `
             Summary
           </div>
         </a>
+        <div
+          aria-label="log out"
+          class="navicon"
+          id="auth-signout"
+        >
+          <svg>
+            logout.svg
+          </svg>
+          <div>
+            Log Out
+          </div>
+        </div>
       </nav>
     </footer>
   </div>

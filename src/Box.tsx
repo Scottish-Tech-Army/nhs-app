@@ -3,21 +3,22 @@ import {
   getBoxName,
   getItemDisplayName,
   TRAUMA_TOWER_TEMPLATE,
-} from "./data/TraumaTower";
+} from "./model/TraumaTower";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   BoxTemplate,
   EIBoxInput,
   EIMissingBoxItem,
   ItemTemplate,
-} from "./data/StorageTypes";
-import { getCurrentUser } from "./data/BoxContentsSlice";
-import { useAppSelector } from "./data/store";
+} from "./model/StorageTypes";
+import { useAppSelector } from "./model/store";
 import "./App.css";
 import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
 import { ReactComponent as InfoCircle } from "./icons/info-circle.svg";
 import { ReactComponent as Plus } from "./icons/add.svg";
 import { ReactComponent as Minus } from "./icons/minus.svg";
+import { Auth } from "@aws-amplify/auth";
+import { getUser } from "./model/auth/AuthSlice";
 
 // Icons vuesax linear. Licence: https://iconsax.io/#license
 
@@ -69,7 +70,7 @@ function Box() {
     boxNumber = Number.parseInt(boxId);
   }
 
-  const currentUser = useAppSelector(getCurrentUser());
+  const currentUser = useAppSelector(getUser);
 
   const [boxTemplate, setBoxTemplate] = useState<BoxTemplate>();
   const [itemCounts, setItemCounts] = useState<number[]>();
@@ -88,31 +89,45 @@ function Box() {
   }, [boxTemplateId, boxNumber]);
 
   async function handleSubmit() {
-    await fetch(CHECK_API_ENDPONT, {
-      method: "POST",
-      body: JSON.stringify(
-        calculateBoxMissingItems(
-          boxTemplate!,
-          boxNumber,
-          itemCounts!,
-          currentUser
-        )
-      ),
-    }).then(({ status }) => status === 200 && navigate("/"));
+    await Auth.currentSession()
+      .then((session) =>
+        fetch(CHECK_API_ENDPONT, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
+          },
+          body: JSON.stringify(
+            calculateBoxMissingItems(
+              boxTemplate!,
+              boxNumber,
+              itemCounts!,
+              currentUser!.name
+            )
+          ),
+        })
+      )
+      .then(({ status }) => status === 200 && navigate("/"));
   }
 
   async function handleClickFull() {
-    await fetch(CHECK_API_ENDPONT, {
-      method: "POST",
-      body: JSON.stringify({
-        boxTemplateId: boxTemplate!.boxTemplateId,
-        boxNumber,
-        name: boxTemplate!.name,
-        missingItems: [],
-        isFull: true,
-        checker: currentUser,
-      }),
-    }).then(({ status }) => status === 200 && navigate("/"));
+    await Auth.currentSession()
+      .then((session) =>
+        fetch(CHECK_API_ENDPONT, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
+          },
+          body: JSON.stringify({
+            boxTemplateId: boxTemplate!.boxTemplateId,
+            boxNumber,
+            name: boxTemplate!.name,
+            missingItems: [],
+            isFull: true,
+            checker: currentUser!.name,
+          }),
+        })
+      )
+      .then(({ status }) => status === 200 && navigate("/"));
   }
 
   function preventExtraClickEvents(

@@ -4,11 +4,15 @@ import { getByRole, screen } from "@testing-library/react";
 import localforage from "localforage";
 import React from "react";
 import App from "./App";
-import { renderWithProvider } from "./testUtils";
+import { INITIAL_SIGNED_IN_STATE, renderWithProvider } from "./testUtils";
+
+jest.mock("@aws-amplify/core");
 
 describe("App", () => {
   it("renders default view", async () => {
-    const { user } = renderWithProvider(<App />);
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
@@ -17,7 +21,9 @@ describe("App", () => {
   });
 
   it("renders shopping list view", async () => {
-    const { user } = renderWithProvider(<App />);
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(screen.getByRole("link", { name: "summary" }));
@@ -27,7 +33,9 @@ describe("App", () => {
   });
 
   it("renders box view", async () => {
-    const { user } = renderWithProvider(<App />);
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
@@ -40,7 +48,9 @@ describe("App", () => {
   });
 
   it("renders item view from box view", async () => {
-    const { user } = renderWithProvider(<App />);
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
@@ -59,7 +69,9 @@ describe("App", () => {
   });
 
   it("disclaimer must be accepted to continue", async () => {
-    const { user } = renderWithProvider(<App />);
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
 
     expect(
       screen.getByText(
@@ -74,5 +86,12 @@ describe("App", () => {
         "This application is for demo use only. It is not intended for real life use."
       )
     ).toBeNull();
+  });
+
+  it("signin page if not signed in", async () => {
+    renderWithProvider(<App />);
+
+    expect(screen.getByText("Username")).toBeDefined();
+    expect(screen.getByText("Password")).toBeDefined();
   });
 });

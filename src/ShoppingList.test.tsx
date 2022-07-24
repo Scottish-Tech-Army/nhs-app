@@ -5,8 +5,11 @@ import { screen, waitFor } from "@testing-library/react";
 
 import ShoppingList from "./ShoppingList";
 import { renderWithProvider } from "./testUtils";
-import { EIBox } from "./data/StorageTypes";
+import { EIBox } from "./model/StorageTypes";
 import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
+import { Auth } from "@aws-amplify/auth";
+
+jest.mock("@aws-amplify/auth");
 
 const TIMESTAMP = "2022-06-23T09:18:06.324Z";
 const DISPLAY_TIMESTAMP = "Thu 23/6/2022 at 10:18";
@@ -42,6 +45,16 @@ const BOXES: EIBox[] = [
 ];
 
 describe("ShoppingList", () => {
+  beforeEach(() => {
+    (Auth.currentSession as jest.Mock).mockImplementation(() => {
+      return Promise.resolve({
+        getIdToken: () => {
+          return { getJwtToken: () => "test jwt token" };
+        },
+      });
+    });
+  });
+
   it("rendered a shopping list page for filled store - no boxes recorded", async () => {
     fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
 
@@ -101,7 +114,12 @@ describe("ShoppingList", () => {
       initialRoutes: ["/summary"],
     });
     await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
-    expect(fetchMock).toBeCalledWith(TEST_INVENTORY_API_ENDPOINT + "boxes");
+    expect(fetchMock).toBeCalledWith(
+      TEST_INVENTORY_API_ENDPOINT + "boxes",
+      expect.objectContaining({
+        headers: { Authorization: "Bearer test jwt token" },
+      })
+    );
 
     expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
     expect(await screen.findByText("No Items")).toBeDefined();

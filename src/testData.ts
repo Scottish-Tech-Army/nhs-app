@@ -1,5 +1,5 @@
-import { BoxContents, StorageAreaContents } from "./data/StorageTypes";
-import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
+import { BoxContents, StorageAreaContents } from "./model/StorageTypes";
+import { TRAUMA_TOWER_TEMPLATE } from "./model/TraumaTower";
 
 export const FULL_CHEST_DRAIN_BOX: Omit<BoxContents, "boxNumber"> = {
   boxTemplateId: "0",

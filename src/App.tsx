@@ -1,23 +1,45 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import StorageArea from "./StorageArea";
-import { useAppDispatch } from "./data/store";
-import { refreshState } from "./data/BoxContentsSlice";
+import { useAppDispatch, useAppSelector } from "./model/store";
+import { refreshState } from "./model/BoxContentsSlice";
 
 import Box from "./Box";
 import ShoppingList from "./ShoppingList";
 import ItemDetails from "./ItemDetails";
+import { isAuthenticating, SignIn } from "./auth/SignIn";
+import { getAuthState } from "./model/auth/AuthSlice";
+import { Amplify } from "@aws-amplify/core";
 
+const awsConfig = {
+  Auth: {
+    region: process.env.REACT_APP_AWS_REGION,
+    userPoolId: process.env.REACT_APP_AWS_USER_POOL_ID,
+    userPoolWebClientId: process.env.REACT_APP_AWS_USER_POOL_WEB_CLIENT_ID,
+  },
+};
+
+// eslint-disable-next-line jest/require-hook
+console.debug("Configure", Amplify.configure(awsConfig));
 
 function App() {
   const dispatch = useAppDispatch();
-  
+  const authState = useAppSelector(getAuthState);
+
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
 
   useEffect(() => {
     dispatch(refreshState());
   }, [dispatch]);
+
+  if (isAuthenticating(authState)) {
+    return (
+      <div className="root">
+        <SignIn />
+      </div>
+    );
+  }
 
   return (
     <div className="root">

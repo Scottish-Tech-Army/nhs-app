@@ -9,6 +9,7 @@ const { Bucket } = require("aws-cdk-lib/aws-s3");
 const cloudfront = require("aws-cdk-lib/aws-cloudfront");
 const origins = require("aws-cdk-lib/aws-cloudfront-origins");
 const s3deploy = require("aws-cdk-lib/aws-s3-deployment");
+const cognito = require("aws-cdk-lib/aws-cognito");
 
 const app = new cdk.App();
 const envStageName = app.node.tryGetContext("env");
@@ -20,7 +21,6 @@ if (!envStageName) {
   );
 }
 
-
 const frontendStackId = "STA-NHS-Inventory-Frontend-" + envStageName;
 
 // S3 has a global name restriction per region.
@@ -29,9 +29,7 @@ const FRONTEND_BUCKET_NAME = frontendStackId;
 const FRONTEND_DISTRIBUTION_NAME = frontendStackId + "-Distribution";
 const FRONTEND_DEPLOY_NAME = frontendStackId + "-DeployWithInvalidation";
 
-
 class CdkFrontendStack extends cdk.Stack {
-
   constructor(scope) {
     super(scope, frontendStackId);
 
@@ -68,13 +66,10 @@ class CdkFrontendStack extends cdk.Stack {
   }
 }
 
-
-
 const backendStackId = "STA-NHS-Inventory-Backend-" + envStageName;
 const resourcePrefix = "STA-NHS-Inventory-" + envStageName;
 
 class CdkBackendStack extends cdk.Stack {
-
   constructor(scope) {
     super(scope, backendStackId);
 
@@ -83,12 +78,16 @@ class CdkBackendStack extends cdk.Stack {
     const region = stack.region;
 
     const BOXES_TABLE_NAME = resourcePrefix + "-Boxes";
+    const USERPOOL_ID = resourcePrefix + "-UserPool";
 
     // Database tables for locations and units
 
     const boxesTable = new dynamodb.Table(this, "Boxes", {
       tableName: BOXES_TABLE_NAME,
-      partitionKey: { name: "boxTemplateId", type: dynamodb.AttributeType.STRING },
+      partitionKey: {
+        name: "boxTemplateId",
+        type: dynamodb.AttributeType.STRING,
+      },
       sortKey: { name: "boxNumber", type: dynamodb.AttributeType.NUMBER },
     });
     new cdk.CfnOutput(this, "Boxes table", {
@@ -114,7 +113,12 @@ class CdkBackendStack extends cdk.Stack {
       },
     });
 
-    boxesTable.grant(inventoryLambda, "dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Scan");
+    boxesTable.grant(
+      inventoryLambda,
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:Scan"
+    );
 
     // API gateway
 
@@ -122,28 +126,93 @@ class CdkBackendStack extends cdk.Stack {
       handler: inventoryLambda,
       proxy: false,
       restApiName: "Emergency Inventory Client Service (" + envStageName + ")",
-      description: "This service provides the Emergency Inventory app functions.",
+      description:
+        "This service provides the Emergency Inventory app functions.",
       defaultCorsPreflightOptions: {
-        allowHeaders: ['Content-Type'],
+        allowHeaders: ["Content-Type", "Authorization"],
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,
       },
       deployOptions: {
-        stageName: envStageName
-      }
+        stageName: envStageName,
+      },
     });
     new cdk.CfnOutput(this, "Emergency Inventory client API endpoint", {
       value: restApi.urlForPath(),
       description: "API Gateway endpoint for Emergency Inventory API",
     });
 
+    const clientUserPool = new cognito.UserPool(
+      this,
+      "NhsInventoryAppUserPool",
+      {
+        userPoolName: USERPOOL_ID,
+        selfSignUpEnabled: false,
+        passwordPolicy: {
+          minLength: 6,
+          requireLowercase: false,
+          requireUppercase: false,
+          requireDigits: false,
+          requireSymbols: false,
+        },
+      }
+    );
+    clientUserPool.node.defaultChild.applyRemovalPolicy(
+      cdk.RemovalPolicy.RETAIN
+    );
+    new cdk.CfnOutput(this, "NhsInventoryApp user pool id", {
+      value: clientUserPool.userPoolId,
+      description: "User pool id for NHS Inventory app users",
+    });
+
+    const clientUserPoolAppClient = clientUserPool.addClient(
+      "NhsInventoryAppUserPoolAppClient",
+      {
+        accessTokenValidity: cdk.Duration.minutes(60),
+        idTokenValidity: cdk.Duration.minutes(60),
+        refreshTokenValidity: cdk.Duration.days(30),
+      }
+    );
+    new cdk.CfnOutput(this, "NhsInventoryApp user pool web client id", {
+      value: clientUserPoolAppClient.userPoolClientId,
+      description: "User pool web client id for survey users",
+    });
+
+    const apiAuthoriser = new apigateway.CfnAuthorizer(
+      this,
+      "NhsInventoryAppApiAuth",
+      {
+        restApiId: restApi.restApiId,
+        type: "COGNITO_USER_POOLS",
+        identitySource: "method.request.header.Authorization",
+        providerArns: [clientUserPool.userPoolArn],
+        name: "NhsInventoryAppApiAuth",
+      }
+    );
+
     // API GET /boxes
-    const racksApiResource = restApi.root.addResource("boxes");
-    racksApiResource.addMethod("GET");
+    const boxesApiResource = restApi.root.addResource("boxes");
+    let method = boxesApiResource.addMethod("GET");
+    let methodResource = method.node.findChild("Resource");
+    methodResource.addPropertyOverride(
+      "AuthorizationType",
+      "COGNITO_USER_POOLS"
+    );
+    methodResource.addPropertyOverride("AuthorizerId", {
+      Ref: apiAuthoriser.logicalId,
+    });
 
     // API POST /check
     const checkApiResource = restApi.root.addResource("check");
-    checkApiResource.addMethod("POST");
+    method = checkApiResource.addMethod("POST");
+    methodResource = method.node.findChild("Resource");
+    methodResource.addPropertyOverride(
+      "AuthorizationType",
+      "COGNITO_USER_POOLS"
+    );
+    methodResource.addPropertyOverride("AuthorizerId", {
+      Ref: apiAuthoriser.logicalId,
+    });
   }
 }
 

@@ -1,17 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { StorageAreaContents } from "./StorageTypes";
-import { RootState } from "./store";
+import { AppThunk, RootState } from "./store";
 import { TRAUMA_TOWER_TEMPLATE } from "./TraumaTower";
 import localforage from "localforage";
-import { ThunkAction } from "redux-thunk";
-import { AnyAction } from "redux";
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  AnyAction
->;
 
 localforage.config({
   name: "nhs-inventory",

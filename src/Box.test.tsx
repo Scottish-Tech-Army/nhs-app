@@ -9,12 +9,27 @@ import { renderWithProvider } from "./testUtils";
 import fetchMock from "jest-fetch-mock";
 
 import Box from "./Box";
-import { EIBoxInput } from "./data/StorageTypes";
+import { EIBoxInput } from "./model/StorageTypes";
 import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
+import { Auth } from "@aws-amplify/auth";
+import { SIGNED_IN } from "./model/auth/AuthStates";
 
 const CHECK_API_ENDPONT = TEST_INVENTORY_API_ENDPOINT + "check";
+const TEST_USERNAME = "test user";
+
+jest.mock("@aws-amplify/auth");
 
 describe("Box", () => {
+  beforeEach(() => {
+    (Auth.currentSession as jest.Mock).mockImplementation(() => {
+      return Promise.resolve({
+        getIdToken: () => {
+          return { getJwtToken: () => "test jwt token" };
+        },
+      });
+    });
+  });
+
   it("rendered a box page", async () => {
     renderWithRoute("0", "3");
     expect(screen.getByText("Trauma Chest Drain - Box 3")).toBeDefined();
@@ -125,7 +140,7 @@ describe("Box", () => {
         { quantity: 1, name: "Spencer wells forceps", size: "Straight 20cm" },
       ],
       isFull: false,
-      checker: "Bob",
+      checker: TEST_USERNAME,
     };
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
@@ -133,6 +148,7 @@ describe("Box", () => {
       CHECK_API_ENDPONT,
       expect.objectContaining({
         method: "POST",
+        headers: { Authorization: "Bearer test jwt token" },
       })
     );
     const actualPayload = JSON.parse(
@@ -190,7 +206,7 @@ describe("Box", () => {
         { quantity: 1, name: "Spencer wells forceps", size: "Straight 20cm" },
       ],
       isFull: false,
-      checker: "Bob",
+      checker: TEST_USERNAME,
     };
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
@@ -198,6 +214,7 @@ describe("Box", () => {
       CHECK_API_ENDPONT,
       expect.objectContaining({
         method: "POST",
+        headers: { Authorization: "Bearer test jwt token" },
       })
     );
     const actualPayload = JSON.parse(
@@ -220,7 +237,7 @@ describe("Box", () => {
       name: "Trauma Chest Drain",
       missingItems: [],
       isFull: true,
-      checker: "Bob",
+      checker: TEST_USERNAME,
     };
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
@@ -228,6 +245,7 @@ describe("Box", () => {
       CHECK_API_ENDPONT,
       expect.objectContaining({
         method: "POST",
+        headers: { Authorization: "Bearer test jwt token" },
       })
     );
     const actualPayload = JSON.parse(
@@ -250,7 +268,7 @@ describe("Box", () => {
       name: "Trauma Chest Drain",
       missingItems: [],
       isFull: true,
-      checker: "Bob",
+      checker: TEST_USERNAME,
     };
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
@@ -258,6 +276,7 @@ describe("Box", () => {
       CHECK_API_ENDPONT,
       expect.objectContaining({
         method: "POST",
+        headers: { Authorization: "Bearer test jwt token" },
       })
     );
     const actualPayload = JSON.parse(
@@ -302,7 +321,16 @@ describe("Box", () => {
         <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
         <Route path="*" element={<div>Unknown path</div>} />
       </Routes>,
-      { initialRoutes: ["/", `/box/${boxTemplateId}/${boxId}`] }
+      {
+        initialRoutes: ["/", `/box/${boxTemplateId}/${boxId}`],
+        preloadedState: {
+          auth: {
+            authState: SIGNED_IN,
+            user: { name: TEST_USERNAME },
+            errorMessage: "",
+          },
+        },
+      }
     );
   }
 });

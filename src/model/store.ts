@@ -1,10 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { AnyAction, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import  authReducer  from "./auth/AuthSlice";
 import boxContentsReducer from "./BoxContentsSlice";
 
 export const createStore = () =>
   configureStore({
     reducer: {
+      auth: authReducer,
       boxContents: boxContentsReducer,
     },
   });
@@ -15,6 +17,13 @@ const store = createStore();
 export type AppStore = typeof store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  AnyAction
+>;
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
