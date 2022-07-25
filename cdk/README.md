@@ -45,14 +45,17 @@ cdk deploy [--profile AWS_PROFILE] --context env=dev
 The CDK will create and deploy a CloudFormation stack of the backend AWS components. If it completes successfully, it will return output like:
 
 ```
- ✅  EmergencyInventory-Backend-dev
+ ✅  STA-NHS-Inventory-Backend-dev
 
 Outputs:
-EmergencyInventory-Backend-dev.Boxestable = EmergencyInventory-dev-Boxes
-EmergencyInventory-Backend-dev.EmergencyInventoryclientAPIendpoint = https://XXXXXXXXXX.execute-api.eu-west-2.amazonaws.com/dev/
-EmergencyInventory-Backend-dev.InventoryClientApiEndpoint99B6C40C = https://XXXXXXXXXX.execute-api.eu-west-2.amazonaws.com/dev/
+STA-NHS-Inventory-Backend-dev.Boxestable = STA-NHS-Inventory-dev-Boxes
+STA-NHS-Inventory-Backend-dev.EmergencyInventoryclientAPIendpoint = https://XXXXXXXXXX.execute-api.eu-west-2.amazonaws.com/dev/
+STA-NHS-Inventory-Backend-dev.InventoryClientApiEndpoint99B6C40C = https://XXXXXXXXXX.execute-api.eu-west-2.amazonaws.com/dev/
+STA-NHS-Inventory-Backend-dev.NhsInventoryAppuserpoolid = eu-west-2_XXXXXXXXX
+STA-NHS-Inventory-Backend-dev.NhsInventoryAppuserpoolwebclientid = XXXXXXXXXXXXXXXXXXXXXXXXX
+
 Stack ARN:
-arn:aws:cloudformation:eu-west-2:802141162806:stack/EmergencyInventory-Backend-dev/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+arn:aws:cloudformation:eu-west-2:XXXXXXXXXXXXX:stack/STA-NHS-Inventory-Backend-dev/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
 ```
 
 These outputs are also shown in the outputs section of the CloudformationStack in the AWS Console. They are used to populate the environment specific parameters in the build of the frontend client.
@@ -61,8 +64,9 @@ These outputs are also shown in the outputs section of the CloudformationStack i
 
 The Emergency Inventory backend consists of:
 
-- A DominoDB table of box checks 
+- A DynamoDB table of box checks 
 - Lambda function processing the client API requests.
 - API Gateway wrapper for this lambda function.
+- A Cognito user pool to API authorisation.
 
 The DynamoDB tables are set to retain on delete, with fixed resource names to avoid a CloudFormation update replacing them (as their contents are not easily replaced).

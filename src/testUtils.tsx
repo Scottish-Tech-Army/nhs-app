@@ -11,14 +11,17 @@ import userEvent from "@testing-library/user-event";
 import { configureStore } from "@reduxjs/toolkit";
 import type { PreloadedState } from "@reduxjs/toolkit";
 
-import type { AppStore, RootState } from "./data/store";
+import type { RootState } from "./model/store";
 import boxContentsReducer, {
-  createInitialState,
-} from "./data/BoxContentsSlice";
+  createInitialState as boxContentsInitialState,
+} from "./model/BoxContentsSlice";
+import authReducer, {
+  initialState as authInitialState,
+} from "./model/auth/AuthSlice";
+import { SIGNED_IN } from "./model/auth/AuthStates";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
-  preloadedState?: PreloadedState<RootState>;
-  store?: AppStore;
+  preloadedState?: PreloadedState<Partial<RootState>>;
   initialRoutes?: string[];
 }
 
@@ -26,15 +29,19 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
 export function renderWithProvider(
   component: React.ReactElement,
   {
-    preloadedState = { boxContents: createInitialState() },
-    store = configureStore({
-      reducer: { boxContents: boxContentsReducer },
-      preloadedState,
-    }),
+    preloadedState = undefined,
     initialRoutes = ["/"],
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
+  const store = configureStore({
+    reducer: { auth: authReducer, boxContents: boxContentsReducer },
+    preloadedState: {
+      auth: authInitialState(),
+      boxContents: boxContentsInitialState(),
+      ...preloadedState,
+    },
+  });
   const user = userEvent.setup();
   let history = createMemoryHistory({ initialEntries: initialRoutes });
   return {
@@ -49,3 +56,12 @@ export function renderWithProvider(
     ),
   };
 }
+
+export const INITIAL_SIGNED_IN_STATE: Partial<RootState> = {
+  auth: {
+    authState: SIGNED_IN,
+    user: { name: "jsmith" },
+    errorMessage: "",
+  },
+  boxContents: boxContentsInitialState(),
+};

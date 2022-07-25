@@ -17,6 +17,18 @@ const BOX_TITLES = [
   "Trauma Chest Drain - Box 6",
 ];
 
+const TEST_USER = Cypress.env("cognito_username");
+
+beforeEach(() => {
+  cy.visit(LOCAL_HOST_PORT);
+  cy.getByLabel("Username").should("have.value", "").type(TEST_USER);
+  cy.getByLabel("Password")
+    .should("have.value", "")
+    .type(Cypress.env("cognito_password"));
+  cy.contains("Log In").click();
+  cy.contains(DISCLAIMER_TEXT);
+});
+
 describe("disclaimer pop-up", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
@@ -53,7 +65,6 @@ describe("directory", () => {
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
   });
-
 });
 
 describe("summary", () => {
@@ -65,7 +76,7 @@ describe("summary", () => {
   });
 
   it("empty summary page", () => {
-    cy.root().find('[aria-label="summary"]').click()
+    cy.root().find('[aria-label="summary"]').click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
 
@@ -98,9 +109,12 @@ describe("summary", () => {
       .click();
     cy.contains("Save").click();
 
-    const checkerString = `Checked by Bob on ${format(Date.now(), "EEE d/M/yyyy 'at' HH:")}`
+    const checkerString = `Checked by ${TEST_USER} on ${format(
+      Date.now(),
+      "EEE d/M/yyyy 'at' HH:"
+    )}`;
 
-    cy.root().find('[aria-label="summary"]').click()
+    cy.root().find('[aria-label="summary"]').click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
 
@@ -123,12 +137,10 @@ describe("summary", () => {
         cy.contains("1 x Sterile gloves (Medium)").should("not.exist");
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
       });
-    
+
     cy.root().find('[aria-label="directory"]').click();
     cy.contains(STORAGE_AREA_TITLE);
-
   });
-
 
   function markAllBoxesFull() {
     BOX_TITLES.forEach((title) => {

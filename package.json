@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/auth": "^4.5.10",
+    "@aws-amplify/core": "^4.5.10",
     "@reduxjs/toolkit": "^1.8.3",
     "date-fns": "^2.28.0",
     "localforage": "^1.10.0",
@@ -18,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "cypress open"
+    "cypress:open": "env-cmd -f .env.local cypress open"
   },
   "eslintConfig": {
     "extends": [

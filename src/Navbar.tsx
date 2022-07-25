@@ -1,7 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { SignOut } from "./auth/SignOut";
 import { ReactComponent as HomeIcon } from "./icons/home.svg";
 import { ReactComponent as ChecklistIcon } from "./icons/checklist.svg";
+// Icon SVGs downloaded from https://fonts.google.com/icons?icon.style=Filled&icon.set=Material+Icons under Apache licence
 
 function Navbar() {
   return (
@@ -22,6 +24,7 @@ function Navbar() {
         <ChecklistIcon />
         <div>Summary</div>
       </NavLink>
+      <SignOut />
     </nav>
   );
 }

@@ -1,9 +1,10 @@
+import { Auth } from "@aws-amplify/auth";
 import { format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { getAreaContents } from "./data/BoxContentsSlice";
-import { EIBox } from "./data/StorageTypes";
-import { useAppSelector } from "./data/store";
-import { getItemDisplayName } from "./data/TraumaTower";
+import { getAreaContents } from "./model/BoxContentsSlice";
+import { EIBox } from "./model/StorageTypes";
+import { useAppSelector } from "./model/store";
+import { getItemDisplayName } from "./model/TraumaTower";
 
 import Navbar from "./Navbar";
 
@@ -20,7 +21,14 @@ function Summary() {
   const partiallyFullBoxes = boxes.filter((box) => !box.isFull);
 
   useEffect(() => {
-    fetch(BOXES_API_ENDPONT)
+    Auth.currentSession()
+      .then((session) =>
+        fetch(BOXES_API_ENDPONT, {
+          headers: {
+            Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
+          },
+        })
+      )
       .then((response) => response.json())
       .then((data) => {
         setBoxes(data);

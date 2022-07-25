@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component SignOut logout popup confirm logs user out 1`] = `
+<div>
+  <div
+    aria-label="log out"
+    class="navicon"
+    id="auth-signout"
+  >
+    <svg>
+      logout.svg
+    </svg>
+    <div>
+      Log Out
+    </div>
+  </div>
+  <div
+    class="confirm-reset-popup"
+  >
+    <h2>
+      Log out
+    </h2>
+    <div
+      class="message"
+    >
+      Are you sure you want to leave?
+    </div>
+    <button
+      class="confirm-yes"
+      type="button"
+    >
+      YES
+    </button>
+    <button
+      class="confirm-no"
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
+  <div
+    class="modal-overlay"
+  />
+</div>
+`;

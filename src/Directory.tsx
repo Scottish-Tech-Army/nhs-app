@@ -1,11 +1,10 @@
 import React from "react";
 import "./App.css";
-import { BoxTemplate } from "./data/StorageTypes";
-import { TRAUMA_TOWER_TEMPLATE } from "./data/TraumaTower";
+import { BoxTemplate } from "./model/StorageTypes";
+import { TRAUMA_TOWER_TEMPLATE } from "./model/TraumaTower";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as EditIcon } from "./icons/edit.svg";
 import Navbar from "./Navbar";
-// Icon SVGs downloaded from https://fonts.google.com/icons?icon.style=Filled&icon.set=Material+Icons under Apache licence
 
 function Directory() {
   let navigate = useNavigate();

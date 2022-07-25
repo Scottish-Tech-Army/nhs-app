@@ -1,5 +1,5 @@
 import React from "react";
-import { getItemTemplate } from "./data/TraumaTower";
+import { getItemTemplate } from "./model/TraumaTower";
 import { useNavigate, useParams } from "react-router-dom";
 import "./App.css";
 import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";

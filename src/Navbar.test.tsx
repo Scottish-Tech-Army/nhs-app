@@ -14,6 +14,8 @@ describe("Navbar", () => {
       "active"
     );
     expect(screen.getByRole("link", { name: "summary" })).toHaveClass("active");
+
+    expect(screen.getByLabelText("log out")).not.toHaveClass("active");
   });
 
   it("renders for directory", () => {
@@ -27,6 +29,8 @@ describe("Navbar", () => {
     expect(screen.getByRole("link", { name: "summary" })).not.toHaveClass(
       "active"
     );
+
+    expect(screen.getByLabelText("log out")).not.toHaveClass("active");
 
     expect(container).toMatchSnapshot();
   });
@@ -57,5 +61,12 @@ describe("Navbar", () => {
     await user.click(screen.getByRole("link", { name: "summary" }));
 
     expect(history.location.pathname).toEqual("/summary");
+  });
+
+  it("shows logout confirmation", async () => {
+    const { user } = renderWithProvider(<Navbar />);
+    await user.click(screen.getByLabelText("log out"));
+
+    expect(screen.getByText("Are you sure you want to leave?")).toBeDefined();
   });
 });
