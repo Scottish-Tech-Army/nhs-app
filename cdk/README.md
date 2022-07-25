@@ -64,7 +64,7 @@ These outputs are also shown in the outputs section of the CloudformationStack i
 
 The Emergency Inventory backend consists of:
 
-- A DominoDB table of box checks 
+- A DynamoDB table of box checks 
 - Lambda function processing the client API requests.
 - API Gateway wrapper for this lambda function.
 - A Cognito user pool to API authorisation.
