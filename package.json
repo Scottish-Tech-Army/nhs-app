@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "cypress open"
+    "cypress:open": "env-cmd -f .env.local cypress open"
   },
   "eslintConfig": {
     "extends": [

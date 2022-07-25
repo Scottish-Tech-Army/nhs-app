@@ -8,4 +8,9 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  env: {
+    cognito_username: process.env.AWS_COGNITO_TEST_USERNAME,
+    cognito_password: process.env.AWS_COGNITO_TEST_PASSWORD,
+    // awsConfig: awsConfig.default
+  }
 });
