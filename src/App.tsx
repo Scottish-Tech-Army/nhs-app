@@ -1,12 +1,12 @@
 import React, { useState, useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import StorageArea from "./StorageArea";
+import Directory from "./Directory";
 import { useAppDispatch } from "./data/store";
 import { refreshState } from "./data/BoxContentsSlice";
 
 import Box from "./Box";
-import ShoppingList from "./ShoppingList";
+import Summary from "./Summary";
 import ItemDetails from "./ItemDetails";
 
 
@@ -24,8 +24,8 @@ function App() {
       <Routes>
         <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
         <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
-        <Route path="summary" element={<ShoppingList />} />
-        <Route path="*" element={<StorageArea />} />
+        <Route path="summary" element={<Summary />} />
+        <Route path="*" element={<Directory />} />
       </Routes>
       {!disclaimerAccepted && (
         <>

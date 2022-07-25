@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ShoppingList renders correctly 1`] = `
+exports[`Summary renders correctly 1`] = `
 <div>
   <div
-    class="shopping-list"
+    class="summary-list"
   >
     <header>
       <h1>
@@ -57,7 +57,7 @@ exports[`ShoppingList renders correctly 1`] = `
     <footer>
       <nav>
         <a
-          aria-label="storage area"
+          aria-label="directory"
           class="navicon"
           href="/"
         >
@@ -65,7 +65,7 @@ exports[`ShoppingList renders correctly 1`] = `
             home.svg
           </svg>
           <div>
-            Storage Area
+            Directory
           </div>
         </a>
         <a

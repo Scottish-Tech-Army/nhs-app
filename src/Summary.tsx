@@ -14,7 +14,7 @@ export type FormValueType = {
 
 const BOXES_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}boxes`;
 
-function ShoppingList() {
+function Summary() {
   const [boxes, setBoxes] = useState<EIBox[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const partiallyFullBoxes = boxes.filter((box) => !box.isFull);
@@ -60,7 +60,7 @@ function ShoppingList() {
     );
   }
   return (
-    <div className="shopping-list">
+    <div className="summary-list">
       <header>
         <h1>Summary</h1>
       </header>
@@ -82,4 +82,4 @@ function ShoppingList() {
   );
 }
 
-export default ShoppingList;
+export default Summary;

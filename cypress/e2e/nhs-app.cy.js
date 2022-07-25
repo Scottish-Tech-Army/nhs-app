@@ -34,7 +34,7 @@ describe("disclaimer pop-up", () => {
   });
 });
 
-describe("storage area", () => {
+describe("directory", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
@@ -124,7 +124,7 @@ describe("summary", () => {
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
       });
     
-    cy.root().find('[aria-label="storage area"]').click();
+    cy.root().find('[aria-label="directory"]').click();
     cy.contains(STORAGE_AREA_TITLE);
 
   });
