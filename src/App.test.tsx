@@ -20,7 +20,7 @@ describe("App", () => {
     expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
   });
 
-  it("renders shopping list view", async () => {
+  it("renders summary view", async () => {
     const { user } = renderWithProvider(<App />, {
       preloadedState: INITIAL_SIGNED_IN_STATE,
     });

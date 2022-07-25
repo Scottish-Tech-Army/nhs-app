@@ -9,12 +9,12 @@ function Navbar() {
   return (
     <nav>
       <NavLink
-        aria-label="storage area"
+        aria-label="directory"
         to={"/"}
         className={({ isActive }) => (isActive ? "navicon active" : "navicon")}
       >
         <HomeIcon />
-        <div>Storage Area</div>
+        <div>Directory</div>
       </NavLink>
       <NavLink
         aria-label="summary"

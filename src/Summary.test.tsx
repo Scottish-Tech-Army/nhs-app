@@ -3,7 +3,7 @@ import React from "react";
 
 import { screen, waitFor } from "@testing-library/react";
 
-import ShoppingList from "./ShoppingList";
+import Summary from "./Summary";
 import { renderWithProvider } from "./testUtils";
 import { EIBox } from "./model/StorageTypes";
 import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
@@ -44,7 +44,7 @@ const BOXES: EIBox[] = [
   },
 ];
 
-describe("ShoppingList", () => {
+describe("Summary", () => {
   beforeEach(() => {
     (Auth.currentSession as jest.Mock).mockImplementation(() => {
       return Promise.resolve({
@@ -55,10 +55,10 @@ describe("ShoppingList", () => {
     });
   });
 
-  it("rendered a shopping list page for filled store - no boxes recorded", async () => {
+  it("rendered a summary list page for filled store - no boxes recorded", async () => {
     fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
 
-    renderWithProvider(<ShoppingList />, {
+    renderWithProvider(<Summary />, {
       initialRoutes: ["/summary"],
     });
 
@@ -66,13 +66,13 @@ describe("ShoppingList", () => {
 
     expect(await screen.findByText("No Items")).toBeDefined();
 
-    await checkShoppingList([]);
+    await checkSummaryList([]);
   });
 
-  it("rendered a shopping list page - loading", async () => {
+  it("rendered a summary list page - loading", async () => {
     fetchMock.mockResponse("", { status: 500 });
 
-    renderWithProvider(<ShoppingList />, {
+    renderWithProvider(<Summary />, {
       initialRoutes: ["/summary"],
     });
 
@@ -80,10 +80,10 @@ describe("ShoppingList", () => {
 
     expect(screen.getByText("Fetching Items")).toBeDefined();
 
-    await checkShoppingList([]);
+    await checkSummaryList([]);
   });
 
-  it("rendered a shopping list and all boxes full", async () => {
+  it("rendered a summary list and all boxes full", async () => {
     fetchMock.mockResponse(
       JSON.stringify([
         {
@@ -110,7 +110,7 @@ describe("ShoppingList", () => {
       { status: 200 }
     );
 
-    renderWithProvider(<ShoppingList />, {
+    renderWithProvider(<Summary />, {
       initialRoutes: ["/summary"],
     });
     await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
@@ -124,19 +124,19 @@ describe("ShoppingList", () => {
     expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
     expect(await screen.findByText("No Items")).toBeDefined();
 
-    await checkShoppingList([]);
+    await checkSummaryList([]);
   });
 
-  it("rendered a shopping list page for partially filled store - ie some items shown", async () => {
+  it("rendered a summary list page for partially filled store - ie some items shown", async () => {
     fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
 
-    renderWithProvider(<ShoppingList />, {
+    renderWithProvider(<Summary />, {
       initialRoutes: ["/summary"],
     });
 
     expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
 
-    await checkShoppingList([
+    await checkSummaryList([
       {
         name: "Trauma Chest Drain - Box 2",
         checkNameAndDate: `Checked by Bob on ${DISPLAY_TIMESTAMP}`,
@@ -153,7 +153,7 @@ describe("ShoppingList", () => {
   it("renders correctly", async () => {
     fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
 
-    const { container } = renderWithProvider(<ShoppingList />, {
+    const { container } = renderWithProvider(<Summary />, {
       initialRoutes: ["/summary"],
     });
 
@@ -163,14 +163,14 @@ describe("ShoppingList", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("can return to storage area page", async () => {
-    const { user, history } = renderWithProvider(<ShoppingList />, {
+  it("can return to directory page", async () => {
+    const { user, history } = renderWithProvider(<Summary />, {
       initialRoutes: ["/needed"],
     });
 
     expect(history.location.pathname).toEqual("/needed");
 
-    await user.click(screen.getByRole("link", { name: "storage area" }));
+    await user.click(screen.getByRole("link", { name: "directory" }));
 
     expect(history.location.pathname).toEqual("/");
   });
@@ -181,7 +181,7 @@ describe("ShoppingList", () => {
     items: string[];
   };
 
-  async function checkShoppingList(expectedBoxes: ExpectedBoxContents[]) {
+  async function checkSummaryList(expectedBoxes: ExpectedBoxContents[]) {
     await waitFor(() => {
       const actualBoxes = document.querySelectorAll("div.box")!;
 

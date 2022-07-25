@@ -1,13 +1,13 @@
 /* eslint-disable testing-library/no-node-access */
 import { screen } from "@testing-library/react";
-import StorageArea from "./StorageArea";
+import Directory from "./Directory";
 import "@testing-library/jest-dom";
 import React from "react";
 import { renderWithProvider } from "./testUtils";
 
-describe("StorageArea", () => {
+describe("Directory", () => {
   it("renders a home page", async () => {
-    renderWithProvider(<StorageArea />);
+    renderWithProvider(<Directory />);
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
 
@@ -27,13 +27,13 @@ describe("StorageArea", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = renderWithProvider(<StorageArea />);
+    const { container } = renderWithProvider(<Directory />);
 
     expect(container).toMatchSnapshot();
   });
 
   it("navigates to box page", async () => {
-    const { user, history } = renderWithProvider(<StorageArea />);
+    const { user, history } = renderWithProvider(<Directory />);
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
     expect(history.location.pathname).toEqual("/");

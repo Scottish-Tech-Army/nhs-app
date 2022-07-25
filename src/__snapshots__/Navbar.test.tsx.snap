@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Navbar renders for storage area 1`] = `
+exports[`Navbar renders for directory 1`] = `
 <div>
   <nav>
     <a
       aria-current="page"
-      aria-label="storage area"
+      aria-label="directory"
       class="navicon active"
       href="/"
     >
@@ -13,7 +13,7 @@ exports[`Navbar renders for storage area 1`] = `
         home.svg
       </svg>
       <div>
-        Storage Area
+        Directory
       </div>
     </a>
     <a
