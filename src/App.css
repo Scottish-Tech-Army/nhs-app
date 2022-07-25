@@ -28,7 +28,15 @@
   height: 15px;
   animation: spin 2s linear infinite;
 }
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 .signin {
   display: flex;
   flex-direction: column;
@@ -65,7 +73,7 @@
  /* width: 100%; */
 }
 
-.signin button#signin-button {
+.signin button#action-button {
   color: white;
   background-color: #025bbb;
   border-radius: 15px;
@@ -75,10 +83,13 @@
   font-size: 22px;
   margin: auto;
   filter: drop-shadow(0 0 200px #025bbb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
-.signin button#signin-button:disabled {
+.signin button#action-button:disabled {
   background-color: grey;
 }
 

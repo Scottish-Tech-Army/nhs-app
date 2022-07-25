@@ -72,13 +72,13 @@ export function SignIn() {
 
         <div className="action-row">
           <button
-            id="change-button"
+            id="action-button"
             onClick={handleChangePassword}
             disabled={
               loading || !password || password.length < MIN_PASSWORD_LENGTH
             }
           >
-            {loading ? <div className="loader" /> : <span>CHANGE</span>}
+            {loading ? <div className="loader" /> : <span>Change</span>}
           </button>
         </div>
       </div>
@@ -111,7 +111,7 @@ export function SignIn() {
       {authError ? <div className="auth-alert">{authError}</div> : null}
       <div className="action-row">
         <button
-          id="signin-button"
+          id="action-button"
           onClick={handleSignIn}
           disabled={loading || username.length === 0 || !password}
         >

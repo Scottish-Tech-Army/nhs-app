@@ -82,7 +82,7 @@ describe("component SignIn", () => {
     const { user } = renderWithProvider(<SignIn />);
     const usernameInput = screen.getByLabelText("Username");
     const passwordInput = screen.getByLabelText("Password");
-    const signInButton = document.querySelector("#signin-button");
+    const signInButton = document.querySelector("#action-button");
 
     expect(usernameInput).toHaveDisplayValue("");
     expect(passwordInput).toHaveDisplayValue("");
@@ -115,7 +115,7 @@ describe("component SignIn", () => {
     await user.type(screen.getByLabelText("Username"), TEST_USERNAME);
     await user.type(screen.getByLabelText("Password"), "12345678");
 
-    const signInButton = document.querySelector("#signin-button")!;
+    const signInButton = document.querySelector("#action-button")!;
     await user.click(signInButton);
 
     expect(signIn).toHaveBeenCalledTimes(1);
@@ -128,7 +128,7 @@ describe("component SignIn", () => {
     await user.type(screen.getByLabelText("Username"), TEST_USERNAME);
     await user.type(screen.getByLabelText("Password"), "12345678");
 
-    const signInButton = document.querySelector("#signin-button")!;
+    const signInButton = document.querySelector("#action-button")!;
     await user.click(signInButton);
 
     expect(signInButton).toBeDisabled();
@@ -147,7 +147,7 @@ describe("component SignIn", () => {
     await user.type(screen.getByLabelText("Username"), TEST_USERNAME);
     await user.type(screen.getByLabelText("Password"), "12345678");
 
-    const signInButton = document.querySelector("#signin-button")!;
+    const signInButton = document.querySelector("#action-button")!;
     await user.click(signInButton);
 
     expect(signInButton).toBeDisabled();
@@ -180,7 +180,7 @@ describe("component SignIn", () => {
       },
     });
     const passwordInput = screen.getByLabelText("New password");
-    const changeButton = container.querySelector("#change-button");
+    const changeButton = container.querySelector("#action-button");
 
     expect(passwordInput).toHaveDisplayValue("");
     expect(changeButton).toBeDisabled();
@@ -219,7 +219,7 @@ describe("component SignIn", () => {
     });
     await user.type(screen.getByLabelText("New password"), "new password");
 
-    const changeButton = container.querySelector("#change-button")!;
+    const changeButton = container.querySelector("#action-button")!;
     await user.click(changeButton);
 
     expect(completeNewPassword).toHaveBeenCalledTimes(1);
@@ -242,7 +242,7 @@ describe("component SignIn", () => {
     });
     await user.type(screen.getByLabelText("New password"), "new password");
 
-    const changeButton = container.querySelector("#change-button")!;
+    const changeButton = container.querySelector("#action-button")!;
     await user.click(changeButton);
 
     expect(changeButton).toBeDisabled();
@@ -268,7 +268,7 @@ describe("component SignIn", () => {
     });
     await user.type(screen.getByLabelText("New password"), "new password");
 
-    const changeButton = container.querySelector("#change-button")!;
+    const changeButton = container.querySelector("#action-button")!;
     await user.click(changeButton);
 
     expect(changeButton).toBeDisabled();
