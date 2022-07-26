@@ -69,6 +69,18 @@ exports[`Summary renders correctly 1`] = `
           </div>
         </a>
         <a
+          aria-label="directory 2"
+          class="navicon"
+          href="/directory2"
+        >
+          <svg>
+            home.svg
+          </svg>
+          <div>
+            Directory 2
+          </div>
+        </a>
+        <a
           aria-current="page"
           aria-label="summary"
           class="navicon active"

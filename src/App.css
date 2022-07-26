@@ -29,13 +29,21 @@
   animation: spin 2s linear infinite;
 }
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .signin {
   display: flex;
@@ -70,7 +78,6 @@
   display: flex;
   flex-direction: row;
   margin-top: 105px;
- /* width: 100%; */
 }
 
 .signin button#action-button {
@@ -88,12 +95,12 @@
   justify-content: center;
 }
 
-
 .signin button#action-button:disabled {
   background-color: grey;
 }
 
 .directory header,
+.directory2 header,
 .box-details header,
 .summary-list header {
   background-color: #025bbb;
@@ -102,6 +109,7 @@
 }
 
 .directory header h1,
+.directory2 header h1,
 .box-details header h1,
 .summary-list header h1 {
   font-family: "HindSemiBold", sans-serif;
@@ -142,6 +150,7 @@
 
 .box-details,
 .directory,
+.directory2,
 .summary-list {
   display: flex;
   flex-direction: column;
@@ -149,6 +158,7 @@
 }
 
 .directory main,
+.directory2 main,
 .box-details main,
 .summary-list main {
   flex: 1;
@@ -162,6 +172,7 @@
 }
 
 .directory main .scroll,
+.directory2 main .scroll,
 .box-details main .scroll,
 .summary-list main .scroll {
   position: absolute;
@@ -294,6 +305,7 @@
 }
 
 .directory footer,
+.directory2 footer,
 .summary-list footer,
 .box-details footer {
   position: absolute;
@@ -307,11 +319,12 @@
 }
 
 .directory footer nav,
+.directory2 footer nav,
 .summary-list footer nav,
 .box-details footer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -326,15 +339,11 @@
 }
 
 footer .navicon {
-  margin-left: 24px;
-  margin-right: 24px;
-  height: 56px;
   color: white;
   border-radius: 15px;
   text-decoration: none;
   text-align: center;
   padding: 10px 10px 5px 10px;
-  height: 20px;
   fill: currentColor;
   color: #999999;
   font-size: 9px;
@@ -519,4 +528,61 @@ footer nav .navicon svg {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.directory2 main .box {
+  border: 1px solid rgba(2, 91, 187, 0.25);
+  border-radius: 12px;
+  margin-bottom: 17px;
+  margin-left: 25px;
+  margin-right: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 10px;
+  position: relative;
+}
+
+.directory2 main .box .box-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.directory2 main .box .display-name {
+  margin-bottom: 17px;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-size: 18px;
+  line-height: 130%;
+  align-self: center;
+}
+
+.directory2 main .box .box-numbers {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.directory2 main .box a.box-number {
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  color: #025bbb;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-family: "HindSemiBold", sans-serif;
+  font-size: 22px;
+  line-height: 29px;
+  border: #025bbb solid 1px;
+}
+
+.directory2 main .box a.box-number:hover {
+  background-color: #025bbb;
+  color: white;
 }
