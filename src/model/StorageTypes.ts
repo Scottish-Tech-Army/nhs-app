@@ -20,23 +20,6 @@ export type StorageAreaTemplate = {
   boxes: BoxTemplate[];
 };
 
-export type ItemContents = {
-  name: string;
-  size?: string;
-  quantity: number;
-};
-
-export type BoxContents = {
-  boxTemplateId: string;
-  boxNumber: number;
-  items: ItemContents[];
-};
-
-export type StorageAreaContents = {
-  storageAreaId: string;
-  boxes: BoxContents[];
-};
-
 export type EIMissingBoxItem = {
   name: string;
   size?: string;

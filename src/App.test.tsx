@@ -1,7 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 /* eslint-disable testing-library/no-node-access */
 import { getByRole, screen } from "@testing-library/react";
-import localforage from "localforage";
 import React from "react";
 import App from "./App";
 import { INITIAL_SIGNED_IN_STATE, renderWithProvider } from "./testUtils";
@@ -16,8 +15,6 @@ describe("App", () => {
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     expect(screen.getByText("Trauma Tower")).toBeDefined();
-    expect(localforage.getItem).toHaveBeenCalledTimes(1);
-    expect(localforage.getItem).toHaveBeenCalledWith("boxContents");
   });
 
   it("renders summary view", async () => {

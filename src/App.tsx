@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Directory from "./Directory";
-import { useAppDispatch, useAppSelector } from "./model/store";
-import { refreshState } from "./model/BoxContentsSlice";
+import { useAppSelector } from "./model/store";
 
 import Box from "./Box";
 import Summary from "./Summary";
@@ -24,14 +23,9 @@ const awsConfig = {
 console.debug("Configure", Amplify.configure(awsConfig));
 
 function App() {
-  const dispatch = useAppDispatch();
   const authState = useAppSelector(getAuthState);
 
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
-
-  useEffect(() => {
-    dispatch(refreshState());
-  }, [dispatch]);
 
   if (isAuthenticating(authState)) {
     return (

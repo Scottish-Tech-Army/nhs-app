@@ -1,14 +1,10 @@
 import { AnyAction, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import  authReducer  from "./auth/AuthSlice";
-import boxContentsReducer from "./BoxContentsSlice";
+import authReducer from "./auth/AuthSlice";
 
 export const createStore = () =>
   configureStore({
-    reducer: {
-      auth: authReducer,
-      boxContents: boxContentsReducer,
-    },
+    reducer: { auth: authReducer },
   });
 
 const store = createStore();
