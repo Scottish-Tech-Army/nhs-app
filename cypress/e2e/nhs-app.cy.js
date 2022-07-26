@@ -8,14 +8,6 @@ const STORAGE_AREA_TITLE = "Trauma Tower";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
 const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
 const LOCAL_HOST_PORT = "http://localhost:3000";
-const BOX_TITLES = [
-  "Trauma Chest Drain - Box 1",
-  "Trauma Chest Drain - Box 2",
-  "Trauma Chest Drain - Box 3",
-  "Trauma Chest Drain - Box 4",
-  "Trauma Chest Drain - Box 5",
-  "Trauma Chest Drain - Box 6",
-];
 
 const TEST_USER = Cypress.env("cognito_username");
 
@@ -61,7 +53,7 @@ describe("directory", () => {
   });
 
   it("navigated to summary", () => {
-    cy.root().find('[aria-label="summary"]').click();
+    cy.get('[aria-label="summary"]').click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
   });
@@ -76,7 +68,7 @@ describe("summary", () => {
   });
 
   it("empty summary page", () => {
-    cy.root().find('[aria-label="summary"]').click();
+    cy.get('[aria-label="summary"]').click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
 
@@ -114,7 +106,7 @@ describe("summary", () => {
       "EEE d/M/yyyy 'at' HH:"
     )}`;
 
-    cy.root().find('[aria-label="summary"]').click();
+    cy.get('[aria-label="summary"]').click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
 
@@ -138,16 +130,23 @@ describe("summary", () => {
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
       });
 
-    cy.root().find('[aria-label="directory"]').click();
+    cy.get('[aria-label="directory"]').click();
     cy.contains(STORAGE_AREA_TITLE);
   });
 
   function markAllBoxesFull() {
-    BOX_TITLES.forEach((title) => {
-      cy.contains(title).click();
-      cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-      cy.contains(title);
-      cy.contains("FULL").click();
+    const boxTitles = [];
+    cy.get(".box").each((item) => {
+      boxTitles.push(item.text());
+    });
+    cy.wrap(boxTitles).then(() => {
+      boxTitles.forEach((title) => {
+        cy.log("Filling " + title);
+        cy.contains(title).click();
+        cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+        cy.contains(title);
+        cy.contains("FULL").click();
+      });
     });
   }
 });

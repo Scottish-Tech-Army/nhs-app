@@ -1,5 +1,5 @@
 import {
-  ItemContents,
+  EIMissingBoxItem,
   ItemTemplate,
   StorageAreaTemplate,
 } from "./StorageTypes";
@@ -123,6 +123,114 @@ export const TRAUMA_TOWER_TEMPLATE: StorageAreaTemplate = {
         },
       ],
     },
+
+    {
+      name: "Catastrophic Haemorrhage",
+      boxTemplateId: "1",
+      count: 3,
+      items: [
+        {
+          name: "CAT Tourniquet",
+          description: "Combat application tourniquet",
+          location: "Resus store XX",
+          photo: "cat.jpg",
+          quantity: 4,
+        },
+        {
+          name: "Blast bandages",
+          description: "Large trauma dressing",
+          location: "Resus store XX",
+          photo: "blast.jpg",
+          quantity: 2,
+        },
+        {
+          name: "Chito Gauze",
+          description: "Haemostatic gauze for packing wounds",
+          location: "Resus store XX",
+          photo: "haemgauze.jpg",
+          quantity: 2,
+        },
+        {
+          name: "Modular bandage",
+          description: "Olaes modular pressure bandage",
+          location: "Resus store XX",
+          photo: "modular.jpg",
+          quantity: 2,
+        },
+        {
+          name: "Mosquito Artery Forceps (Straight)",
+          size: "12.5cm",
+          description: "Forceps for clamping blood vessels",
+          location: "Resus store XX",
+          photo: "mosquito.png",
+          quantity: 2,
+        },
+        {
+          name: "Dressing pack",
+          size: "Medium",
+          description: "Universal dressing pack",
+          location: "Resus store XX",
+          photo: "dressingpack.jpg",
+        },
+        {
+          name: "Suture pack",
+          size: "Standard",
+          description: "Pack of equipment for suturing",
+          location: "Resus store XX",
+          photo: "standardsuture.jpg",
+        },
+        {
+          name: "Mersilk suture",
+          size: "1-0",
+          description: "Non-absorbable, handheld suture",
+          location: "Resus store XX",
+          photo: "mersilk.jpg",
+          quantity: 2,
+        },
+        {
+          name: "Stapler",
+          description: "Skin stapler for wound closure",
+          location: "Resus store XX",
+          photo: "stapler.jpg",
+        },
+      ],
+    },
+
+    {
+      name: "Max Fax Haemorrhage",
+      boxTemplateId: "2",
+      count: 3,
+      items: [
+        {
+          name: "Bite block",
+          size: "Small (white)",
+          description: "Pair of bite blocks",
+          location: "Resus store XX",
+          photo: "smallbiteblock.jpg",
+        },
+        {
+          name: "Bite block",
+          size: "Medium (green)",
+          description: "Pair of bite blocks",
+          location: "Resus store XX",
+          photo: "mediumbiteblock.jpg",
+        },
+        {
+          name: "Bite block",
+          size: "Large (orange)",
+          description: "Pair of bite blocks",
+          location: "Resus store XX",
+          photo: "largebiteblock.jpg",
+        },
+        {
+          name: "Epistat",
+          description: "Epistat nasal catheter",
+          location: "Resus store XX",
+          photo: "epistat.jpg",
+          quantity: 2,
+        },
+      ],
+    },
   ],
 };
 
@@ -152,7 +260,7 @@ export function getBoxName(boxTemplateName: string, boxNumber: number) {
   return `${boxTemplateName} - Box ${boxNumber}`;
 }
 
-export function getItemDisplayName(item: ItemTemplate | ItemContents) {
+export function getItemDisplayName(item: ItemTemplate | EIMissingBoxItem) {
   let result = item.name;
   if (item.size) {
     result += ` (${item.size})`;

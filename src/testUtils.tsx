@@ -12,9 +12,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import type { PreloadedState } from "@reduxjs/toolkit";
 
 import type { RootState } from "./model/store";
-import boxContentsReducer, {
-  createInitialState as boxContentsInitialState,
-} from "./model/BoxContentsSlice";
 import authReducer, {
   initialState as authInitialState,
 } from "./model/auth/AuthSlice";
@@ -35,10 +32,9 @@ export function renderWithProvider(
   }: ExtendedRenderOptions = {}
 ) {
   const store = configureStore({
-    reducer: { auth: authReducer, boxContents: boxContentsReducer },
+    reducer: { auth: authReducer },
     preloadedState: {
       auth: authInitialState(),
-      boxContents: boxContentsInitialState(),
       ...preloadedState,
     },
   });
@@ -63,5 +59,4 @@ export const INITIAL_SIGNED_IN_STATE: Partial<RootState> = {
     user: { name: "jsmith" },
     errorMessage: "",
   },
-  boxContents: boxContentsInitialState(),
 };

@@ -1,9 +1,7 @@
 import { Auth } from "@aws-amplify/auth";
 import { format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { getAreaContents } from "./model/BoxContentsSlice";
 import { EIBox } from "./model/StorageTypes";
-import { useAppSelector } from "./model/store";
 import { getItemDisplayName } from "./model/TraumaTower";
 
 import Navbar from "./Navbar";
@@ -40,7 +38,6 @@ function Summary() {
       });
   }, []);
 
-  useAppSelector(getAreaContents);
 
   function getDisplayTime(isoDateTime: string) {
     const timestamp = parseISO(isoDateTime);
