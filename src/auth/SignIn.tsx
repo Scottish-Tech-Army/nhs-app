@@ -61,7 +61,7 @@ export function SignIn() {
         <div className="branding-container">
           <img
             className="ae-logo"
-            src="/branding/Edinburgh+Emergency+Medicine.png"
+            src="/branding/EdinburghEmergencyMedicine.png"
             height="130px"
             width="130px"
             alt=""
@@ -98,7 +98,7 @@ export function SignIn() {
       <div className="branding-container">
         <img
           className="ae-logo"
-          src="/branding/Edinburgh+Emergency+Medicine.png"
+          src="/branding/EdinburghEmergencyMedicine.png"
           height="130px"
           width="130px"
           alt=""
