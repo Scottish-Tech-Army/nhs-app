@@ -45,6 +45,8 @@
     transform: rotate(360deg);
   }
 }
+
+
 .signin {
   display: flex;
   flex-direction: column;
@@ -53,12 +55,23 @@
   height: 100%;
   padding: 33px;
 }
+.branding-container{
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 30%;
+}
+.ae-logo{
+    justify-content: center; 
+    align-items: center;
+    align-content: center;
+}
 
 .signin h2 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 35px;
   color: #491f6f;
-  margin-top: 100px;
+  margin-top: 30px;
+  margin-left: 15px;
 }
 
 .signin label {
