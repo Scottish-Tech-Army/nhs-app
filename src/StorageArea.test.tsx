@@ -30,7 +30,7 @@ describe("StorageArea", () => {
     const { user, history  } = renderWithRoute("1");
 
     expect(screen.getByText("Trauma Tower 2")).toBeDefined();
-    expect(history.location.pathname).toEqual("/");
+    expect(history.location.pathname).toEqual("/area/1");
 
     const boxFour = within(
       screen.getByText("Trauma Chest Drain").parentElement!

@@ -7,7 +7,7 @@ exports[`Directory renders correctly 1`] = `
   >
     <header>
       <h1>
-        Trauma Tower
+        Directory
       </h1>
     </header>
     <main>
@@ -23,7 +23,7 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Trauma Chest Drain - Box 1
+            Trauma Tower 1
           </div>
         </div>
         <div
@@ -35,7 +35,7 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Trauma Chest Drain - Box 2
+            Trauma Tower 2
           </div>
         </div>
         <div
@@ -47,115 +47,7 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Trauma Chest Drain - Box 3
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 4
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 5
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Trauma Chest Drain - Box 6
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Catastrophic Haemorrhage - Box 1
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Catastrophic Haemorrhage - Box 2
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Catastrophic Haemorrhage - Box 3
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Max Fax Haemorrhage - Box 1
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Max Fax Haemorrhage - Box 2
-          </div>
-        </div>
-        <div
-          class="box"
-        >
-          <svg>
-            edit.svg
-          </svg>
-          <div
-            class="display-name"
-          >
-            Max Fax Haemorrhage - Box 3
+            Backup Area
           </div>
         </div>
       </div>
@@ -173,18 +65,6 @@ exports[`Directory renders correctly 1`] = `
           </svg>
           <div>
             Directory
-          </div>
-        </a>
-        <a
-          aria-label="directory 2"
-          class="navicon"
-          href="/directory2"
-        >
-          <svg>
-            home.svg
-          </svg>
-          <div>
-            Directory 2
           </div>
         </a>
         <a

@@ -9,12 +9,12 @@ describe("Directory", () => {
   it("renders a home page", async () => {
     renderWithProvider(<Directory />);
 
-    expect(screen.getByText("Directory")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
 
     [
       "Trauma Tower 1",
       "Trauma Tower 2",
-      "Storage area",
+      "Backup Area",
     ].forEach((title) => {
       expect(screen.getByText(title)).toBeDefined();
     });
@@ -31,8 +31,9 @@ describe("Directory", () => {
 
   it("navigates to storage area page", async () => {
     const { user, history } = renderWithProvider(<Directory />);
+    
+    expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
 
-    expect(screen.getByText("Directory")).toBeDefined();
     expect(history.location.pathname).toEqual("/");
 
     await user.click(await screen.findByText("Trauma Tower 2"));

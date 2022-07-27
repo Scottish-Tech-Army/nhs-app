@@ -249,7 +249,7 @@ export const TRAUMA_TOWER_2: StorageAreaTemplate = {
 
 export const BACKUP_AREA: StorageAreaTemplate = {
   storageAreaId: "2",
-  name: "Backup area",
+  name: "Backup Area",
   boxes: [BOX_TRAUMA_CHEST_DRAIN, BOX_CAT_HAEMORRHAGE, BOX_MAX_FAX_HAEMORRHAGE],
 };
 
@@ -258,6 +258,12 @@ export const STORAGE_AREAS: StorageAreaTemplate[] = [
   TRAUMA_TOWER_2,
   BACKUP_AREA,
 ];
+
+export function getStorageArea(storageAreaId: string) {
+  return STORAGE_AREAS.find(
+    (storageArea) => storageArea.storageAreaId === storageAreaId
+  );
+}
 
 export function getBoxTemplate(boxTemplateId: string) {
   return BOX_TEMPLATES.find(

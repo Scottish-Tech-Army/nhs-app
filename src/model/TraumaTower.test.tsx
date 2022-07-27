@@ -1,4 +1,5 @@
 import {
+  getStorageArea,
   getBoxName,
   getBoxTemplate,
   getItemDisplayName,

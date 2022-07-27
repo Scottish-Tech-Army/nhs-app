@@ -3,10 +3,12 @@ import "./App.css";
 import { BoxTemplate } from "./model/StorageTypes";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import { getStorageArea } from "./model/TraumaTower";
 
 function StorageArea() {
   let { storageAreaId } = useParams();
-
+  let storageArea = getStorageArea(storageAreaId!);
+ 
   const getBoxes = (boxTemplate: BoxTemplate) => {
     const boxNumbers = [];
     for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
@@ -14,7 +16,7 @@ function StorageArea() {
         <Link
           className="box-number"
           key={`${boxTemplate.boxTemplateId}/${boxIndex}`}
-          to={`/box/${boxTemplate.boxTemplateId}/${boxIndex}`}
+          to={`/box/${storageAreaId}/${boxTemplate.boxTemplateId}/${boxIndex}`}
         >
           {boxIndex}
         </Link>
@@ -29,14 +31,18 @@ function StorageArea() {
     );
   };
 
+  if (!storageArea) {
+    return null;
+  };
+
   return (
     <div className="storage-area">
       <header>
-        <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
+        <h1>{storageArea.name}</h1>
       </header>
       <main>
         <div className="scroll">
-          {TRAUMA_TOWER_TEMPLATE.boxes.map((boxTemplate) =>
+          {storageArea.boxes.map((boxTemplate) =>
             getBoxes(boxTemplate)
           )}
         </div>
