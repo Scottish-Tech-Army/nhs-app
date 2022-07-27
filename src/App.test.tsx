@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 /* eslint-disable testing-library/no-node-access */
-import { getByRole, screen } from "@testing-library/react";
+import { getByRole, screen, within } from "@testing-library/react";
 import React from "react";
 import App from "./App";
 import { INITIAL_SIGNED_IN_STATE, renderWithProvider } from "./testUtils";
@@ -14,7 +14,7 @@ describe("App", () => {
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    expect(screen.getByText("Directory")).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
   });
 
   it("renders summary view", async () => {
@@ -25,7 +25,7 @@ describe("App", () => {
 
     await user.click(screen.getByRole("link", { name: "summary" }));
 
-    expect(screen.queryByText("Directory")).toBeNull();
+    expect(screen.queryByRole("heading", { name: "Directory" })).toBeNull();
     expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
   });
 
@@ -46,7 +46,11 @@ describe("App", () => {
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
     await user.click(screen.getByText("Trauma Tower 1"));
-    await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
+    await user.click(
+      within(screen.getByText("Trauma Chest Drain").parentElement!).getByText(
+        "2"
+      )
+    );
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
 
@@ -61,7 +65,12 @@ describe("App", () => {
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
     await user.click(screen.getByText("Trauma Tower 1"));
-    await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
+
+    await user.click(
+      within(screen.getByText("Trauma Chest Drain").parentElement!).getByText(
+        "2"
+      )
+    );
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
 

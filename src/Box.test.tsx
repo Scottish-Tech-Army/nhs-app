@@ -31,7 +31,7 @@ describe("Box", () => {
   });
 
   it("rendered a box page", async () => {
-    renderWithRoute("0", "3");
+    renderWithRoute("1", "0", "3");
     expect(screen.getByText("Trauma Chest Drain - Box 3")).toBeDefined();
 
     const inputFields = Array.from(document.querySelectorAll(".display-name"));
@@ -57,20 +57,34 @@ describe("Box", () => {
     expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
   });
 
+  it("does not render if no storageAreaId", async () => {
+    const { container } = renderWithRoute("", "0", "3");
+
+    expect(container).toHaveTextContent("Unknown path");
+  });
+
   it("does not render if no boxTemplateId", async () => {
-    const { container } = renderWithRoute("", "3");
+    const { container } = renderWithRoute("1", "", "3");
 
     expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if no boxId", async () => {
-    const { container } = renderWithRoute("0", "");
+    const { container } = renderWithRoute("1", "0", "");
 
     expect(container).toHaveTextContent("Unknown path");
   });
 
+  it("does not render if unknown storageAreaId", async () => {
+    const { container } = renderWithRoute("Unknown", "0", "4");
+
+    expect(container.children).toHaveLength(0);
+
+    expect(container).toMatchSnapshot();
+  });
+
   it("does not render if unknown boxTemplateId", async () => {
-    const { container } = renderWithRoute("Unknown", "4");
+    const { container } = renderWithRoute("1", "Unknown", "4");
 
     expect(container.children).toHaveLength(0);
 
@@ -78,7 +92,7 @@ describe("Box", () => {
   });
 
   it("does not render if unknown boxId", async () => {
-    const { container } = renderWithRoute("0", "Unknown");
+    const { container } = renderWithRoute("1", "0", "Unknown");
 
     expect(container.children).toHaveLength(0);
 
@@ -86,7 +100,7 @@ describe("Box", () => {
   });
 
   it("does not render if unknown boxId - box number too high", async () => {
-    const { container } = renderWithRoute("0", "7");
+    const { container } = renderWithRoute("1", "0", "7");
 
     expect(container.children).toHaveLength(0);
 
@@ -96,7 +110,7 @@ describe("Box", () => {
   it("can save item changes - success", async () => {
     fetchMock.mockResponse("", { status: 200 });
 
-    const { user, history } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("1", "0", "3");
 
     const itemLabel = screen.getByText(
       "Blunt dissection chest drainage insertion pack (28Fg)"
@@ -118,6 +132,7 @@ describe("Box", () => {
     const expectedPayload: EIBoxInput = {
       boxTemplateId: "0",
       boxNumber: 3,
+      storageAreaId: "1",
       name: "Trauma Chest Drain",
       missingItems: [
         { quantity: 1, name: "Sterile gloves", size: "Small" },
@@ -156,13 +171,13 @@ describe("Box", () => {
     );
     expect(actualPayload).toEqual(expectedPayload);
 
-    expect(history.location.pathname).toEqual("/");
+    expect(history.location.pathname).toEqual("/area/1");
   });
 
   it("can save item changes - failure", async () => {
     fetchMock.mockResponse("", { status: 500 });
 
-    const { user, history } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("1", "0", "3");
 
     const itemLabel = screen.getByText(
       "Blunt dissection chest drainage insertion pack (28Fg)"
@@ -184,6 +199,7 @@ describe("Box", () => {
     const expectedPayload: EIBoxInput = {
       boxTemplateId: "0",
       boxNumber: 3,
+      storageAreaId: "1",
       name: "Trauma Chest Drain",
       missingItems: [
         { quantity: 1, name: "Sterile gloves", size: "Small" },
@@ -222,18 +238,19 @@ describe("Box", () => {
     );
     expect(actualPayload).toEqual(expectedPayload);
 
-    expect(history.location.pathname).toEqual("/box/0/3");
+    expect(history.location.pathname).toEqual("/box/1/0/3");
   });
 
   it("can mark box as full - success", async () => {
     fetchMock.mockResponse("", { status: 200 });
-    const { user, history } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("1", "0", "3");
 
     await user.click(screen.getByRole("button", { name: "FULL" }));
 
     const expectedPayload: EIBoxInput = {
       boxTemplateId: "0",
       boxNumber: 3,
+      storageAreaId: "1",
       name: "Trauma Chest Drain",
       missingItems: [],
       isFull: true,
@@ -253,18 +270,19 @@ describe("Box", () => {
     );
     expect(actualPayload).toEqual(expectedPayload);
 
-    expect(history.location.pathname).toEqual("/");
+    expect(history.location.pathname).toEqual("/area/1");
   });
 
   it("can mark box as full - failure", async () => {
     fetchMock.mockResponse("", { status: 500 });
-    const { user, history } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("1", "0", "3");
 
     await user.click(screen.getByRole("button", { name: "FULL" }));
 
     const expectedPayload: EIBoxInput = {
       boxTemplateId: "0",
       boxNumber: 3,
+      storageAreaId: "1",
       name: "Trauma Chest Drain",
       missingItems: [],
       isFull: true,
@@ -284,11 +302,11 @@ describe("Box", () => {
     );
     expect(actualPayload).toEqual(expectedPayload);
 
-    expect(history.location.pathname).toEqual("/box/0/3");
+    expect(history.location.pathname).toEqual("/box/1/0/3");
   });
 
   it("can go to item details", async () => {
-    const { user, history } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("1", "0", "3");
 
     const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
 
@@ -301,7 +319,7 @@ describe("Box", () => {
   });
 
   it("can return to previous page", async () => {
-    const { user, history } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("1", "0", "3");
 
     await user.click(screen.getByRole("button", { name: "Back" }));
 
@@ -309,20 +327,20 @@ describe("Box", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = renderWithRoute("0", "3");
+    const { container } = renderWithRoute("1", "0", "3");
 
     expect(container).toMatchSnapshot();
   });
 
-  function renderWithRoute(boxTemplateId: string, boxId: string) {
+  function renderWithRoute(storageAreaId: string, boxTemplateId: string, boxId: string) {
     // Add routes to get the contents of useParams populated
     return renderWithProvider(
       <Routes>
-        <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
+        <Route path="box/:storageAreaId/:boxTemplateId/:boxId" element={<Box />} />
         <Route path="*" element={<div>Unknown path</div>} />
       </Routes>,
       {
-        initialRoutes: ["/", `/box/${boxTemplateId}/${boxId}`],
+        initialRoutes: ["/", `/box/${storageAreaId}/${boxTemplateId}/${boxId}`],
         preloadedState: {
           auth: {
             authState: SIGNED_IN,

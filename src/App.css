@@ -199,7 +199,7 @@
   padding-top: 17px;
 }
 
-.directory main .box,
+.directory main .single-storage-area,
 .summary-list main .box {
   border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
@@ -226,7 +226,7 @@
   position: relative;
 }
 
-.directory main .box {
+.directory main .single-storage-area {
   min-height: 70px;
   cursor: pointer;
 }
@@ -242,7 +242,7 @@
   margin-top: 0;
 }
 
-.directory main .box svg {
+.directory main .single-storage-area svg {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -251,7 +251,7 @@
   color: #491f6f;
 }
 
-.directory main .box .display-name {
+.directory main .single-storage-area .display-name {
   font-size: 14px;
   line-height: 130%;
   padding-left: 74px;

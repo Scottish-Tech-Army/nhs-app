@@ -68,7 +68,7 @@ describe("storage area", () => {
   });
 
   it("select box", () => {
-    cy.get(BOX_TITLE).parent().find(".box-number")[3].click();
+    cy.contains(BOX_TITLE).parent().contains("4").click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains(BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
@@ -86,7 +86,7 @@ describe("summary", () => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
     cy.contains(STORAGE_AREA_TITLE);
-    markAllBoxesFull();
+    markAllAreasFull();
   });
 
   it("empty summary page", () => {
@@ -98,7 +98,7 @@ describe("summary", () => {
   });
 
   it("populated summary page", () => {
-    markAllBoxesFull();
+    markAllAreasFull();
 
     cy.contains(BOX_FOUR_TITLE).click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
@@ -155,6 +155,21 @@ describe("summary", () => {
     cy.get('[aria-label="directory"]').click();
     cy.contains(STORAGE_AREA_TITLE);
   });
+
+  function markAllAreasFull() {
+    const areaTitles: string[] = [];
+    cy.get(".single-storage-area").each((item) => {
+      areaTitles.push(item.text());
+    });
+    cy.wrap(areaTitles).then(() => {
+      areaTitles.forEach((title) => {
+        cy.log("Filling " + title);
+        cy.contains(title).click();
+        markAllBoxesFull();
+        cy.get('[aria-label="directory"]').click();
+      });
+    });
+  }
 
   function markAllBoxesFull() {
     const boxTitles: string[] = [];

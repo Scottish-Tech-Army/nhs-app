@@ -6,6 +6,8 @@ exports[`Box does not render if unknown boxId 1`] = `<div />`;
 
 exports[`Box does not render if unknown boxTemplateId 1`] = `<div />`;
 
+exports[`Box does not render if unknown storageAreaId 1`] = `<div />`;
+
 exports[`Box renders correctly 1`] = `
 <div>
   <div

@@ -18,7 +18,7 @@ function Directory() {
         <div className="scroll">
           {STORAGE_AREAS.map((storageArea, index) => (
             <div
-              className="box"
+              className="single-storage-area"
               key={index}
               onClick={() =>
                 navigate(`/area/${storageArea.storageAreaId}`)

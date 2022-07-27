@@ -15,7 +15,7 @@ exports[`Directory renders correctly 1`] = `
         class="scroll"
       >
         <div
-          class="box"
+          class="single-storage-area"
         >
           <svg>
             edit.svg
@@ -27,7 +27,7 @@ exports[`Directory renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="box"
+          class="single-storage-area"
         >
           <svg>
             edit.svg
@@ -39,7 +39,7 @@ exports[`Directory renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="box"
+          class="single-storage-area"
         >
           <svg>
             edit.svg

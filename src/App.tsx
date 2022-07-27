@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="root">
       <Routes>
-        <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
+        <Route path="box/:storageAreaId/:boxTemplateId/:boxId" element={<Box />} />
         <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
         <Route path="summary" element={<Summary />} />
         <Route path="area/:storageAreaId" element={<StorageArea />} />
