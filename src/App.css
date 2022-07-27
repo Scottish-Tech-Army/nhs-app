@@ -54,6 +54,7 @@
   align-items: stretch;
   height: 100%;
   padding: 33px;
+  box-sizing: border-box;
 }
 .branding-container{
   display: flex;

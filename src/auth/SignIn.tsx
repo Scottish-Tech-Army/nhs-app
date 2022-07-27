@@ -64,6 +64,7 @@ export function SignIn() {
             src="/branding/Edinburgh+Emergency+Medicine.png"
             height="130px"
             width="130px"
+            alt=""
           />
           <h2>Change Password</h2>
         </div>
@@ -100,6 +101,7 @@ export function SignIn() {
           src="/branding/Edinburgh+Emergency+Medicine.png"
           height="130px"
           width="130px"
+          alt=""
         />
         <h2>Log in</h2>
       </div>
