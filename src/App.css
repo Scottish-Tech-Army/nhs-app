@@ -57,7 +57,7 @@
 .signin h2 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 35px;
-  color: #025bbb;
+  color: #491f6f;
   margin-top: 100px;
 }
 
@@ -82,14 +82,14 @@
 
 .signin button#action-button {
   color: white;
-  background-color: #025bbb;
+  background-color: #491f6f;
   border-radius: 15px;
   width: 201px;
   height: 59px;
   font-family: "HindSemiBold", sans-serif;
   font-size: 22px;
   margin: auto;
-  filter: drop-shadow(0 0 200px #025bbb);
+  filter: drop-shadow(0 0 200px #491f6f);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +103,7 @@
 .directory2 header,
 .box-details header,
 .summary-list header {
-  background-color: #025bbb;
+  background-color: #491f6f;
   color: white;
   min-height: 100px;
 }
@@ -138,7 +138,7 @@
   line-height: 14px;
 
   background-color: white;
-  color: #025bbb;
+  color: #491f6f;
   border: 1px solid rgba(255, 255, 255, 0.2);
 
   border-radius: 50%;
@@ -187,7 +187,7 @@
 
 .directory main .box,
 .summary-list main .box {
-  border: 1px solid rgba(2, 91, 187, 0.25);
+  border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
   margin-left: 25px;
@@ -199,7 +199,7 @@
 }
 
 .box-details main .item {
-  border: 1px solid rgba(2, 91, 187, 0.25);
+  border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
   margin-left: 25px;
@@ -234,7 +234,7 @@
   height: 20px;
   left: 27px;
   top: 23px;
-  color: #025bbb;
+  color: #491f6f;
 }
 
 .directory main .box .display-name {
@@ -262,7 +262,7 @@
   text-align: center;
   font-size: 28px;
   line-height: 130%;
-  color: #025bbb;
+  color: #491f6f;
 }
 
 .box-details main .item .quantity .actual-quantity-bad {
@@ -278,7 +278,7 @@
 
   border: 0;
   background-color: inherit;
-  color: #025bbb;
+  color: #491f6f;
   flex-shrink: 0;
 }
 
@@ -290,7 +290,7 @@
 .box-details main .item button.change-quantity {
   width: 38px;
   height: 38px;
-  border: 1px solid rgba(2, 91, 187, 0.2);
+  border: 1px solid rgba(73, 31, 111, 0.2);
   border-radius: 50%;
   padding: 0;
   background-color: inherit;
@@ -332,7 +332,7 @@
   margin-left: 24px;
   margin-right: 24px;
   height: 56px;
-  background: #025bbb;
+  background: #491f6f;
   color: white;
   border-radius: 15px;
   flex-grow: 1;
@@ -351,7 +351,7 @@ footer .navicon {
 
 footer nav .navicon:hover,
 footer nav .navicon.active {
-  color: #025bbb;
+  color: #491f6f;
 }
 
 footer nav .navicon svg {
@@ -380,7 +380,7 @@ footer nav .navicon svg {
   height: 48px;
   left: 26px;
   top: 26px;
-  border: 1px solid rgba(2, 91, 187, 0.2);
+  border: 1px solid rgba(73, 31, 111, 0.2);
   border-radius: 50%;
   padding: 0;
   margin: 0;
@@ -388,7 +388,7 @@ footer nav .navicon svg {
 }
 
 .box-details button.back {
-  color: #025bbb;
+  color: #491f6f;
 }
 
 .box-details button.back svg,
@@ -433,7 +433,7 @@ footer nav .navicon svg {
   font-family: "HindSemiBold", sans-serif;
   font-size: 15px;
   line-height: 14px;
-  border-top: 1px solid rgba(2, 91, 187, 0.6);
+  border-top: 1px solid rgba(73, 31, 111, 0.6);
   padding-top: 19px;
 
   padding-left: 8px;
@@ -484,7 +484,7 @@ footer nav .navicon svg {
 
   margin-bottom: 11px;
   padding-top: 50px;
-  border-top: 4px solid #025bbb;
+  border-top: 4px solid #491f6f;
 }
 
 .disclaimer-popup .message,
@@ -510,12 +510,12 @@ footer nav .navicon svg {
 
 .disclaimer-popup .confirm-yes,
 .confirm-reset-popup .confirm-yes {
-  background: #025bbb;
+  background: #491f6f;
   margin-top: 13px;
 }
 
 .confirm-reset-popup .confirm-no {
-  background: rgba(2, 91, 187, 0.5);
+  background: rgba(73, 31, 111, 0.75);
   margin-top: 13px;
 }
 
@@ -531,7 +531,7 @@ footer nav .navicon svg {
 }
 
 .directory2 main .box {
-  border: 1px solid rgba(2, 91, 187, 0.25);
+  border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
   margin-left: 25px;
@@ -569,7 +569,7 @@ footer nav .navicon svg {
   height: 40px;
   width: 40px;
   background-color: white;
-  color: #025bbb;
+  color: #491f6f;
   border-radius: 5px;
   text-align: center;
   display: flex;
@@ -579,10 +579,10 @@ footer nav .navicon svg {
   font-family: "HindSemiBold", sans-serif;
   font-size: 22px;
   line-height: 29px;
-  border: #025bbb solid 1px;
+  border: #491f6f solid 1px;
 }
 
 .directory2 main .box a.box-number:hover {
-  background-color: #025bbb;
+  background-color: #491f6f;
   color: white;
 }
