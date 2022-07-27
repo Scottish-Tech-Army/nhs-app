@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 import { Amplify } from "@aws-amplify/core";
 import { Auth, CognitoUser } from "@aws-amplify/auth";
 
@@ -31,8 +30,8 @@ import { Auth, CognitoUser } from "@aws-amplify/auth";
 declare global {
   namespace Cypress {
     interface Chainable {
-      getByLabel(label: string): Chainable<void>
-      loginByCognitoApi(username:string, password:string): Chainable<void>
+      getByLabel(label: string): Chainable<void>;
+      loginByCognitoApi(username: string, password: string): Chainable<void>;
       // login(email: string, password: string): Chainable<void>
       // drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
       // dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
@@ -41,64 +40,73 @@ declare global {
   }
 }
 
-Cypress.Commands.add('getByLabel', (label) => {
+Cypress.Commands.add("getByLabel", (label) => {
   // you can disable individual command logging
   // by passing {log: false} option
-  cy.log('**getByLabel**')
-  cy.contains('label', label)
-    .invoke('attr', 'for')
+  cy.log("**getByLabel**");
+  cy.contains("label", label)
+    .invoke("attr", "for")
     .then((id) => {
-      cy.get('#' + id)
-    })
-})
+      cy.get("#" + id);
+    });
+});
 
-Amplify.configure(Cypress.env('awsConfig'))
+Amplify.configure(Cypress.env("awsConfig"));
 
 // Amazon Cognito
-Cypress.Commands.add('loginByCognitoApi', (username, password) => {
+Cypress.Commands.add("loginByCognitoApi", (username, password) => {
   const log = Cypress.log({
-    displayName: 'COGNITO LOGIN',
+    displayName: "COGNITO LOGIN",
     message: [`🔐 Authenticating | ${username}`],
     // @ts-ignore
     autoEnd: false,
-  })
+  });
 
-  log.snapshot('before')
+  log.snapshot("before");
 
-  const signIn = Auth.signIn({ username, password })
+  const signIn = Auth.signIn({ username, password }) as Promise<CognitoUser>;
 
-  cy.wrap(signIn, { log: false }).then((cognitoResponse) => {
-    const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`
+  cy.wrap<Promise<CognitoUser>, CognitoUser>(signIn, { log: false }).then(
+    (cognitoResponse) => {
+      const signInUserSession = cognitoResponse.getSignInUserSession()!;
+      const username = cognitoResponse.getUsername();
 
-    window.localStorage.setItem(
-      `${keyPrefixWithUsername}.idToken`,
-      cognitoResponse.signInUserSession.idToken.jwtToken
-    )
+      // These are not exported fields - risky to use
+      const keyPrefix = (cognitoResponse as any).keyPrefix;
+      const clockDrift = (signInUserSession as any).clockDrift;
 
-    window.localStorage.setItem(
-      `${keyPrefixWithUsername}.accessToken`,
-      cognitoResponse.signInUserSession.accessToken.jwtToken
-    )
+      const keyPrefixWithUsername = `${keyPrefix}.${username}`;
 
-    window.localStorage.setItem(
-      `${keyPrefixWithUsername}.refreshToken`,
-      cognitoResponse.signInUserSession.refreshToken.token
-    )
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.idToken`,
+        signInUserSession.getIdToken().getJwtToken()
+      );
 
-    window.localStorage.setItem(
-      `${keyPrefixWithUsername}.clockDrift`,
-      cognitoResponse.signInUserSession.clockDrift
-    )
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.accessToken`,
+        signInUserSession.getAccessToken().getJwtToken()
+      );
 
-    window.localStorage.setItem(
-      `${cognitoResponse.keyPrefix}.LastAuthUser`,
-      cognitoResponse.username
-    )
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.refreshToken`,
+        signInUserSession.getRefreshToken().getToken()
+      );
 
-    window.localStorage.setItem('amplify-authenticator-authState', 'signedIn')
-    log.snapshot('after')
-    log.end()
-  })
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.clockDrift`,
+        clockDrift
+      );
 
-  cy.visit('/')
-})
+      window.localStorage.setItem(`${keyPrefix}.LastAuthUser`, username);
+
+      window.localStorage.setItem(
+        "amplify-authenticator-authState",
+        "signedIn"
+      );
+      log.snapshot("after");
+      log.end();
+    }
+  );
+
+  cy.visit("/");
+});
