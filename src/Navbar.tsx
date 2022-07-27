@@ -17,14 +17,6 @@ function Navbar() {
         <div>Directory</div>
       </NavLink>
       <NavLink
-        aria-label="directory 2"
-        to={"/directory2"}
-        className={({ isActive }) => (isActive ? "navicon active" : "navicon")}
-      >
-        <HomeIcon />
-        <div>Directory 2</div>
-      </NavLink>
-      <NavLink
         aria-label="summary"
         to={"/summary"}
         className={({ isActive }) => (isActive ? "navicon active" : "navicon")}

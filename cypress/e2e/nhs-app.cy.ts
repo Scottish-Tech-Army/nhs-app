@@ -2,7 +2,9 @@ const { format } = require("date-fns");
 
 const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
-const STORAGE_AREA_TITLE = "Trauma Tower";
+const DIRECTORY_TITLE = "Directory";
+const STORAGE_AREA_TITLE = "Trauma Tower 1";
+const BOX_TITLE = "Trauma Chest Drain";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
 const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
 const LOCAL_HOST_PORT = "http://localhost:3000";
@@ -40,11 +42,33 @@ describe("directory", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
-    cy.contains(STORAGE_AREA_TITLE);
+    cy.contains("h1", DIRECTORY_TITLE);
+  });
+
+  it("select storage area", () => {
+    cy.contains(STORAGE_AREA_TITLE).click();
+
+    cy.contains("h1", DIRECTORY_TITLE).should("not.exist");
+    cy.contains("h1", STORAGE_AREA_TITLE);
+    cy.contains(BOX_TITLE);
+  });
+
+  it("navigated to summary", () => {
+    cy.get('[aria-label="summary"]').click();
+    cy.contains("h1", DIRECTORY_TITLE).should("not.exist");
+    cy.contains("h1", "Summary");
+  });
+});
+
+describe("storage area", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    cy.contains(STORAGE_AREA_TITLE).click();
   });
 
   it("select box", () => {
-    cy.contains(BOX_FOUR_TITLE).click();
+    cy.get(BOX_TITLE).parent().find(".box-number")[3].click();
     cy.contains(STORAGE_AREA_TITLE).should("not.exist");
     cy.contains(BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
@@ -52,7 +76,7 @@ describe("directory", () => {
 
   it("navigated to summary", () => {
     cy.get('[aria-label="summary"]').click();
-    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
+    cy.contains("h1", STORAGE_AREA_TITLE).should("not.exist");
     cy.contains("h1", "Summary");
   });
 });

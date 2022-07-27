@@ -14,6 +14,7 @@ const INPUT_BOXES: EIBoxInput[] = [
   {
     name: "Trauma Chest Drain",
     boxTemplateId: "0",
+    storageAreaId: "2",
     boxNumber: 2,
     missingItems: [
       {
@@ -42,6 +43,7 @@ const INPUT_BOXES: EIBoxInput[] = [
     name: "Trauma Chest Drain",
     boxTemplateId: "0",
     boxNumber: 4,
+    storageAreaId: "3",
     missingItems: [],
     isFull: true,
     checker: "Bob",
@@ -56,6 +58,7 @@ const BOXES: EIBox[] = [
     checkTime: TIMESTAMP,
     checker: "Bob",
     isFull: false,
+    storageAreaId: "2",
     missingItems: [
       {
         name: "Sterile gloves",
@@ -85,11 +88,11 @@ const BOXES: EIBox[] = [
     checkTime: TIMESTAMP,
     checker: "Bob",
     isFull: true,
+    storageAreaId: "3",
     missingItems: [],
     name: "Trauma Chest Drain",
   },
 ];
-
 
 const DYNAMO_BOXES = [
   {
@@ -99,6 +102,7 @@ const DYNAMO_BOXES = [
     checkTime: { S: "2022-06-23T09:18:06.324Z" },
     checker: { S: "Bob" },
     isFull: { BOOL: false },
+    storageAreaId: { S: "2" },
     missingItems: {
       L: [
         {
@@ -129,9 +133,10 @@ const DYNAMO_BOXES = [
     checkTime: { S: "2022-06-23T09:18:06.324Z" },
     checker: { S: "Bob" },
     isFull: { BOOL: true },
+    storageAreaId: { S: "3" },
     missingItems: { L: [] },
     name: { S: "Trauma Chest Drain" },
-  }
+  },
 ];
 
 const DB_BOXES_RESPONSE = {
@@ -240,6 +245,7 @@ describe("api call POST /check", () => {
     const input = {
       name: "Trauma Chest Drain",
       boxNumber: 4,
+      storageAreaId: "1",
       missingItems: [],
       isFull: true,
       checker: "Bob",
@@ -266,6 +272,7 @@ describe("api call POST /check", () => {
     const input = {
       name: "Trauma Chest Drain",
       boxTemplateId: "0",
+      storageAreaId: "1",
       missingItems: [],
       isFull: true,
       checker: "Bob",
@@ -288,11 +295,39 @@ describe("api call POST /check", () => {
     );
   });
 
+  it("failure response on missing input storageAreaId", async () => {
+    const input = {
+      name: "Trauma Chest Drain",
+      boxTemplateId: "0",
+      boxNumber: 4,
+      missingItems: [],
+      isFull: true,
+      checker: "Bob",
+    };
+    const event: Partial<APIGatewayProxyEvent> = {
+      body: JSON.stringify(input),
+      resource: "/check",
+    };
+    const result = await handler(event as APIGatewayProxyEvent);
+
+    expect(result.statusCode).toEqual(400);
+    expect(result.body).toEqual(
+      JSON.stringify({
+        message: "storageAreaId missing",
+        request: {
+          body: JSON.stringify(input),
+          resource: "/check",
+        },
+      })
+    );
+  });
+
   it("failure response on missing input checker", async () => {
     const input = {
       name: "Trauma Chest Drain",
       boxTemplateId: "0",
       boxNumber: 4,
+      storageAreaId: "1",
       missingItems: [],
       isFull: true,
     };

@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
 import { BoxTemplate } from "./model/StorageTypes";
-import { TRAUMA_TOWER_TEMPLATE } from "./model/TraumaTower";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
-function Directory2() {
+function StorageArea() {
+  let { storageAreaId } = useParams();
+
   const getBoxes = (boxTemplate: BoxTemplate) => {
     const boxNumbers = [];
     for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
@@ -29,7 +30,7 @@ function Directory2() {
   };
 
   return (
-    <div className="directory2">
+    <div className="storage-area">
       <header>
         <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
       </header>
@@ -47,4 +48,4 @@ function Directory2() {
   );
 }
 
-export default Directory2;
+export default StorageArea;

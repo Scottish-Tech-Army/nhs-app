@@ -9,21 +9,12 @@ describe("Directory", () => {
   it("renders a home page", async () => {
     renderWithProvider(<Directory />);
 
-    expect(screen.getByText("Trauma Tower")).toBeDefined();
+    expect(screen.getByText("Directory")).toBeDefined();
 
     [
-      "Trauma Chest Drain - Box 1",
-      "Trauma Chest Drain - Box 2",
-      "Trauma Chest Drain - Box 3",
-      "Trauma Chest Drain - Box 4",
-      "Trauma Chest Drain - Box 5",
-      "Trauma Chest Drain - Box 6",
-      "Catastrophic Haemorrhage - Box 1",
-      "Catastrophic Haemorrhage - Box 2",
-      "Catastrophic Haemorrhage - Box 3",
-      "Max Fax Haemorrhage - Box 1",
-      "Max Fax Haemorrhage - Box 2",
-      "Max Fax Haemorrhage - Box 3",
+      "Trauma Tower 1",
+      "Trauma Tower 2",
+      "Storage area",
     ].forEach((title) => {
       expect(screen.getByText(title)).toBeDefined();
     });
@@ -38,16 +29,14 @@ describe("Directory", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("navigates to box page", async () => {
+  it("navigates to storage area page", async () => {
     const { user, history } = renderWithProvider(<Directory />);
 
-    expect(screen.getByText("Trauma Tower")).toBeDefined();
+    expect(screen.getByText("Directory")).toBeDefined();
     expect(history.location.pathname).toEqual("/");
 
-    const boxFour = await screen.findByText("Trauma Chest Drain - Box 4");
+    await user.click(await screen.findByText("Trauma Tower 2"));
 
-    await user.click(boxFour);
-
-    expect(history.location.pathname).toEqual("/box/0/4");
+    expect(history.location.pathname).toEqual("/area/1");
   });
 });

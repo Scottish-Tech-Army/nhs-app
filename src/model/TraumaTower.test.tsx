@@ -3,14 +3,22 @@ import {
   getBoxTemplate,
   getItemDisplayName,
   getItemTemplate,
-  TRAUMA_TOWER_TEMPLATE,
+  BOX_CAT_HAEMORRHAGE,
+  TRAUMA_TOWER_2,
 } from "./TraumaTower";
 
 test("getBoxTemplate", () => {
   expect(getBoxTemplate("unknown")).toBeUndefined();
   expect(getBoxTemplate("")).toBeUndefined();
 
-  expect(getBoxTemplate("0")).toEqual(TRAUMA_TOWER_TEMPLATE.boxes[0]);
+  expect(getBoxTemplate("1")).toEqual(BOX_CAT_HAEMORRHAGE);
+});
+
+test("getStorageArea", () => {
+  expect(getStorageArea("unknown")).toBeUndefined();
+  expect(getStorageArea("")).toBeUndefined();
+
+  expect(getStorageArea("1")).toEqual(TRAUMA_TOWER_2);
 });
 
 test("getBoxName", () => {

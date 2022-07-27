@@ -114,7 +114,7 @@
 }
 
 .directory header,
-.directory2 header,
+.storage-area header,
 .box-details header,
 .summary-list header {
   background-color: #491f6f;
@@ -123,7 +123,7 @@
 }
 
 .directory header h1,
-.directory2 header h1,
+.storage-area header h1,
 .box-details header h1,
 .summary-list header h1 {
   font-family: "HindSemiBold", sans-serif;
@@ -164,7 +164,7 @@
 
 .box-details,
 .directory,
-.directory2,
+.storage-area,
 .summary-list {
   display: flex;
   flex-direction: column;
@@ -172,7 +172,7 @@
 }
 
 .directory main,
-.directory2 main,
+.storage-area main,
 .box-details main,
 .summary-list main {
   flex: 1;
@@ -186,7 +186,7 @@
 }
 
 .directory main .scroll,
-.directory2 main .scroll,
+.storage-area main .scroll,
 .box-details main .scroll,
 .summary-list main .scroll {
   position: absolute;
@@ -319,7 +319,7 @@
 }
 
 .directory footer,
-.directory2 footer,
+.storage-area footer,
 .summary-list footer,
 .box-details footer {
   position: absolute;
@@ -333,7 +333,7 @@
 }
 
 .directory footer nav,
-.directory2 footer nav,
+.storage-area footer nav,
 .summary-list footer nav,
 .box-details footer {
   display: flex;
@@ -544,7 +544,7 @@ footer nav .navicon svg {
   height: 100%;
 }
 
-.directory2 main .box {
+.storage-area main .box {
   border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
@@ -557,13 +557,13 @@ footer nav .navicon svg {
   position: relative;
 }
 
-.directory2 main .box .box-title {
+.storage-area main .box .box-title {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
-.directory2 main .box .display-name {
+.storage-area main .box .display-name {
   margin-bottom: 17px;
   margin-left: 25px;
   margin-right: 25px;
@@ -572,14 +572,14 @@ footer nav .navicon svg {
   align-self: center;
 }
 
-.directory2 main .box .box-numbers {
+.storage-area main .box .box-numbers {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.directory2 main .box a.box-number {
+.storage-area main .box a.box-number {
   height: 40px;
   width: 40px;
   background-color: white;
@@ -596,7 +596,7 @@ footer nav .navicon svg {
   border: #491f6f solid 1px;
 }
 
-.directory2 main .box a.box-number:hover {
+.storage-area main .box a.box-number:hover {
   background-color: #491f6f;
   color: white;
 }

@@ -14,7 +14,7 @@ describe("App", () => {
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    expect(screen.getByText("Trauma Tower")).toBeDefined();
+    expect(screen.getByText("Directory")).toBeDefined();
   });
 
   it("renders summary view", async () => {
@@ -25,8 +25,19 @@ describe("App", () => {
 
     await user.click(screen.getByRole("link", { name: "summary" }));
 
-    expect(screen.queryByText("Trauma Tower")).toBeNull();
+    expect(screen.queryByText("Directory")).toBeNull();
     expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+  });
+
+  it("renders storage area view", async () => {
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
+    await user.click(screen.getByRole("button", { name: "Accept" }));
+
+    await user.click(screen.getByText("Trauma Tower 1"));
+
+    expect(screen.getByText("Trauma Chest Drain")).toBeDefined();
   });
 
   it("renders box view", async () => {
@@ -34,7 +45,7 @@ describe("App", () => {
       preloadedState: INITIAL_SIGNED_IN_STATE,
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
-
+    await user.click(screen.getByText("Trauma Tower 1"));
     await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
@@ -49,7 +60,7 @@ describe("App", () => {
       preloadedState: INITIAL_SIGNED_IN_STATE,
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
-
+    await user.click(screen.getByText("Trauma Tower 1"));
     await user.click(screen.getByText("Trauma Chest Drain - Box 2"));
 
     expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();

@@ -16,6 +16,7 @@ export type EIBoxInput = {
   checker: string;
   boxTemplateId: string;
   boxNumber: number;
+  storageAreaId: string;
   name: string;
   missingItems: EIMissingBoxItem[];
   isFull: boolean;
@@ -87,6 +88,9 @@ export const handler = async (
     }
     if (payload.boxNumber === undefined) {
       return errorResponse(400, "boxNumber missing");
+    }
+    if (!payload.storageAreaId) {
+      return errorResponse(400, "storageAreaId missing");
     }
     if (!payload.checker) {
       return errorResponse(400, "checker missing");
