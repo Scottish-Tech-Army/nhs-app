@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-  getBoxName,
-  getBoxTemplate,
+  getContainerName,
+  getContainerTemplate,
   getItemDisplayName,
   getStorageArea,
-} from "./model/TraumaTower";
+} from "./model/DataDefinitions";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  BoxTemplate,
-  EIBoxInput,
-  EIMissingBoxItem,
+  ContainerTemplate,
+  ContainerInputData,
+  MissingContainerItem,
   ItemTemplate,
   StorageAreaTemplate,
 } from "./model/StorageTypes";
@@ -29,7 +29,7 @@ const CHECK_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}check`
 function calculateMissingItem(
   itemTemplate: ItemTemplate,
   currentQuantity: number
-): EIMissingBoxItem | undefined {
+): MissingContainerItem | undefined {
   const quantityToGet = (itemTemplate.quantity || 1) - currentQuantity;
 
   return quantityToGet > 0
@@ -41,57 +41,58 @@ function calculateMissingItem(
     : undefined;
 }
 
-function calculateBoxMissingItems(
+function calculateContainerMissingItems(
   storageArea: StorageAreaTemplate,
-  boxTemplate: BoxTemplate,
-  boxNumber: number,
+  containerTemplate: ContainerTemplate,
+  containerNumber: number,
   itemCounts: number[],
   currentUser: string
-): EIBoxInput {
-  const missingItems = boxTemplate?.items
+): ContainerInputData {
+  const missingItems = containerTemplate?.items
     .map((itemTemplate, index) =>
       calculateMissingItem(itemTemplate, itemCounts[index])
     )
-    .filter(Boolean) as EIMissingBoxItem[];
+    .filter(Boolean) as MissingContainerItem[];
 
   return {
-    boxTemplateId: boxTemplate.boxTemplateId,
-    boxNumber,
+    containerTemplateId: containerTemplate.containerTemplateId,
+    containerNumber,
     storageAreaId: storageArea?.storageAreaId,
-    name: boxTemplate.name,
+    name: containerTemplate.name,
     missingItems,
     isFull: !missingItems.length,
     checker: currentUser,
   };
 }
 
-function Box() {
-  const { storageAreaId, boxTemplateId, boxId } = useParams();
+function Container() {
+  const { storageAreaId, containerTemplateId, containerNumber } = useParams();
   const navigate = useNavigate();
 
-  let boxNumber = 0;
-  if (boxId?.match(/^\d+$/)) {
-    boxNumber = Number.parseInt(boxId);
+  let containerNumberValue = 0;
+  if (containerNumber?.match(/^\d+$/)) {
+    containerNumberValue = Number.parseInt(containerNumber);
   }
 
   const currentUser = useAppSelector(getUser);
 
   const [storageArea, setStorageArea] = useState<StorageAreaTemplate>();
-  const [boxTemplate, setBoxTemplate] = useState<BoxTemplate>();
+  const [containerTemplate, setContainerTemplate] =
+    useState<ContainerTemplate>();
   const [itemCounts, setItemCounts] = useState<number[]>();
 
   useEffect(() => {
     setStorageArea(getStorageArea(storageAreaId!));
-    const currentBoxTemplate = getBoxTemplate(boxTemplateId!);
+    const currentContainerTemplate = getContainerTemplate(containerTemplateId!);
 
-    if (currentBoxTemplate) {
-      setBoxTemplate(currentBoxTemplate);
-      setItemCounts(currentBoxTemplate.items.map(() => 0));
+    if (currentContainerTemplate) {
+      setContainerTemplate(currentContainerTemplate);
+      setItemCounts(currentContainerTemplate.items.map(() => 0));
     } else {
-      setBoxTemplate(undefined);
+      setContainerTemplate(undefined);
       setItemCounts([]);
     }
-  }, [storageAreaId, boxTemplateId, boxNumber]);
+  }, [storageAreaId, containerTemplateId, containerNumberValue]);
 
   async function handleSubmit() {
     await Auth.currentSession()
@@ -102,17 +103,20 @@ function Box() {
             Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
           },
           body: JSON.stringify(
-            calculateBoxMissingItems(
+            calculateContainerMissingItems(
               storageArea!,
-              boxTemplate!,
-              boxNumber,
+              containerTemplate!,
+              containerNumberValue,
               itemCounts!,
               currentUser!.name
             )
           ),
         })
       )
-      .then(({ status }) => status === 200 && navigate(`/area/${storageArea?.storageAreaId}`));
+      .then(
+        ({ status }) =>
+          status === 200 && navigate(`/area/${storageArea?.storageAreaId}`)
+      );
   }
 
   async function handleClickFull() {
@@ -124,17 +128,20 @@ function Box() {
             Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
           },
           body: JSON.stringify({
-            boxTemplateId: boxTemplate!.boxTemplateId,
-            boxNumber,
+            containerTemplateId: containerTemplate!.containerTemplateId,
+            containerNumber: containerNumberValue,
             storageAreaId: storageArea?.storageAreaId,
-            name: boxTemplate!.name,
+            name: containerTemplate!.name,
             missingItems: [],
             isFull: true,
             checker: currentUser!.name,
           }),
         })
       )
-      .then(({ status }) => status === 200 && navigate(`/area/${storageArea?.storageAreaId}`));
+      .then(
+        ({ status }) =>
+          status === 200 && navigate(`/area/${storageArea?.storageAreaId}`)
+      );
   }
 
   function preventExtraClickEvents(
@@ -148,7 +155,6 @@ function Box() {
   function getItem(itemTemplate: ItemTemplate, index: number) {
     const expectedQuantity = itemTemplate.quantity || 1;
     const actualQuantity = itemCounts![index];
-    // TODO are too many items bad?
     const enoughItems = actualQuantity - expectedQuantity >= 0;
 
     return (
@@ -159,7 +165,7 @@ function Box() {
             type="button"
             className="item-info"
             aria-label="item information"
-            onClick={() => navigate(`/item/${boxTemplateId}/${index}`)}
+            onClick={() => navigate(`/item/${containerTemplateId}/${index}`)}
           >
             <InfoCircle />
           </button>
@@ -214,14 +220,25 @@ function Box() {
     );
   }
 
-  if (!storageArea || !boxTemplate || boxNumber <= 0 || boxNumber > boxTemplate.count) {
+  const containerQuantity = containerTemplate?.quantity ?? 1;
+
+  if (
+    !storageArea ||
+    !containerTemplate ||
+    containerNumberValue <= 0 ||
+    containerNumberValue > containerQuantity
+  ) {
     return null;
   }
 
   return (
-    <div className="box-details">
+    <div className="container-details">
       <header>
-        <h1>{getBoxName(boxTemplate!.name, boxNumber)}</h1>
+        <h1>
+          {storageArea.name}
+          <br />
+          {getContainerName(containerTemplate!, containerNumberValue)}
+        </h1>
         <button
           type="button"
           className="back"
@@ -235,7 +252,7 @@ function Box() {
         </button>
       </header>
       <main>
-        <div className="scroll">{boxTemplate?.items.map(getItem)}</div>
+        <div className="scroll">{containerTemplate?.items.map(getItem)}</div>
       </main>
       <footer>
         <button type="button" className="save" onClick={handleSubmit}>
@@ -246,4 +263,4 @@ function Box() {
   );
 }
 
-export default Box;
+export default Container;

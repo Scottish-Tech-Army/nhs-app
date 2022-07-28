@@ -1,29 +1,35 @@
 import {
   getStorageArea,
-  getBoxName,
-  getBoxTemplate,
+  getContainerName,
+  getContainerTemplate,
   getItemDisplayName,
   getItemTemplate,
   BOX_CAT_HAEMORRHAGE,
-  TRAUMA_TOWER_2,
-} from "./TraumaTower";
+  TRAUMA_TOWER,
+  BOX_TRAUMA_CHEST_DRAIN,
+  AIRWAY_TROLLEY_DRAWER_B,
+} from "./DataDefinitions";
 
-test("getBoxTemplate", () => {
-  expect(getBoxTemplate("unknown")).toBeUndefined();
-  expect(getBoxTemplate("")).toBeUndefined();
+test("getContainerTemplate", () => {
+  expect(getContainerTemplate("unknown")).toBeUndefined();
+  expect(getContainerTemplate("")).toBeUndefined();
 
-  expect(getBoxTemplate("1")).toEqual(BOX_CAT_HAEMORRHAGE);
+  expect(getContainerTemplate("cat-haemorrhage")).toEqual(BOX_CAT_HAEMORRHAGE);
 });
 
 test("getStorageArea", () => {
   expect(getStorageArea("unknown")).toBeUndefined();
   expect(getStorageArea("")).toBeUndefined();
 
-  expect(getStorageArea("1")).toEqual(TRAUMA_TOWER_2);
+  expect(getStorageArea("trauma-tower")).toEqual(TRAUMA_TOWER);
 });
 
-test("getBoxName", () => {
-  expect(getBoxName("Chest Drain", 1)).toEqual("Chest Drain - Box 1");
+test("getContainerName with replicates", () => {
+  expect(getContainerName(BOX_TRAUMA_CHEST_DRAIN, 1)).toEqual("Trauma Chest Drain - Box\u00A01");
+});
+
+test("getContainerName without replicates", () => {
+  expect(getContainerName({...AIRWAY_TROLLEY_DRAWER_B, containerTemplateId: "id"})).toEqual("Drawer B - Maintaining Oxygenation & SAD");
 });
 
 test("getItemDisplayName", () => {
@@ -67,7 +73,7 @@ test("getItemDisplayName", () => {
 
 describe("getItemTemplate", () => {
   test("success", () => {
-    expect(getItemTemplate("0", "0")).toEqual({
+    expect(getItemTemplate("trauma-chest-drain", "0")).toEqual({
       name: "Blunt dissection chest drainage insertion pack",
       size: "28Fg",
       description:
@@ -76,7 +82,7 @@ describe("getItemTemplate", () => {
       photo: "chestdrain.jpg",
     });
 
-    expect(getItemTemplate("0", "4")).toEqual({
+    expect(getItemTemplate("trauma-chest-drain", "4")).toEqual({
       name: "Chest drain catheter",
       size: "28Fr",
       description: "Chest drain catheter - 28Fr",
@@ -85,18 +91,18 @@ describe("getItemTemplate", () => {
     });
   });
 
-  test("unknown boxTemplateId", () => {
+  test("unknown containerTemplateId", () => {
     expect(getItemTemplate("unknown", "1")).toBeUndefined();
     expect(getItemTemplate("", "1")).toBeUndefined();
     expect(getItemTemplate(undefined, "1")).toBeUndefined();
   });
 
   test("unknown itemNumber", () => {
-    expect(getItemTemplate("0", "-1")).toBeUndefined();
-    expect(getItemTemplate("0", "15")).toBeUndefined();
+    expect(getItemTemplate("trauma-chest-drain", "-1")).toBeUndefined();
+    expect(getItemTemplate("trauma-chest-drain", "15")).toBeUndefined();
 
-    expect(getItemTemplate("0", "unknown")).toBeUndefined();
-    expect(getItemTemplate("0", "")).toBeUndefined();
-    expect(getItemTemplate("0", undefined)).toBeUndefined();
+    expect(getItemTemplate("trauma-chest-drain", "unknown")).toBeUndefined();
+    expect(getItemTemplate("trauma-chest-drain", "")).toBeUndefined();
+    expect(getItemTemplate("trauma-chest-drain", undefined)).toBeUndefined();
   });
 });

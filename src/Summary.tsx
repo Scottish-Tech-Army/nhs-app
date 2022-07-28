@@ -1,8 +1,12 @@
 import { Auth } from "@aws-amplify/auth";
 import { format, parseISO } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { EIBox } from "./model/StorageTypes";
-import { getItemDisplayName } from "./model/TraumaTower";
+import { ContainerData } from "./model/StorageTypes";
+import {
+  getContainerName,
+  getContainerTemplate,
+  getItemDisplayName,
+} from "./model/DataDefinitions";
 
 import Navbar from "./Navbar";
 
@@ -11,17 +15,19 @@ export type FormValueType = {
   count: number;
 };
 
-const BOXES_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}boxes`;
+const CONTAINERS_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}containers`;
 
 function Summary() {
-  const [boxes, setBoxes] = useState<EIBox[]>([]);
+  const [containers, setContainers] = useState<ContainerData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const partiallyFullBoxes = boxes.filter((box) => !box.isFull);
+  const partiallyFullContainers = containers.filter(
+    (container) => !container.isFull
+  );
 
   useEffect(() => {
     Auth.currentSession()
       .then((session) =>
-        fetch(BOXES_API_ENDPONT, {
+        fetch(CONTAINERS_API_ENDPONT, {
           headers: {
             Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
           },
@@ -29,33 +35,46 @@ function Summary() {
       )
       .then((response) => response.json())
       .then((data) => {
-        setBoxes(data);
+        setContainers(data);
         setLoading(false);
       })
       .catch((error) => {
         console.error(error);
-        setBoxes([]);
+        setContainers([]);
       });
   }, []);
-
 
   function getDisplayTime(isoDateTime: string) {
     const timestamp = parseISO(isoDateTime);
     return format(timestamp, "EEE d/M/yyyy 'at' HH:mm");
   }
 
-  function getBoxShoppingList(box: EIBox, index: number) {
+  function getContainerShoppingList(container: ContainerData, index: number) {
+    const containerTemplate = getContainerTemplate(
+      container.containerTemplateId
+    );
+
+    if (!containerTemplate) {
+      console.error(
+        "Container template not found: ",
+        container.containerTemplateId
+      );
+      return null;
+    }
+
     return (
-      <div key={index} className="box">
+      <div key={index} className="container">
         <div>
-          <h2>{`${box.name} - Box ${box.boxNumber}`}</h2>
+          <h2>
+            {getContainerName(containerTemplate, container.containerNumber)}
+          </h2>
           <div className="checker">{`Checked by ${
-            box.checker
-          } on ${getDisplayTime(box.checkTime)}`}</div>
+            container.checker
+          } on ${getDisplayTime(container.checkTime)}`}</div>
         </div>
 
         <div className="items">
-          {box.missingItems.map((item, index) => (
+          {container.missingItems.map((item, index) => (
             <div key={index} className="item">
               {`${item.quantity} x ${getItemDisplayName(item)}`}
             </div>
@@ -72,9 +91,9 @@ function Summary() {
       <main>
         {loading ? (
           <div>Fetching Items</div>
-        ) : partiallyFullBoxes.length ? (
+        ) : partiallyFullContainers.length ? (
           <div className="scroll">
-            {partiallyFullBoxes.map(getBoxShoppingList)}
+            {partiallyFullContainers.map(getContainerShoppingList)}
           </div>
         ) : (
           <div className="nothing-to-replace">No Items</div>

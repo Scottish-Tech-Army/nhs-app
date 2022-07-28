@@ -5,7 +5,7 @@ import { screen, waitFor } from "@testing-library/react";
 
 import Summary from "./Summary";
 import { renderWithProvider } from "./testUtils";
-import { EIBox } from "./model/StorageTypes";
+import { ContainerData } from "./model/StorageTypes";
 import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
 import { Auth } from "@aws-amplify/auth";
 
@@ -16,11 +16,11 @@ const DISPLAY_TIMESTAMP = "Thu 23/6/2022 at 10:18";
 
 const UUID = "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5";
 
-const BOXES: EIBox[] = [
+const CONTAINERS: ContainerData[] = [
   {
-    boxNumber: 2,
-    boxTemplateId: "0",
-    storageAreaId: "1",
+    containerNumber: 2,
+    containerTemplateId: "trauma-chest-drain",
+    storageAreaId: "trauma-tower",
     checkId: UUID,
     checkTime: TIMESTAMP,
     checker: "Bob",
@@ -34,9 +34,9 @@ const BOXES: EIBox[] = [
     name: "Trauma Chest Drain",
   },
   {
-    boxNumber: 4,
-    boxTemplateId: "0",
-    storageAreaId: "1",
+    containerNumber: 4,
+    containerTemplateId: "trauma-chest-drain",
+    storageAreaId: "trauma-tower",
     checkId: UUID,
     checkTime: TIMESTAMP,
     checker: "Bob",
@@ -57,7 +57,7 @@ describe("Summary", () => {
     });
   });
 
-  it("rendered a summary list page for filled store - no boxes recorded", async () => {
+  it("rendered a summary list page for filled store - no containers recorded", async () => {
     fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
 
     renderWithProvider(<Summary />, {
@@ -85,12 +85,12 @@ describe("Summary", () => {
     await checkSummaryList([]);
   });
 
-  it("rendered a summary list and all boxes full", async () => {
+  it("rendered a summary list and all containers full", async () => {
     fetchMock.mockResponse(
       JSON.stringify([
         {
-          boxNumber: 4,
-          boxTemplateId: "0",
+          containerNumber: 4,
+          containerTemplateId: "trauma-chest-drain",
           checkId: UUID,
           checkTime: TIMESTAMP,
           checker: "Bob",
@@ -99,8 +99,8 @@ describe("Summary", () => {
           name: "Trauma Chest Drain",
         },
         {
-          boxNumber: 5,
-          boxTemplateId: "0",
+          containerNumber: 5,
+          containerTemplateId: "trauma-chest-drain",
           checkId: UUID,
           checkTime: TIMESTAMP,
           checker: "Bob",
@@ -117,7 +117,7 @@ describe("Summary", () => {
     });
     await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
     expect(fetchMock).toBeCalledWith(
-      TEST_INVENTORY_API_ENDPOINT + "boxes",
+      TEST_INVENTORY_API_ENDPOINT + "containers",
       expect.objectContaining({
         headers: { Authorization: "Bearer test jwt token" },
       })
@@ -130,7 +130,7 @@ describe("Summary", () => {
   });
 
   it("rendered a summary list page for partially filled store - ie some items shown", async () => {
-    fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
+    fetchMock.mockResponse(JSON.stringify(CONTAINERS), { status: 200 });
 
     renderWithProvider(<Summary />, {
       initialRoutes: ["/summary"],
@@ -153,14 +153,14 @@ describe("Summary", () => {
   });
 
   it("renders correctly", async () => {
-    fetchMock.mockResponse(JSON.stringify(BOXES), { status: 200 });
+    fetchMock.mockResponse(JSON.stringify(CONTAINERS), { status: 200 });
 
     const { container } = renderWithProvider(<Summary />, {
       initialRoutes: ["/summary"],
     });
 
     await waitFor(() =>
-      expect(document.querySelectorAll("div.box")!).toHaveLength(1)
+      expect(document.querySelectorAll("div.container")!).toHaveLength(1)
     );
     expect(container).toMatchSnapshot();
   });
@@ -177,26 +177,26 @@ describe("Summary", () => {
     expect(history.location.pathname).toEqual("/");
   });
 
-  type ExpectedBoxContents = {
+  type ExpectedContainerContents = {
     name: string;
     checkNameAndDate: string;
     items: string[];
   };
 
-  async function checkSummaryList(expectedBoxes: ExpectedBoxContents[]) {
+  async function checkSummaryList(expectedContainers: ExpectedContainerContents[]) {
     await waitFor(() => {
-      const actualBoxes = document.querySelectorAll("div.box")!;
+      const actualContainers = document.querySelectorAll("div.container")!;
 
-      expect(actualBoxes).toHaveLength(expectedBoxes.length);
-      actualBoxes.forEach((actualBox, index) => {
-        const expectedBox = expectedBoxes[index];
-        expect(actualBox).toHaveTextContent(expectedBox.name);
-        expect(actualBox).toHaveTextContent(expectedBox.checkNameAndDate);
+      expect(actualContainers).toHaveLength(expectedContainers.length);
+      actualContainers.forEach((actualContainer, index) => {
+        const expectedContainer = expectedContainers[index];
+        expect(actualContainer).toHaveTextContent(expectedContainer.name);
+        expect(actualContainer).toHaveTextContent(expectedContainer.checkNameAndDate);
 
-        const actualItems = actualBox.querySelectorAll("div.item")!;
-        expect(actualItems).toHaveLength(expectedBox.items.length);
+        const actualItems = actualContainer.querySelectorAll("div.item")!;
+        expect(actualItems).toHaveLength(expectedContainer.items.length);
         actualItems.forEach((actualItem, index) => {
-          const expectedItem = expectedBox.items[index];
+          const expectedItem = expectedContainer.items[index];
           expect(actualItem).toHaveTextContent(expectedItem);
         });
       });

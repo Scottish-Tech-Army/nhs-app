@@ -4,7 +4,7 @@ import "./App.css";
 import Directory from "./Directory";
 import { useAppSelector } from "./model/store";
 
-import Box from "./Box";
+import Container from "./Container";
 import Summary from "./Summary";
 import ItemDetails from "./ItemDetails";
 import { isAuthenticating, SignIn } from "./auth/SignIn";
@@ -39,8 +39,8 @@ function App() {
   return (
     <div className="root">
       <Routes>
-        <Route path="box/:storageAreaId/:boxTemplateId/:boxId" element={<Box />} />
-        <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
+        <Route path="container/:storageAreaId/:containerTemplateId/:containerNumber" element={<Container />} />
+        <Route path="item/:containerTemplateId/:itemId" element={<ItemDetails />} />
         <Route path="summary" element={<Summary />} />
         <Route path="area/:storageAreaId" element={<StorageArea />} />
         <Route path="*" element={<Directory />} />

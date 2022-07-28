@@ -12,9 +12,9 @@ describe("Directory", () => {
     expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
 
     [
-      "Trauma Tower 1",
-      "Trauma Tower 2",
-      "Backup Area",
+      "Trauma Tower",
+      "Airway Trolley 1",
+      "Airway Trolley 2",
     ].forEach((title) => {
       expect(screen.getByText(title)).toBeDefined();
     });
@@ -36,8 +36,8 @@ describe("Directory", () => {
 
     expect(history.location.pathname).toEqual("/");
 
-    await user.click(await screen.findByText("Trauma Tower 2"));
+    await user.click(await screen.findByText("Trauma Tower"));
 
-    expect(history.location.pathname).toEqual("/area/1");
+    expect(history.location.pathname).toEqual("/area/trauma-tower");
   });
 });

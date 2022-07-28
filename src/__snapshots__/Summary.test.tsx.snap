@@ -15,11 +15,11 @@ exports[`Summary renders correctly 1`] = `
         class="scroll"
       >
         <div
-          class="box"
+          class="container"
         >
           <div>
             <h2>
-              Trauma Chest Drain - Box 2
+              Trauma Chest Drain - Box 2
             </h2>
             <div
               class="checker"

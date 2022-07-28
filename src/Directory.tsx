@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BoxTemplate } from "./model/StorageTypes";
-import { STORAGE_AREAS } from "./model/TraumaTower";
+import { STORAGE_AREAS } from "./model/DataDefinitions";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as EditIcon } from "./icons/edit.svg";
 import Navbar from "./Navbar";

@@ -77,22 +77,22 @@ class CdkBackendStack extends cdk.Stack {
     const stack = cdk.Stack.of(this);
     const region = stack.region;
 
-    const BOXES_TABLE_NAME = resourcePrefix + "-Boxes";
+    const CONTAINERS_TABLE_NAME = resourcePrefix + "-Containers";
     const USERPOOL_ID = resourcePrefix + "-UserPool";
 
-    // Database table for boxes
+    // Database table for containers
 
-    const boxesTable = new dynamodb.Table(this, "Boxes", {
-      tableName: BOXES_TABLE_NAME,
+    const containersTable = new dynamodb.Table(this, "Containers", {
+      tableName: CONTAINERS_TABLE_NAME,
       partitionKey: {
-        name: "boxTemplateId",
+        name: "containerTemplateId",
         type: dynamodb.AttributeType.STRING,
       },
-      sortKey: { name: "boxNumber", type: dynamodb.AttributeType.NUMBER },
+      sortKey: { name: "containerNumber", type: dynamodb.AttributeType.NUMBER },
     });
-    new cdk.CfnOutput(this, "Boxes table", {
-      value: boxesTable.tableName,
-      description: "DynamoDB table containing box contents",
+    new cdk.CfnOutput(this, "Containers table", {
+      value: containersTable.tableName,
+      description: "DynamoDB table containing container contents",
     });
 
     // Lambda to process user API requests
@@ -103,7 +103,7 @@ class CdkBackendStack extends cdk.Stack {
       handler: "handler",
       environment: {
         REGION: region,
-        BOXES_TABLE_NAME,
+        CONTAINERS_TABLE_NAME,
       },
       timeout: cdk.Duration.seconds(30),
       commandHooks: {
@@ -113,7 +113,7 @@ class CdkBackendStack extends cdk.Stack {
       },
     });
 
-    boxesTable.grant(
+    containersTable.grant(
       inventoryLambda,
       "dynamodb:GetItem",
       "dynamodb:PutItem",
@@ -190,9 +190,9 @@ class CdkBackendStack extends cdk.Stack {
       }
     );
 
-    // API GET /boxes
-    const boxesApiResource = restApi.root.addResource("boxes");
-    let method = boxesApiResource.addMethod("GET");
+    // API GET /containers
+    const containersApiResource = restApi.root.addResource("containers");
+    let method = containersApiResource.addMethod("GET");
     let methodResource = method.node.findChild("Resource");
     methodResource.addPropertyOverride(
       "AuthorizationType",

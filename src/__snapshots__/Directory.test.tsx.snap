@@ -23,7 +23,7 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Trauma Tower 1
+            Trauma Tower
           </div>
         </div>
         <div
@@ -35,7 +35,7 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Trauma Tower 2
+            Airway Trolley 1
           </div>
         </div>
         <div
@@ -47,7 +47,115 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Backup Area
+            Airway Trolley 2
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Airway Trolley 3
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Airway Trolley 4
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 1
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 2
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 3
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 4
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 5
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 6
+          </div>
+        </div>
+        <div
+          class="single-storage-area"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Other Procedures
           </div>
         </div>
       </div>

@@ -52,7 +52,7 @@ describe("signIn", () => {
     expect(store.getState().auth).toStrictEqual({
       errorMessage: "",
       authState: SIGNED_IN,
-      user: TEST_USER_WITH_COGNITO,
+      user: TEST_USER,
     });
   });
 
@@ -279,7 +279,7 @@ describe("completeNewPassword", () => {
     expect(store.getState().auth).toStrictEqual({
       errorMessage: "",
       authState: SIGNED_IN,
-      user: TEST_USER_WITH_COGNITO,
+      user: TEST_USER,
     });
   });
 

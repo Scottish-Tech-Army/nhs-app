@@ -1,21 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Box does not render if unknown boxId - box number too high 1`] = `<div />`;
+exports[`Container does not render if unknown containerNumber - container number too high 1`] = `<div />`;
 
-exports[`Box does not render if unknown boxId 1`] = `<div />`;
+exports[`Container does not render if unknown containerNumber 1`] = `<div />`;
 
-exports[`Box does not render if unknown boxTemplateId 1`] = `<div />`;
+exports[`Container does not render if unknown containerTemplateId 1`] = `<div />`;
 
-exports[`Box does not render if unknown storageAreaId 1`] = `<div />`;
+exports[`Container does not render if unknown storageAreaId 1`] = `<div />`;
 
-exports[`Box renders correctly 1`] = `
+exports[`Container renders correctly 1`] = `
 <div>
   <div
-    class="box-details"
+    class="container-details"
   >
     <header>
       <h1>
-        Trauma Chest Drain - Box 3
+        Trauma Tower
+        <br />
+        Trauma Chest Drain - Box 3
       </h1>
       <button
         aria-label="Back"

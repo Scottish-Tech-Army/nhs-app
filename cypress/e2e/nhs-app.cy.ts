@@ -4,7 +4,7 @@ const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
 const DIRECTORY_TITLE = "Directory";
 const SUMMARY_TITLE = "Summary";
-const STORAGE_AREA_TITLE = "Trauma Tower 1";
+const STORAGE_AREA_TITLE = "Trauma Tower";
 const BOX_TITLE = "Trauma Chest Drain";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
 const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
@@ -63,7 +63,7 @@ describe("storage area", () => {
     goToStorageArea();
   });
 
-  it("select box", () => {
+  it("select container", () => {
     cy.contains(BOX_TITLE).parent().contains("4").click();
     cy.contains("h1", BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
@@ -98,7 +98,7 @@ describe("summary", () => {
     cy.contains("Sterile gloves (Small)");
     cy.contains("Save").click();
 
-    cy.contains("h1", STORAGE_AREA_TITLE);
+    cy.get("h1").should("have.text", STORAGE_AREA_TITLE);
 
     cy.contains(BOX_TITLE).parent().contains("2").click();
 
@@ -156,35 +156,24 @@ describe("summary", () => {
       areaTitles.forEach((title) => {
         cy.log("Filling " + title);
         cy.contains(title).click();
-        markAllBoxesFull(title);
+        markAllContainersFull(title);
         goToDirectory();
       });
     });
   }
 
-  function markAllBoxesFull(storageAreaTitle: string) {
-    const boxTemplateNames: string[] = [];
-    cy.get(".display-name").each((item) => {
-      boxTemplateNames.push(item.text());
+  function markAllContainersFull(storageAreaTitle: string) {
+    const containerLinkHrefs: string[] = [];
+    cy.get("a[href*='/container']").each((item) => {
+      cy.wrap(item)
+        .invoke("attr", "href")
+        .then((href) => containerLinkHrefs.push(href!));
     });
-    cy.wrap(boxTemplateNames).then(() => {
-      boxTemplateNames.forEach((boxTemplateName) => {
-        const boxNumbers: string[] = [];
-        cy.contains(boxTemplateName)
-          .parent()
-          .find(".box-number")
-          .each((item) => {
-            boxNumbers.push(item.text());
-          });
-
-        cy.wrap(boxNumbers).then(() => {
-          boxNumbers.forEach((boxNumber) => {
-            cy.log("Filling " + boxTemplateName + " " + boxNumber);
-            cy.contains(boxTemplateName).parent().contains(boxNumber).click();
-            cy.contains("FULL").click();
-            cy.contains(storageAreaTitle);
-          });
-        });
+    cy.wrap(containerLinkHrefs).then(() => {
+      containerLinkHrefs.forEach((containerLinkHref) => {
+        cy.get(`a[href='${containerLinkHref}']`).click();
+        cy.contains("FULL").click();
+        cy.get("h1").should("have.text", storageAreaTitle);
       });
     });
   }
@@ -204,5 +193,5 @@ function goToDirectory() {
 // From directory
 function goToStorageArea() {
   cy.contains(STORAGE_AREA_TITLE).click();
-  cy.contains("h1", STORAGE_AREA_TITLE);
+  cy.get("h1").should("have.text", STORAGE_AREA_TITLE);
 }

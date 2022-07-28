@@ -8,7 +8,6 @@ import { AppThunk } from "../store";
 const logger = new Logger("auth-utils");
 
 export function signIn(name: string, password: string): AppThunk {
-  console.debug("signIn");
   return function (dispatch) {
     return Auth.signIn(name, password)
       .then((cognitoUser: CognitoUser) => {
@@ -32,7 +31,7 @@ export function signIn(name: string, password: string): AppThunk {
           return dispatch(
             setAuthState({
               authState: SIGNED_IN,
-              user: { name: cognitoUser.getUsername(), cognitoUser },
+              user: { name: cognitoUser.getUsername() },
             })
           );
         }
@@ -51,7 +50,6 @@ export function signIn(name: string, password: string): AppThunk {
 }
 
 export function signOut(): AppThunk {
-  console.debug("signOut");
   return function (dispatch) {
     return Auth.signOut()
       .then(() => dispatch(setAuthState({ authState: SIGNED_OUT })))
@@ -60,7 +58,6 @@ export function signOut(): AppThunk {
 }
 
 export function completeNewPassword(user: User, newPassword: string): AppThunk {
-  console.debug("completeNewPassword");
   return function (dispatch) {
     let getUserPromise = null;
     if (!user.cognitoUser) {
@@ -84,7 +81,7 @@ export function completeNewPassword(user: User, newPassword: string): AppThunk {
           return dispatch(
             setAuthState({
               authState: SIGNED_IN,
-              user: { name: cognitoUser.getUsername(), cognitoUser },
+              user: { name: cognitoUser.getUsername() },
             })
           );
         }
@@ -94,7 +91,6 @@ export function completeNewPassword(user: User, newPassword: string): AppThunk {
 }
 
 export function signInCurrentUser(): AppThunk {
-  console.debug("signInCurrentUser");
   return function (dispatch) {
     return Auth.currentAuthenticatedUser()
       .then((cognitoUser) =>

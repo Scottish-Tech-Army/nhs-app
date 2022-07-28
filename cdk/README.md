@@ -48,7 +48,7 @@ The CDK will create and deploy a CloudFormation stack of the backend AWS compone
  ✅  STA-NHS-Inventory-Backend-dev
 
 Outputs:
-STA-NHS-Inventory-Backend-dev.Boxestable = STA-NHS-Inventory-dev-Boxes
+STA-NHS-Inventory-Backend-dev.Containerstable = STA-NHS-Inventory-dev-Containers
 STA-NHS-Inventory-Backend-dev.EmergencyInventoryclientAPIendpoint = https://XXXXXXXXXX.execute-api.eu-west-2.amazonaws.com/dev/
 STA-NHS-Inventory-Backend-dev.InventoryClientApiEndpoint99B6C40C = https://XXXXXXXXXX.execute-api.eu-west-2.amazonaws.com/dev/
 STA-NHS-Inventory-Backend-dev.NhsInventoryAppuserpoolid = eu-west-2_XXXXXXXXX
@@ -64,7 +64,7 @@ These outputs are also shown in the outputs section of the CloudformationStack i
 
 The Emergency Inventory backend consists of:
 
-- A DynamoDB table of box checks 
+- A DynamoDB table of container checks 
 - Lambda function processing the client API requests.
 - API Gateway wrapper for this lambda function.
 - A Cognito user pool to API authorisation.

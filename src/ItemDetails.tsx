@@ -1,5 +1,5 @@
 import React from "react";
-import { getItemTemplate } from "./model/TraumaTower";
+import { getItemTemplate } from "./model/DataDefinitions";
 import { useNavigate, useParams } from "react-router-dom";
 import "./App.css";
 import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
@@ -7,10 +7,10 @@ import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
 // Icons vuesax linear. Licence: https://iconsax.io/#license
 
 function ItemDetails() {
-  let { boxTemplateId, itemId } = useParams();
+  let { containerTemplateId, itemId } = useParams();
   let navigate = useNavigate();
 
-  const itemTemplate = getItemTemplate(boxTemplateId, itemId);
+  const itemTemplate = getItemTemplate(containerTemplateId, itemId);
 
   return (
     <div className="item-details">
