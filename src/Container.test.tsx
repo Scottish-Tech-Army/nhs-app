@@ -321,7 +321,7 @@ describe("Container", () => {
   it("can return to previous page", async () => {
     const { user, history } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
 
-    await user.click(screen.getByRole("button", { name: "Back" }));
+    await user.click(screen.getByRole("button", { name: "back" }));
 
     expect(history.location.pathname).toEqual("/");
   });

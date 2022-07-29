@@ -20,7 +20,7 @@ exports[`Container renders correctly 1`] = `
         Trauma Chest Drain - Box 3
       </h1>
       <button
-        aria-label="Back"
+        aria-label="back"
         class="back"
         type="button"
       >

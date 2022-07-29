@@ -4,11 +4,12 @@ const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
 const DIRECTORY_TITLE = "Directory";
 const SUMMARY_TITLE = "Summary";
-const STORAGE_AREA_TITLE = "Trauma Tower";
+const TRAUMA_TOWER = "Trauma Tower";
 const BOX_TITLE = "Trauma Chest Drain";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
 const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
 const LOCAL_HOST_PORT = "http://localhost:3000";
+const AIRWAY_TROLLEY_ONE = "Airway Trolley 1";
 
 const TEST_USER = Cypress.env("cognito_username");
 
@@ -47,7 +48,7 @@ describe("directory", () => {
   });
 
   it("select storage area", () => {
-    goToStorageArea();
+    goToTraumaTower();
     cy.contains(BOX_TITLE);
   });
 
@@ -60,7 +61,7 @@ describe("storage area", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
-    goToStorageArea();
+    goToTraumaTower();
   });
 
   it("select container", () => {
@@ -90,7 +91,7 @@ describe("summary", () => {
     // Populated summary page
     goToDirectory();
 
-    goToStorageArea();
+    goToTraumaTower();
 
     cy.contains(BOX_TITLE).parent().contains("4").click();
     cy.contains("h1", BOX_FOUR_TITLE);
@@ -98,7 +99,7 @@ describe("summary", () => {
     cy.contains("Sterile gloves (Small)");
     cy.contains("Save").click();
 
-    cy.get("h1").should("have.text", STORAGE_AREA_TITLE);
+    cy.get("h1").should("have.text", TRAUMA_TOWER);
 
     cy.contains(BOX_TITLE).parent().contains("2").click();
 
@@ -179,6 +180,90 @@ describe("summary", () => {
   }
 });
 
+describe.only("single instance container", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    goToAirwayTrolleyOne();
+    cy.contains("Drawer B").click();
+    cy.contains("h1", "Drawer B - Maintaining Oxygenation & SAD");
+  });
+
+  it("back button returns to storage area", () => {
+    cy.get('[aria-label="back"]').click();
+    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
+  });
+
+  it("can save items", () => {
+    cy.contains("i-gel (3)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+    cy.contains("Flextube Catheter Mount swivel elbow (Bronchoscopy)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+
+    cy.contains("Save").click();
+
+    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
+  });
+
+  it("full button fills container", () => {
+    cy.contains("FULL").click();
+
+    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
+  });
+});
+
+describe("multiple instance container", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    goToTraumaTower();
+
+    cy.contains(BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", BOX_FOUR_TITLE);
+  });
+
+  it("displays container view", () => {
+    cy.contains(BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", BOX_FOUR_TITLE);
+
+    cy.contains("Sterile gloves (Small)");
+  });
+
+  it("back button returns to storage area", () => {
+    cy.get('[aria-label="back"]').click();
+    cy.get("h1").should("have.text", TRAUMA_TOWER);
+  });
+
+  it("can save items", () => {
+    cy.contains("Sterile gloves (Small)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+    cy.contains("Sterile gloves (Medium)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+    cy.contains("Sterile gloves (Large)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+
+    cy.contains("Save").click();
+
+    cy.get("h1").should("have.text", TRAUMA_TOWER);
+  });
+
+  it("full button fills container", () => {
+    cy.contains("FULL").click();
+
+    cy.get("h1").should("have.text", TRAUMA_TOWER);
+  });
+});
+
 // Navbar
 function goToSummary() {
   cy.get('[aria-label="summary"]').click();
@@ -191,7 +276,12 @@ function goToDirectory() {
 }
 
 // From directory
-function goToStorageArea() {
-  cy.contains(STORAGE_AREA_TITLE).click();
-  cy.get("h1").should("have.text", STORAGE_AREA_TITLE);
+function goToTraumaTower() {
+  cy.contains(TRAUMA_TOWER).click();
+  cy.get("h1").should("have.text", TRAUMA_TOWER);
+}
+
+function goToAirwayTrolleyOne() {
+  cy.contains(AIRWAY_TROLLEY_ONE).click();
+  cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
 }

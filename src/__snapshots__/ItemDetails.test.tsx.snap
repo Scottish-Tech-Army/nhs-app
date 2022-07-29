@@ -7,7 +7,7 @@ exports[`ItemDetails rendered an item details page with size 1`] = `
   >
     <header>
       <button
-        aria-label="Back"
+        aria-label="back"
         class="back"
         type="button"
       >
@@ -76,7 +76,7 @@ exports[`ItemDetails rendered an item details page without size 1`] = `
   >
     <header>
       <button
-        aria-label="Back"
+        aria-label="back"
         class="back"
         type="button"
       >

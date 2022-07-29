@@ -242,7 +242,7 @@ function Container() {
         <button
           type="button"
           className="back"
-          aria-label="Back"
+          aria-label="back"
           onClick={() => navigate(-1)}
         >
           <ArrowLeft />
