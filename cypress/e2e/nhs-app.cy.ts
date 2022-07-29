@@ -75,6 +75,87 @@ describe("storage area", () => {
   });
 });
 
+describe.only("single instance container", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    goToAirwayTrolleyOne();
+    cy.contains("Drawer B").click();
+    cy.contains("h1", "Drawer B - Maintaining Oxygenation & SAD");
+  });
+
+  it("back button returns to storage area", () => {
+    cy.get('[aria-label="back"]').click();
+    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
+  });
+
+  it("can save items", () => {
+    cy.contains("i-gel (3)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+    cy.contains("Flextube Catheter Mount swivel elbow (Bronchoscopy)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+
+    cy.contains("Location").should("not.exist");
+
+    cy.contains("Save").click();
+
+    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
+  });
+
+  it("full button fills container", () => {
+    cy.contains("FULL").click();
+
+    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
+  });
+});
+
+describe.only("multiple instance container", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    goToTraumaTower();
+
+    cy.contains(BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", BOX_FOUR_TITLE);
+  });
+
+  it("back button returns to storage area", () => {
+    cy.get('[aria-label="back"]').click();
+    cy.get("h1").should("have.text", TRAUMA_TOWER);
+  });
+
+  it("can save items", () => {
+    cy.contains("Sterile gloves (Small)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+    cy.contains("Sterile gloves (Medium)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+    cy.contains("Sterile gloves (Large)")
+      .parent()
+      .find('.controls > [aria-label="add item"]')
+      .click();
+
+    cy.getByLabel("Location").should("have.value", "Resus Stock Cupboard");
+    cy.getByLabel("Location").select("Resus 1b");
+
+    cy.contains("Save").click();
+    cy.get("h1").should("have.text", TRAUMA_TOWER);
+  });
+
+  it("full button fills container", () => {
+    cy.contains("FULL").click();
+
+    cy.get("h1").should("have.text", TRAUMA_TOWER);
+  });
+});
+
 describe("summary", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
@@ -178,90 +259,6 @@ describe("summary", () => {
       });
     });
   }
-});
-
-describe.only("single instance container", () => {
-  beforeEach(() => {
-    cy.visit(LOCAL_HOST_PORT);
-    cy.contains("Accept").click();
-    goToAirwayTrolleyOne();
-    cy.contains("Drawer B").click();
-    cy.contains("h1", "Drawer B - Maintaining Oxygenation & SAD");
-  });
-
-  it("back button returns to storage area", () => {
-    cy.get('[aria-label="back"]').click();
-    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
-  });
-
-  it("can save items", () => {
-    cy.contains("i-gel (3)")
-      .parent()
-      .find('.controls > [aria-label="add item"]')
-      .click();
-    cy.contains("Flextube Catheter Mount swivel elbow (Bronchoscopy)")
-      .parent()
-      .find('.controls > [aria-label="add item"]')
-      .click();
-
-    cy.contains("Save").click();
-
-    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
-  });
-
-  it("full button fills container", () => {
-    cy.contains("FULL").click();
-
-    cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
-  });
-});
-
-describe("multiple instance container", () => {
-  beforeEach(() => {
-    cy.visit(LOCAL_HOST_PORT);
-    cy.contains("Accept").click();
-    goToTraumaTower();
-
-    cy.contains(BOX_TITLE).parent().contains("4").click();
-    cy.contains("h1", BOX_FOUR_TITLE);
-  });
-
-  it("displays container view", () => {
-    cy.contains(BOX_TITLE).parent().contains("4").click();
-    cy.contains("h1", BOX_FOUR_TITLE);
-
-    cy.contains("Sterile gloves (Small)");
-  });
-
-  it("back button returns to storage area", () => {
-    cy.get('[aria-label="back"]').click();
-    cy.get("h1").should("have.text", TRAUMA_TOWER);
-  });
-
-  it("can save items", () => {
-    cy.contains("Sterile gloves (Small)")
-      .parent()
-      .find('.controls > [aria-label="add item"]')
-      .click();
-    cy.contains("Sterile gloves (Medium)")
-      .parent()
-      .find('.controls > [aria-label="add item"]')
-      .click();
-    cy.contains("Sterile gloves (Large)")
-      .parent()
-      .find('.controls > [aria-label="add item"]')
-      .click();
-
-    cy.contains("Save").click();
-
-    cy.get("h1").should("have.text", TRAUMA_TOWER);
-  });
-
-  it("full button fills container", () => {
-    cy.contains("FULL").click();
-
-    cy.get("h1").should("have.text", TRAUMA_TOWER);
-  });
 });
 
 // Navbar

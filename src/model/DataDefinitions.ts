@@ -12,11 +12,11 @@ type PartialFixedContainerTemplate = Omit<
 >;
 
 export const LOCATIONS = [
+  "Resus Stock Cupboard",
   "Resus 1a",
   "Resus 1b",
   "Resus 1c",
   "Resus 2",
-  "Resus Stock Cupboard",
   "Ward Clerk's Desk",
 ];
 
