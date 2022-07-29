@@ -11,7 +11,7 @@ exports[`Multiple Instance Container does not render if unknown storageAreaId 1`
 exports[`Multiple Instance Container renders correctly 1`] = `
 <div>
   <div
-    class="container-details"
+    class="container-details with-location"
   >
     <header>
       <h1>
@@ -970,7 +970,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
 exports[`Single Instance Container renders correctly 1`] = `
 <div>
   <div
-    class="container-details"
+    class="container-details "
   >
     <header>
       <h1>
