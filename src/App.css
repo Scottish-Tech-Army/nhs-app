@@ -183,6 +183,9 @@
   margin-bottom: 104px;
 }
 
+.container-details main{
+  margin-bottom: 145px;
+}
 .summary-list main {
   flex: 1;
   position: relative;
@@ -335,6 +338,18 @@
   height: 104px;
 }
 
+.container-locations{
+  display: flex;
+  align-self: center;
+  padding: 24px 24px 15px 24px;
+  align-items: center;
+}
+
+.container-locations label{
+  font-size: 14px;
+margin-right: 10px;
+vertical-align: middle;
+}
 .directory footer nav,
 .storage-area footer nav,
 .summary-list footer nav,
@@ -343,6 +358,22 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.container-details footer{
+  flex-direction: column;
+  align-items: stretch;
+  height: 145px;
+}
+
+.container-locations select{
+  border-radius:  3px;
+  font-family: "HindRegular" ;
+  font-size: 14px;
+}
+
+.container-locations select-items{
+  border-radius:  3px;
 }
 
 .container-details footer button.save {

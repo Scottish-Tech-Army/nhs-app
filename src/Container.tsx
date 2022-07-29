@@ -229,11 +229,10 @@ function Container() {
   }
 
   const getLocationListbox = () => (
-    <div>
+    <div className="container-locations">
       <label htmlFor="location">Location</label>
       <select
         name="location"
-        className="container-locations"
         id="location"
         value={location}
         onChange={({ target }) => setLocation(target.value)}
