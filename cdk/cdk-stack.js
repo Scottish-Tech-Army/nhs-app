@@ -80,7 +80,7 @@ class CdkBackendStack extends cdk.Stack {
     const BOXES_TABLE_NAME = resourcePrefix + "-Boxes";
     const USERPOOL_ID = resourcePrefix + "-UserPool";
 
-    // Database tables for locations and units
+    // Database table for boxes
 
     const boxesTable = new dynamodb.Table(this, "Boxes", {
       tableName: BOXES_TABLE_NAME,

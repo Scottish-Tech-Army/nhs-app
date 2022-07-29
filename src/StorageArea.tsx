@@ -1,11 +1,14 @@
 import React from "react";
 import "./App.css";
 import { BoxTemplate } from "./model/StorageTypes";
-import { TRAUMA_TOWER_TEMPLATE } from "./model/TraumaTower";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import { getStorageArea } from "./model/TraumaTower";
 
-function Directory2() {
+function StorageArea() {
+  let { storageAreaId } = useParams();
+  let storageArea = getStorageArea(storageAreaId!);
+ 
   const getBoxes = (boxTemplate: BoxTemplate) => {
     const boxNumbers = [];
     for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
@@ -13,7 +16,7 @@ function Directory2() {
         <Link
           className="box-number"
           key={`${boxTemplate.boxTemplateId}/${boxIndex}`}
-          to={`/box/${boxTemplate.boxTemplateId}/${boxIndex}`}
+          to={`/box/${storageAreaId}/${boxTemplate.boxTemplateId}/${boxIndex}`}
         >
           {boxIndex}
         </Link>
@@ -28,14 +31,18 @@ function Directory2() {
     );
   };
 
+  if (!storageArea) {
+    return null;
+  };
+
   return (
-    <div className="directory2">
+    <div className="storage-area">
       <header>
-        <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
+        <h1>{storageArea.name}</h1>
       </header>
       <main>
         <div className="scroll">
-          {TRAUMA_TOWER_TEMPLATE.boxes.map((boxTemplate) =>
+          {storageArea.boxes.map((boxTemplate) =>
             getBoxes(boxTemplate)
           )}
         </div>
@@ -47,4 +54,4 @@ function Directory2() {
   );
 }
 
-export default Directory2;
+export default StorageArea;

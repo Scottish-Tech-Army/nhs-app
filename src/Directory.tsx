@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BoxTemplate } from "./model/StorageTypes";
-import { TRAUMA_TOWER_TEMPLATE } from "./model/TraumaTower";
+import { STORAGE_AREAS } from "./model/TraumaTower";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as EditIcon } from "./icons/edit.svg";
 import Navbar from "./Navbar";
@@ -9,35 +9,25 @@ import Navbar from "./Navbar";
 function Directory() {
   let navigate = useNavigate();
 
-  const getBoxes = (boxTemplate: BoxTemplate) => {
-    const result = [];
-    for (let boxIndex = 1; boxIndex <= boxTemplate.count; boxIndex++) {
-      result.push(
-        <div
-          className="box"
-          key={`${boxTemplate.boxTemplateId}/${boxIndex}`}
-          onClick={() =>
-            navigate(`/box/${boxTemplate.boxTemplateId}/${boxIndex}`)
-          }
-        >
-          <EditIcon />
-          <div className="display-name">{`${boxTemplate.name} - Box ${boxIndex}`}</div>
-        </div>
-      );
-    }
-    return result;
-  };
-
   return (
     <div className="directory">
       <header>
-        <h1>{TRAUMA_TOWER_TEMPLATE.name}</h1>
+        <h1>Directory</h1>
       </header>
       <main>
         <div className="scroll">
-          {TRAUMA_TOWER_TEMPLATE.boxes.map((boxTemplate) =>
-            getBoxes(boxTemplate)
-          )}
+          {STORAGE_AREAS.map((storageArea, index) => (
+            <div
+              className="single-storage-area"
+              key={index}
+              onClick={() =>
+                navigate(`/area/${storageArea.storageAreaId}`)
+              }
+            >
+              <EditIcon />
+              <div className="display-name">{storageArea.name}</div>
+            </div>
+          ))}
         </div>
       </main>
       <footer>

@@ -20,6 +20,7 @@ const BOXES: EIBox[] = [
   {
     boxNumber: 2,
     boxTemplateId: "0",
+    storageAreaId: "1",
     checkId: UUID,
     checkTime: TIMESTAMP,
     checker: "Bob",
@@ -35,6 +36,7 @@ const BOXES: EIBox[] = [
   {
     boxNumber: 4,
     boxTemplateId: "0",
+    storageAreaId: "1",
     checkId: UUID,
     checkTime: TIMESTAMP,
     checker: "Bob",

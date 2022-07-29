@@ -10,7 +10,7 @@ import ItemDetails from "./ItemDetails";
 import { isAuthenticating, SignIn } from "./auth/SignIn";
 import { getAuthState } from "./model/auth/AuthSlice";
 import { Amplify } from "@aws-amplify/core";
-import Directory2 from "./Directory2";
+import StorageArea from "./StorageArea";
 
 const awsConfig = {
   Auth: {
@@ -39,10 +39,10 @@ function App() {
   return (
     <div className="root">
       <Routes>
-        <Route path="box/:boxTemplateId/:boxId" element={<Box />} />
+        <Route path="box/:storageAreaId/:boxTemplateId/:boxId" element={<Box />} />
         <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
         <Route path="summary" element={<Summary />} />
-        <Route path="directory2" element={<Directory2 />} />
+        <Route path="area/:storageAreaId" element={<StorageArea />} />
         <Route path="*" element={<Directory />} />
       </Routes>
       {!disclaimerAccepted && (

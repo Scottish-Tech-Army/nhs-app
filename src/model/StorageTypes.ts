@@ -30,6 +30,7 @@ export type EIBoxInput = {
   checker: string;
   boxTemplateId: string;
   boxNumber: number;
+  storageAreaId: string;
   name: string;
   missingItems: EIMissingBoxItem[];
   isFull: boolean;

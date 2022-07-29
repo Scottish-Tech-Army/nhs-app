@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Directory2 renders a home page 1`] = `
+exports[`StorageArea renders a home page 1`] = `
 <div>
   <div
-    class="directory2"
+    class="storage-area"
   >
     <header>
       <h1>
-        Trauma Tower
+        Trauma Tower 1
       </h1>
     </header>
     <main>
@@ -27,37 +27,37 @@ exports[`Directory2 renders a home page 1`] = `
           >
             <a
               class="box-number"
-              href="/box/0/1"
+              href="/box/0/0/1"
             >
               1
             </a>
             <a
               class="box-number"
-              href="/box/0/2"
+              href="/box/0/0/2"
             >
               2
             </a>
             <a
               class="box-number"
-              href="/box/0/3"
+              href="/box/0/0/3"
             >
               3
             </a>
             <a
               class="box-number"
-              href="/box/0/4"
+              href="/box/0/0/4"
             >
               4
             </a>
             <a
               class="box-number"
-              href="/box/0/5"
+              href="/box/0/0/5"
             >
               5
             </a>
             <a
               class="box-number"
-              href="/box/0/6"
+              href="/box/0/0/6"
             >
               6
             </a>
@@ -76,19 +76,19 @@ exports[`Directory2 renders a home page 1`] = `
           >
             <a
               class="box-number"
-              href="/box/1/1"
+              href="/box/0/1/1"
             >
               1
             </a>
             <a
               class="box-number"
-              href="/box/1/2"
+              href="/box/0/1/2"
             >
               2
             </a>
             <a
               class="box-number"
-              href="/box/1/3"
+              href="/box/0/1/3"
             >
               3
             </a>
@@ -107,19 +107,19 @@ exports[`Directory2 renders a home page 1`] = `
           >
             <a
               class="box-number"
-              href="/box/2/1"
+              href="/box/0/2/1"
             >
               1
             </a>
             <a
               class="box-number"
-              href="/box/2/2"
+              href="/box/0/2/2"
             >
               2
             </a>
             <a
               class="box-number"
-              href="/box/2/3"
+              href="/box/0/2/3"
             >
               3
             </a>
@@ -130,9 +130,8 @@ exports[`Directory2 renders a home page 1`] = `
     <footer>
       <nav>
         <a
-          aria-current="page"
           aria-label="directory"
-          class="navicon active"
+          class="navicon"
           href="/"
         >
           <svg>
@@ -140,18 +139,6 @@ exports[`Directory2 renders a home page 1`] = `
           </svg>
           <div>
             Directory
-          </div>
-        </a>
-        <a
-          aria-label="directory 2"
-          class="navicon"
-          href="/directory2"
-        >
-          <svg>
-            home.svg
-          </svg>
-          <div>
-            Directory 2
           </div>
         </a>
         <a

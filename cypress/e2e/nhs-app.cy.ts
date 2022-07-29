@@ -2,7 +2,10 @@ const { format } = require("date-fns");
 
 const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
-const STORAGE_AREA_TITLE = "Trauma Tower";
+const DIRECTORY_TITLE = "Directory";
+const SUMMARY_TITLE = "Summary";
+const STORAGE_AREA_TITLE = "Trauma Tower 1";
+const BOX_TITLE = "Trauma Chest Drain";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
 const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
 const LOCAL_HOST_PORT = "http://localhost:3000";
@@ -40,20 +43,34 @@ describe("directory", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
-    cy.contains(STORAGE_AREA_TITLE);
+    cy.contains("h1", DIRECTORY_TITLE);
+  });
+
+  it("select storage area", () => {
+    goToStorageArea();
+    cy.contains(BOX_TITLE);
+  });
+
+  it("navigated to summary", () => {
+    goToSummary();
+  });
+});
+
+describe("storage area", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    goToStorageArea();
   });
 
   it("select box", () => {
-    cy.contains(BOX_FOUR_TITLE).click();
-    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-    cy.contains(BOX_FOUR_TITLE);
+    cy.contains(BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
   });
 
   it("navigated to summary", () => {
-    cy.get('[aria-label="summary"]').click();
-    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-    cy.contains("h1", "Summary");
+    goToSummary();
   });
 });
 
@@ -61,30 +78,31 @@ describe("summary", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
-    cy.contains(STORAGE_AREA_TITLE);
-    markAllBoxesFull();
+    markAllAreasFull();
   });
 
-  it("empty summary page", () => {
-    cy.get('[aria-label="summary"]').click();
-    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-    cy.contains("h1", "Summary");
+  it("empty then populated summary page", () => {
+    // Empty summary page
+    goToSummary();
 
     cy.contains("No Items");
-  });
 
-  it("populated summary page", () => {
-    markAllBoxesFull();
+    // Populated summary page
+    goToDirectory();
 
-    cy.contains(BOX_FOUR_TITLE).click();
-    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-    cy.contains(BOX_FOUR_TITLE);
+    goToStorageArea();
+
+    cy.contains(BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", BOX_FOUR_TITLE);
+
     cy.contains("Sterile gloves (Small)");
     cy.contains("Save").click();
 
-    cy.contains(BOX_TWO_TITLE).click();
-    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-    cy.contains(BOX_TWO_TITLE);
+    cy.contains("h1", STORAGE_AREA_TITLE);
+
+    cy.contains(BOX_TITLE).parent().contains("2").click();
+
+    cy.contains("h1", BOX_TWO_TITLE);
     cy.contains("Sterile gloves (Small)")
       .parent()
       .find('.controls > [aria-label="add item"]')
@@ -104,9 +122,7 @@ describe("summary", () => {
       "EEE d/M/yyyy 'at' HH:"
     )}`;
 
-    cy.get('[aria-label="summary"]').click();
-    cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-    cy.contains("h1", "Summary");
+    goToSummary();
 
     cy.contains(BOX_FOUR_TITLE)
       .parent()
@@ -128,23 +144,65 @@ describe("summary", () => {
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
       });
 
-    cy.get('[aria-label="directory"]').click();
-    cy.contains(STORAGE_AREA_TITLE);
+    goToDirectory();
   });
 
-  function markAllBoxesFull() {
-    const boxTitles: string[] = [];
-    cy.get(".box").each((item) => {
-      boxTitles.push(item.text());
+  function markAllAreasFull() {
+    const areaTitles: string[] = [];
+    cy.get(".single-storage-area").each((item) => {
+      areaTitles.push(item.text());
     });
-    cy.wrap(boxTitles).then(() => {
-      boxTitles.forEach((title) => {
+    cy.wrap(areaTitles).then(() => {
+      areaTitles.forEach((title) => {
         cy.log("Filling " + title);
         cy.contains(title).click();
-        cy.contains(STORAGE_AREA_TITLE).should("not.exist");
-        cy.contains(title);
-        cy.contains("FULL").click();
+        markAllBoxesFull(title);
+        goToDirectory();
+      });
+    });
+  }
+
+  function markAllBoxesFull(storageAreaTitle: string) {
+    const boxTemplateNames: string[] = [];
+    cy.get(".display-name").each((item) => {
+      boxTemplateNames.push(item.text());
+    });
+    cy.wrap(boxTemplateNames).then(() => {
+      boxTemplateNames.forEach((boxTemplateName) => {
+        const boxNumbers: string[] = [];
+        cy.contains(boxTemplateName)
+          .parent()
+          .find(".box-number")
+          .each((item) => {
+            boxNumbers.push(item.text());
+          });
+
+        cy.wrap(boxNumbers).then(() => {
+          boxNumbers.forEach((boxNumber) => {
+            cy.log("Filling " + boxTemplateName + " " + boxNumber);
+            cy.contains(boxTemplateName).parent().contains(boxNumber).click();
+            cy.contains("FULL").click();
+            cy.contains(storageAreaTitle);
+          });
+        });
       });
     });
   }
 });
+
+// Navbar
+function goToSummary() {
+  cy.get('[aria-label="summary"]').click();
+  cy.contains("h1", SUMMARY_TITLE);
+}
+
+function goToDirectory() {
+  cy.get('[aria-label="directory"]').click();
+  cy.contains("h1", DIRECTORY_TITLE);
+}
+
+// From directory
+function goToStorageArea() {
+  cy.contains(STORAGE_AREA_TITLE).click();
+  cy.contains("h1", STORAGE_AREA_TITLE);
+}

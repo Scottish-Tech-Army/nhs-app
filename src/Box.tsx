@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   getBoxName,
+  getBoxTemplate,
   getItemDisplayName,
-  TRAUMA_TOWER_TEMPLATE,
+  getStorageArea,
 } from "./model/TraumaTower";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -10,6 +11,7 @@ import {
   EIBoxInput,
   EIMissingBoxItem,
   ItemTemplate,
+  StorageAreaTemplate,
 } from "./model/StorageTypes";
 import { useAppSelector } from "./model/store";
 import "./App.css";
@@ -40,6 +42,7 @@ function calculateMissingItem(
 }
 
 function calculateBoxMissingItems(
+  storageArea: StorageAreaTemplate,
   boxTemplate: BoxTemplate,
   boxNumber: number,
   itemCounts: number[],
@@ -54,6 +57,7 @@ function calculateBoxMissingItems(
   return {
     boxTemplateId: boxTemplate.boxTemplateId,
     boxNumber,
+    storageAreaId: storageArea?.storageAreaId,
     name: boxTemplate.name,
     missingItems,
     isFull: !missingItems.length,
@@ -62,8 +66,8 @@ function calculateBoxMissingItems(
 }
 
 function Box() {
-  let { boxTemplateId, boxId } = useParams();
-  let navigate = useNavigate();
+  const { storageAreaId, boxTemplateId, boxId } = useParams();
+  const navigate = useNavigate();
 
   let boxNumber = 0;
   if (boxId?.match(/^\d+$/)) {
@@ -72,21 +76,22 @@ function Box() {
 
   const currentUser = useAppSelector(getUser);
 
+  const [storageArea, setStorageArea] = useState<StorageAreaTemplate>();
   const [boxTemplate, setBoxTemplate] = useState<BoxTemplate>();
   const [itemCounts, setItemCounts] = useState<number[]>();
 
   useEffect(() => {
-    const boxTemplate = TRAUMA_TOWER_TEMPLATE.boxes.find(
-      (box) => box.boxTemplateId === boxTemplateId
-    );
-    if (boxTemplate) {
-      setBoxTemplate(boxTemplate);
-      setItemCounts(boxTemplate.items.map(() => 0));
+    setStorageArea(getStorageArea(storageAreaId!));
+    const currentBoxTemplate = getBoxTemplate(boxTemplateId!);
+
+    if (currentBoxTemplate) {
+      setBoxTemplate(currentBoxTemplate);
+      setItemCounts(currentBoxTemplate.items.map(() => 0));
     } else {
       setBoxTemplate(undefined);
       setItemCounts([]);
     }
-  }, [boxTemplateId, boxNumber]);
+  }, [storageAreaId, boxTemplateId, boxNumber]);
 
   async function handleSubmit() {
     await Auth.currentSession()
@@ -98,6 +103,7 @@ function Box() {
           },
           body: JSON.stringify(
             calculateBoxMissingItems(
+              storageArea!,
               boxTemplate!,
               boxNumber,
               itemCounts!,
@@ -106,7 +112,7 @@ function Box() {
           ),
         })
       )
-      .then(({ status }) => status === 200 && navigate("/"));
+      .then(({ status }) => status === 200 && navigate(`/area/${storageArea?.storageAreaId}`));
   }
 
   async function handleClickFull() {
@@ -120,6 +126,7 @@ function Box() {
           body: JSON.stringify({
             boxTemplateId: boxTemplate!.boxTemplateId,
             boxNumber,
+            storageAreaId: storageArea?.storageAreaId,
             name: boxTemplate!.name,
             missingItems: [],
             isFull: true,
@@ -127,7 +134,7 @@ function Box() {
           }),
         })
       )
-      .then(({ status }) => status === 200 && navigate("/"));
+      .then(({ status }) => status === 200 && navigate(`/area/${storageArea?.storageAreaId}`));
   }
 
   function preventExtraClickEvents(
@@ -207,7 +214,7 @@ function Box() {
     );
   }
 
-  if (!boxTemplate || boxNumber <= 0 || boxNumber > boxTemplate.count) {
+  if (!storageArea || !boxTemplate || boxNumber <= 0 || boxNumber > boxTemplate.count) {
     return null;
   }
 
