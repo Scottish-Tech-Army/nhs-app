@@ -258,7 +258,7 @@ function Container() {
   }
 
   return (
-    <div className="container-details">
+    <div className={`container-details ${isMultipleLocation ? "with-location" : ""}`}>
       <header>
         <h1>
           {storageArea.name}
