@@ -19,7 +19,7 @@ const TEST_USERNAME = "test user";
 
 jest.mock("@aws-amplify/auth");
 
-describe("Container", () => {
+describe("Multiple Instance Container", () => {
   beforeEach(() => {
     (Auth.currentSession as jest.Mock).mockImplementation(() => {
       return Promise.resolve({
@@ -32,7 +32,9 @@ describe("Container", () => {
 
   it("rendered a container page", async () => {
     renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
-    expect(screen.getByRole("heading")).toHaveTextContent("Trauma Chest Drain - Box 3");
+    expect(screen.getByRole("heading")).toHaveTextContent(
+      "Trauma Chest Drain - Box 3"
+    );
 
     const inputFields = Array.from(document.querySelectorAll(".display-name"));
 
@@ -70,7 +72,11 @@ describe("Container", () => {
   });
 
   it("does not render if no containerNumber", async () => {
-    const { container } = renderWithRoute("trauma-tower", "trauma-chest-drain", "");
+    const { container } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      ""
+    );
 
     expect(container).toHaveTextContent("Unknown path");
   });
@@ -92,7 +98,11 @@ describe("Container", () => {
   });
 
   it("does not render if unknown containerNumber", async () => {
-    const { container } = renderWithRoute("trauma-tower", "trauma-chest-drain", "Unknown");
+    const { container } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "Unknown"
+    );
 
     expect(container.children).toHaveLength(0);
 
@@ -100,7 +110,11 @@ describe("Container", () => {
   });
 
   it("does not render if unknown containerNumber - container number too high", async () => {
-    const { container } = renderWithRoute("trauma-tower", "trauma-chest-drain", "7");
+    const { container } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "7"
+    );
 
     expect(container.children).toHaveLength(0);
 
@@ -110,7 +124,11 @@ describe("Container", () => {
   it("can save item changes - success", async () => {
     fetchMock.mockResponse("", { status: 200 });
 
-    const { user, history } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+    const { user, history } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "3"
+    );
 
     const itemLabel = screen.getByText(
       "Blunt dissection chest drainage insertion pack (28Fg)"
@@ -177,7 +195,11 @@ describe("Container", () => {
   it("can save item changes - failure", async () => {
     fetchMock.mockResponse("", { status: 500 });
 
-    const { user, history } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+    const { user, history } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "3"
+    );
 
     const itemLabel = screen.getByText(
       "Blunt dissection chest drainage insertion pack (28Fg)"
@@ -238,12 +260,18 @@ describe("Container", () => {
     );
     expect(actualPayload).toEqual(expectedPayload);
 
-    expect(history.location.pathname).toEqual("/container/trauma-tower/trauma-chest-drain/3");
+    expect(history.location.pathname).toEqual(
+      "/container/trauma-tower/trauma-chest-drain/3"
+    );
   });
 
   it("can mark container as full - success", async () => {
     fetchMock.mockResponse("", { status: 200 });
-    const { user, history } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+    const { user, history } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "3"
+    );
 
     await user.click(screen.getByRole("button", { name: "FULL" }));
 
@@ -275,7 +303,11 @@ describe("Container", () => {
 
   it("can mark container as full - failure", async () => {
     fetchMock.mockResponse("", { status: 500 });
-    const { user, history } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+    const { user, history } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "3"
+    );
 
     await user.click(screen.getByRole("button", { name: "FULL" }));
 
@@ -302,11 +334,17 @@ describe("Container", () => {
     );
     expect(actualPayload).toEqual(expectedPayload);
 
-    expect(history.location.pathname).toEqual("/container/trauma-tower/trauma-chest-drain/3");
+    expect(history.location.pathname).toEqual(
+      "/container/trauma-tower/trauma-chest-drain/3"
+    );
   });
 
   it("can go to item details", async () => {
-    const { user, history } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+    const { user, history } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "3"
+    );
 
     const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
 
@@ -319,7 +357,11 @@ describe("Container", () => {
   });
 
   it("can return to previous page", async () => {
-    const { user, history } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+    const { user, history } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "3"
+    );
 
     await user.click(screen.getByRole("button", { name: "back" }));
 
@@ -327,28 +369,164 @@ describe("Container", () => {
   });
 
   it("renders correctly", () => {
-    const { container } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+    const { container } = renderWithRoute(
+      "trauma-tower",
+      "trauma-chest-drain",
+      "3"
+    );
 
     expect(container).toMatchSnapshot();
   });
-
-  function renderWithRoute(storageAreaId: string, containerTemplateId: string, containerNumber: string) {
-    // Add routes to get the contents of useParams populated
-    return renderWithProvider(
-      <Routes>
-        <Route path="container/:storageAreaId/:containerTemplateId/:containerNumber" element={<Container />} />
-        <Route path="*" element={<div>Unknown path</div>} />
-      </Routes>,
-      {
-        initialRoutes: ["/", `/container/${storageAreaId}/${containerTemplateId}/${containerNumber}`],
-        preloadedState: {
-          auth: {
-            authState: SIGNED_IN,
-            user: { name: TEST_USERNAME },
-            errorMessage: "",
-          },
-        },
-      }
-    );
-  }
 });
+
+describe("Single Instance Container", () => {
+  beforeEach(() => {
+    (Auth.currentSession as jest.Mock).mockImplementation(() => {
+      return Promise.resolve({
+        getIdToken: () => {
+          return { getJwtToken: () => "test jwt token" };
+        },
+      });
+    });
+  });
+
+  it("rendered a container page", async () => {
+    renderWithRoute("airway-trolley-2", "airway-trolley-2-side", "1");
+    expect(screen.getByRole("heading")).toHaveTextContent("Side");
+
+    const inputFields = Array.from(document.querySelectorAll(".display-name"));
+
+    expect(inputFields.map((input) => input.textContent)).toEqual([
+      "Aintree Catheter",
+      "Bougie (Cook Frova)",
+    ]);
+
+    expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
+  });
+
+  it("can save item changes - success", async () => {
+    fetchMock.mockResponse("", { status: 200 });
+
+    const { user, history } = renderWithRoute(
+      "airway-trolley-2",
+      "airway-trolley-2-side",
+      "1"
+    );
+
+    const itemLabel = screen.getByText("Bougie (Cook Frova)");
+
+    const increaseButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "add item",
+    });
+    const decreaseButton = getByRole(itemLabel.parentElement!, "button", {
+      name: "remove item",
+    });
+    await user.click(increaseButton);
+    await user.click(increaseButton);
+    await user.click(increaseButton);
+    await user.click(decreaseButton);
+
+    await user.click(screen.getByRole("button", { name: "Save" }));
+
+    const expectedPayload: ContainerInputData = {
+      containerTemplateId: "airway-trolley-2-side",
+      containerNumber: 1,
+      storageAreaId: "airway-trolley-2",
+      name: "Side",
+      missingItems: [{ quantity: 1, name: "Aintree Catheter" }],
+      isFull: false,
+      checker: TEST_USERNAME,
+    };
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    expect(fetchMock).toHaveBeenCalledWith(
+      CHECK_API_ENDPONT,
+      expect.objectContaining({
+        method: "POST",
+        headers: { Authorization: "Bearer test jwt token" },
+      })
+    );
+    const actualPayload = JSON.parse(
+      fetchMock.mock.calls[0][1]!.body! as string
+    );
+    expect(actualPayload).toEqual(expectedPayload);
+
+    expect(history.location.pathname).toEqual("/area/airway-trolley-2");
+  });
+
+  it("can mark container as full - success", async () => {
+    fetchMock.mockResponse("", { status: 200 });
+    const { user, history } = renderWithRoute(
+      "airway-trolley-2",
+      "airway-trolley-2-side",
+      "1"
+    );
+
+    await user.click(screen.getByRole("button", { name: "FULL" }));
+
+    const expectedPayload: ContainerInputData = {
+      containerTemplateId: "airway-trolley-2-side",
+      containerNumber: 1,
+      storageAreaId: "airway-trolley-2",
+      name: "Side",
+      missingItems: [],
+      isFull: true,
+      checker: TEST_USERNAME,
+    };
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    expect(fetchMock).toHaveBeenCalledWith(
+      CHECK_API_ENDPONT,
+      expect.objectContaining({
+        method: "POST",
+        headers: { Authorization: "Bearer test jwt token" },
+      })
+    );
+    const actualPayload = JSON.parse(
+      fetchMock.mock.calls[0][1]!.body! as string
+    );
+    expect(actualPayload).toEqual(expectedPayload);
+
+    expect(history.location.pathname).toEqual("/area/airway-trolley-2");
+  });
+
+  it("renders correctly", () => {
+    const { container } = renderWithRoute(
+      "airway-trolley-2",
+      "airway-trolley-2-side",
+      "1"
+    );
+
+    expect(container).toMatchSnapshot();
+  });
+});
+
+function renderWithRoute(
+  storageAreaId: string,
+  containerTemplateId: string,
+  containerNumber: string
+) {
+  // Add routes to get the contents of useParams populated
+  return renderWithProvider(
+    <Routes>
+      <Route
+        path="container/:storageAreaId/:containerTemplateId/:containerNumber"
+        element={<Container />}
+      />
+      <Route path="*" element={<div>Unknown path</div>} />
+    </Routes>,
+    {
+      initialRoutes: [
+        "/",
+        `/container/${storageAreaId}/${containerTemplateId}/${containerNumber}`,
+      ],
+      preloadedState: {
+        auth: {
+          authState: SIGNED_IN,
+          user: { name: TEST_USERNAME },
+          errorMessage: "",
+        },
+      },
+    }
+  );
+}

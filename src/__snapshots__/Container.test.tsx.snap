@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Container does not render if unknown containerNumber - container number too high 1`] = `<div />`;
+exports[`Multiple Instance Container does not render if unknown containerNumber - container number too high 1`] = `<div />`;
 
-exports[`Container does not render if unknown containerNumber 1`] = `<div />`;
+exports[`Multiple Instance Container does not render if unknown containerNumber 1`] = `<div />`;
 
-exports[`Container does not render if unknown containerTemplateId 1`] = `<div />`;
+exports[`Multiple Instance Container does not render if unknown containerTemplateId 1`] = `<div />`;
 
-exports[`Container does not render if unknown storageAreaId 1`] = `<div />`;
+exports[`Multiple Instance Container does not render if unknown storageAreaId 1`] = `<div />`;
 
-exports[`Container renders correctly 1`] = `
+exports[`Multiple Instance Container renders correctly 1`] = `
 <div>
   <div
     class="container-details"
@@ -886,6 +886,167 @@ exports[`Container renders correctly 1`] = `
                 class="expected-quantity"
               >
                 1
+              </span>
+            </div>
+            <button
+              aria-label="remove item"
+              class="change-quantity"
+              disabled=""
+              type="button"
+            >
+              <svg>
+                minus.svg
+              </svg>
+            </button>
+            <button
+              aria-label="add item"
+              class="change-quantity"
+              type="button"
+            >
+              <svg>
+                add.svg
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <button
+        class="save"
+        type="button"
+      >
+        Save
+      </button>
+    </footer>
+  </div>
+</div>
+`;
+
+exports[`Single Instance Container renders correctly 1`] = `
+<div>
+  <div
+    class="container-details"
+  >
+    <header>
+      <h1>
+        Airway Trolley 2
+        <br />
+        Side
+      </h1>
+      <button
+        aria-label="back"
+        class="back"
+        type="button"
+      >
+        <svg>
+          arrow-left.svg
+        </svg>
+      </button>
+      <button
+        class="full"
+        type="button"
+      >
+        FULL
+      </button>
+    </header>
+    <main>
+      <div
+        class="scroll"
+      >
+        <div
+          class="item"
+        >
+          <div
+            class="display-name"
+          >
+            Aintree Catheter
+          </div>
+          <div
+            class="controls"
+          >
+            <button
+              aria-label="item information"
+              class="item-info"
+              type="button"
+            >
+              <svg>
+                info-circle.svg
+              </svg>
+            </button>
+            <div
+              class="quantity"
+            >
+              <span
+                class="actual-quantity-bad"
+              >
+                0
+              </span>
+              <span>
+                 / 
+              </span>
+              <span
+                class="expected-quantity"
+              >
+                1
+              </span>
+            </div>
+            <button
+              aria-label="remove item"
+              class="change-quantity"
+              disabled=""
+              type="button"
+            >
+              <svg>
+                minus.svg
+              </svg>
+            </button>
+            <button
+              aria-label="add item"
+              class="change-quantity"
+              type="button"
+            >
+              <svg>
+                add.svg
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="item"
+        >
+          <div
+            class="display-name"
+          >
+            Bougie (Cook Frova)
+          </div>
+          <div
+            class="controls"
+          >
+            <button
+              aria-label="item information"
+              class="item-info"
+              type="button"
+            >
+              <svg>
+                info-circle.svg
+              </svg>
+            </button>
+            <div
+              class="quantity"
+            >
+              <span
+                class="actual-quantity-bad"
+              >
+                0
+              </span>
+              <span>
+                 / 
+              </span>
+              <span
+                class="expected-quantity"
+              >
+                2
               </span>
             </div>
             <button
