@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 const { format } = require("date-fns");
 
 const DISCLAIMER_TEXT =
@@ -135,7 +133,7 @@ describe("summary", () => {
   });
 
   function markAllBoxesFull() {
-    const boxTitles = [];
+    const boxTitles: string[] = [];
     cy.get(".box").each((item) => {
       boxTitles.push(item.text());
     });
