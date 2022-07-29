@@ -46,7 +46,8 @@ function calculateContainerMissingItems(
   containerTemplate: ContainerTemplate,
   containerNumber: number,
   itemCounts: number[],
-  currentUser: string
+  currentUser: string,
+  location: string | undefined
 ): ContainerInputData {
   const missingItems = containerTemplate?.items
     .map((itemTemplate, index) =>
@@ -62,6 +63,7 @@ function calculateContainerMissingItems(
     missingItems,
     isFull: !missingItems.length,
     checker: currentUser,
+    location,
   };
 }
 
@@ -80,9 +82,12 @@ function Container() {
   const [containerTemplate, setContainerTemplate] =
     useState<ContainerTemplate>();
   const [itemCounts, setItemCounts] = useState<number[]>();
+  const [location, setLocation] = useState<string>();
 
   useEffect(() => {
-    setStorageArea(getStorageArea(storageAreaId!));
+    const currentStorageArea = getStorageArea(storageAreaId!);
+    setLocation(currentStorageArea?.possibleLocations?.[0]);
+    setStorageArea(currentStorageArea);
     const currentContainerTemplate = getContainerTemplate(containerTemplateId!);
 
     if (currentContainerTemplate) {
@@ -93,6 +98,8 @@ function Container() {
       setItemCounts([]);
     }
   }, [storageAreaId, containerTemplateId, containerNumberValue]);
+
+  const isMultipleLocation = !!storageArea?.possibleLocations;
 
   async function handleSubmit() {
     await Auth.currentSession()
@@ -108,7 +115,8 @@ function Container() {
               containerTemplate!,
               containerNumberValue,
               itemCounts!,
-              currentUser!.name
+              currentUser!.name,
+              location
             )
           ),
         })
@@ -220,6 +228,25 @@ function Container() {
     );
   }
 
+  const getLocationListbox = () => (
+    <div>
+      <label htmlFor="location">Location</label>
+      <select
+        name="location"
+        className="container-locations"
+        id="location"
+        value={location}
+        onChange={({ target }) => setLocation(target.value)}
+      >
+        {storageArea!.possibleLocations!.map((current, index) => (
+          <option key={index} value={current}>
+            {current}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+
   const containerQuantity = containerTemplate?.quantity ?? 1;
 
   if (
@@ -255,6 +282,7 @@ function Container() {
         <div className="scroll">{containerTemplate?.items.map(getItem)}</div>
       </main>
       <footer>
+        {isMultipleLocation && getLocationListbox()}
         <button type="button" className="save" onClick={handleSubmit}>
           Save
         </button>

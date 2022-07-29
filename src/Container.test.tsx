@@ -56,6 +56,10 @@ describe("Multiple Instance Container", () => {
       "Spencer wells forceps (Straight 20cm)",
     ]);
 
+    expect(
+      screen.getByRole("combobox", { name: "Location" })
+    ).toHaveDisplayValue("Resus Stock Cupboard");
+
     expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
   });
 
@@ -145,6 +149,11 @@ describe("Multiple Instance Container", () => {
     await user.click(increaseButton);
     await user.click(decreaseButton);
 
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "Location" }),
+      ["Resus 1b"]
+    );
+
     await user.click(screen.getByRole("button", { name: "Save" }));
 
     const expectedPayload: ContainerInputData = {
@@ -152,6 +161,7 @@ describe("Multiple Instance Container", () => {
       containerNumber: 3,
       storageAreaId: "trauma-tower",
       name: "Trauma Chest Drain",
+      location: "Resus 1b",
       missingItems: [
         { quantity: 1, name: "Sterile gloves", size: "Small" },
         { quantity: 1, name: "Sterile gloves", size: "Medium" },
@@ -223,6 +233,7 @@ describe("Multiple Instance Container", () => {
       containerNumber: 3,
       storageAreaId: "trauma-tower",
       name: "Trauma Chest Drain",
+      location: "Resus Stock Cupboard",
       missingItems: [
         { quantity: 1, name: "Sterile gloves", size: "Small" },
         { quantity: 1, name: "Sterile gloves", size: "Medium" },
@@ -391,7 +402,11 @@ describe("Single Instance Container", () => {
   });
 
   it("rendered a container page", async () => {
-    renderWithRoute("airway-trolley-2", "airway-trolley-2-side", "1");
+    const { container } = renderWithRoute(
+      "airway-trolley-2",
+      "airway-trolley-2-side",
+      "1"
+    );
     expect(screen.getByRole("heading")).toHaveTextContent("Side");
 
     const inputFields = Array.from(document.querySelectorAll(".display-name"));
@@ -400,6 +415,8 @@ describe("Single Instance Container", () => {
       "Aintree Catheter",
       "Bougie (Cook Frova)",
     ]);
+
+    expect(container).not.toHaveTextContent("Location");
 
     expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
   });

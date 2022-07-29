@@ -779,7 +779,6 @@ export const AIRWAY_TROLLEY_1: StorageAreaTemplate = {
     },
     { ...AIRWAY_TROLLEY_SIDE, containerTemplateId: "airway-trolley-1-side" },
   ],
-  possibleLocations: LOCATIONS,
 };
 
 export const AIRWAY_TROLLEY_2: StorageAreaTemplate = {
@@ -813,7 +812,6 @@ export const AIRWAY_TROLLEY_2: StorageAreaTemplate = {
     },
     { ...AIRWAY_TROLLEY_SIDE, containerTemplateId: "airway-trolley-2-side" },
   ],
-  possibleLocations: LOCATIONS,
 };
 
 export const AIRWAY_TROLLEY_3: StorageAreaTemplate = {
@@ -847,7 +845,6 @@ export const AIRWAY_TROLLEY_3: StorageAreaTemplate = {
     },
     { ...AIRWAY_TROLLEY_SIDE, containerTemplateId: "airway-trolley-3-side" },
   ],
-  possibleLocations: LOCATIONS,
 };
 
 export const AIRWAY_TROLLEY_4: StorageAreaTemplate = {

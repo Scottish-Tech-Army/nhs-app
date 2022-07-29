@@ -912,6 +912,49 @@ exports[`Multiple Instance Container renders correctly 1`] = `
       </div>
     </main>
     <footer>
+      <div>
+        <label
+          for="location"
+        >
+          Location
+        </label>
+        <select
+          class="container-locations"
+          id="location"
+          name="location"
+        >
+          <option
+            value="Resus Stock Cupboard"
+          >
+            Resus Stock Cupboard
+          </option>
+          <option
+            value="Resus 1a"
+          >
+            Resus 1a
+          </option>
+          <option
+            value="Resus 1b"
+          >
+            Resus 1b
+          </option>
+          <option
+            value="Resus 1c"
+          >
+            Resus 1c
+          </option>
+          <option
+            value="Resus 2"
+          >
+            Resus 2
+          </option>
+          <option
+            value="Ward Clerk's Desk"
+          >
+            Ward Clerk's Desk
+          </option>
+        </select>
+      </div>
       <button
         class="save"
         type="button"
