@@ -17,6 +17,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:test": "env-cmd -f .env.test.local npm run build",
+    "build:live": "env-cmd -f .env.live.local npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "env-cmd -f .env.local cypress open"
