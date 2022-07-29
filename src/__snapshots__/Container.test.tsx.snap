@@ -912,14 +912,15 @@ exports[`Multiple Instance Container renders correctly 1`] = `
       </div>
     </main>
     <footer>
-      <div>
+      <div
+        class="container-locations"
+      >
         <label
           for="location"
         >
           Location
         </label>
         <select
-          class="container-locations"
           id="location"
           name="location"
         >

@@ -75,7 +75,7 @@ describe("storage area", () => {
   });
 });
 
-describe.only("single instance container", () => {
+describe("single instance container", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
@@ -113,7 +113,7 @@ describe.only("single instance container", () => {
   });
 });
 
-describe.only("multiple instance container", () => {
+describe("multiple instance container", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
