@@ -93,7 +93,7 @@ export const BOX_TRAUMA_CHEST_DRAIN: ContainerTemplate = {
       quantity: 2,
     },
     {
-      name: "Standard suture pack",
+      name: "Suture pack",
       size: "Standard",
       description: "Pack of equipment for suturing",
       location: "Resus store XX",
@@ -194,7 +194,7 @@ export const BOX_CAT_HAEMORRHAGE: ContainerTemplate = {
       photo: "standardsuture.jpg",
     },
     {
-      name: "Mersilk suture",
+      name: "Mersilk Suture",
       size: "1-0",
       description: "Non-absorbable, handheld suture",
       location: "Resus store XX",
@@ -1440,7 +1440,8 @@ export const A_LINE_BOX: ContainerTemplate = {
       photo: "PHOTO.jpg",
     },
     {
-      name: "Small Dressing Pack",
+      name: "Dressing Pack",
+      size: "Small",
       description: "DESCRIPTION",
       location: "LOCATION",
       photo: "PHOTO.jpg",
@@ -1470,7 +1471,8 @@ export const A_LINE_BOX: ContainerTemplate = {
       photo: "PHOTO.jpg",
     },
     {
-      name: "Standard Suture Pack",
+      name: "Suture pack",
+      size: "Standard",
       description: "DESCRIPTION",
       location: "LOCATION",
       photo: "PHOTO.jpg",
@@ -1482,7 +1484,8 @@ export const A_LINE_BOX: ContainerTemplate = {
       photo: "PHOTO.jpg",
     },
     {
-      name: "Mersilk Suture 1-0",
+      name: "Mersilk Suture",
+      size: "1-0",
       description: "DESCRIPTION",
       location: "LOCATION",
       photo: "PHOTO.jpg",
