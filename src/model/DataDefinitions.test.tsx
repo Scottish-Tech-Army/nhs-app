@@ -8,6 +8,7 @@ import {
   TRAUMA_TOWER,
   BOX_TRAUMA_CHEST_DRAIN,
   AIRWAY_TROLLEY_DRAWER_B,
+  STORAGE_AREAS,
 } from "./DataDefinitions";
 
 test("getContainerTemplate", () => {
@@ -25,11 +26,15 @@ test("getStorageArea", () => {
 });
 
 test("getContainerName with replicates", () => {
-  expect(getContainerName(BOX_TRAUMA_CHEST_DRAIN, 1)).toEqual("Trauma Chest Drain - Box\u00A01");
+  expect(getContainerName(BOX_TRAUMA_CHEST_DRAIN, 1)).toEqual(
+    "Trauma Chest Drain - Box\u00A01"
+  );
 });
 
 test("getContainerName without replicates", () => {
-  expect(getContainerName({...AIRWAY_TROLLEY_DRAWER_B, containerTemplateId: "id"})).toEqual("Drawer B - Maintaining Oxygenation & SAD");
+  expect(
+    getContainerName({ ...AIRWAY_TROLLEY_DRAWER_B, containerTemplateId: "id" })
+  ).toEqual("Drawer B - Maintaining Oxygenation & SAD");
 });
 
 test("getItemDisplayName", () => {
@@ -104,5 +109,22 @@ describe("getItemTemplate", () => {
     expect(getItemTemplate("trauma-chest-drain", "unknown")).toBeUndefined();
     expect(getItemTemplate("trauma-chest-drain", "")).toBeUndefined();
     expect(getItemTemplate("trauma-chest-drain", undefined)).toBeUndefined();
+  });
+});
+
+test("STORAGE_AREAS should have unique ids", () => {
+  const storageAreaIds = new Set();
+  const containerTemplateIds = new Set();
+
+  STORAGE_AREAS.forEach((storageArea) => {
+    expect(storageAreaIds).not.toContain(storageArea.storageAreaId);
+    storageAreaIds.add(storageArea.storageAreaId);
+
+    storageArea.containers.forEach((containerTemplate) => {
+      expect(containerTemplateIds).not.toContain(
+        containerTemplate.containerTemplateId
+      );
+      containerTemplateIds.add(containerTemplate.containerTemplateId);
+    });
   });
 });
