@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`StorageAreaGroup does not render if unknown storageAreaGroupId 1`] = `<div />`;
+
 exports[`StorageAreaGroup renders a storage area group 1`] = `
 <div>
   <div

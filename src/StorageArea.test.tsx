@@ -53,6 +53,14 @@ describe("StorageArea", () => {
     expect(container).toMatchSnapshot();
   });
 
+  it("does not render if unknown storageAreaId", async () => {
+    const { container } = renderWithRoute("Unknown");
+
+    expect(container.children).toHaveLength(0);
+
+    expect(container).toMatchSnapshot();
+  });
+
   it("navigates to single instance container page", async () => {
     const { history, user } = renderWithRoute("transfer-bag-1");
 

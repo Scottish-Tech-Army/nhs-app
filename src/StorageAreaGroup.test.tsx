@@ -31,6 +31,14 @@ describe("StorageAreaGroup", () => {
     expect(container).toMatchSnapshot();
   });
 
+  it("does not render if unknown storageAreaGroupId", async () => {
+    const { container } = renderWithRoute("Unknown");
+
+    expect(container.children).toHaveLength(0);
+
+    expect(container).toMatchSnapshot();
+  });
+
   it("navigates to storage area", async () => {
     const { history, user } = renderWithRoute("transfer-bags");
 
@@ -41,7 +49,6 @@ describe("StorageAreaGroup", () => {
 
     expect(history.location.pathname).toEqual("/area/transfer-bag-3");
   });
-
 
   it("can return to previous page", async () => {
     const { user, history } = renderWithRoute("transfer-bags");
@@ -55,7 +62,10 @@ describe("StorageAreaGroup", () => {
     // Add routes to get the contents of useParams populated
     return renderWithProvider(
       <Routes>
-        <Route path="areas/:storageAreaGroupId" element={<StorageAreaGroup />} />
+        <Route
+          path="areas/:storageAreaGroupId"
+          element={<StorageAreaGroup />}
+        />
         <Route path="*" element={<div>Unknown path</div>} />
       </Routes>,
       {

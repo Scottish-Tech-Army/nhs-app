@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`StorageArea does not render if unknown storageAreaId 1`] = `<div />`;
+
 exports[`StorageArea renders a multiple instance container 1`] = `
 <div>
   <div

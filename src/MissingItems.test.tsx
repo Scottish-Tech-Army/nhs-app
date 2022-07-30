@@ -73,13 +73,15 @@ describe("MissingItems", () => {
   });
 
   it("rendered a missing-items list page for filled store - no containers recorded", async () => {
-    fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
+    fetchMock.mockResponseOnce(JSON.stringify([]), { status: 200 });
 
     renderWithProvider(<MissingItems />, {
       initialRoutes: ["/missing-items"],
     });
 
-    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
+    expect(
+      screen.getByRole("heading", { name: "Missing Items" })
+    ).toBeDefined();
 
     expect(await screen.findByText("No Items")).toBeDefined();
 
@@ -87,13 +89,15 @@ describe("MissingItems", () => {
   });
 
   it("rendered a missing-items list page - loading", async () => {
-    fetchMock.mockResponse("", { status: 500 });
+    fetchMock.mockResponseOnce("", { status: 500 });
 
     renderWithProvider(<MissingItems />, {
       initialRoutes: ["/missing-items"],
     });
 
-    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
+    expect(
+      screen.getByRole("heading", { name: "Missing Items" })
+    ).toBeDefined();
 
     expect(screen.getByText("Fetching Items")).toBeDefined();
 
@@ -101,7 +105,7 @@ describe("MissingItems", () => {
   });
 
   it("rendered a missing-items list and all containers full", async () => {
-    fetchMock.mockResponse(
+    fetchMock.mockResponseOnce(
       JSON.stringify([
         {
           containerNumber: 4,
@@ -138,20 +142,24 @@ describe("MissingItems", () => {
       })
     );
 
-    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
+    expect(
+      screen.getByRole("heading", { name: "Missing Items" })
+    ).toBeDefined();
     expect(await screen.findByText("No Items")).toBeDefined();
 
     await checkMissingItemsList([]);
   });
 
   it("rendered a missing-items list page for partially filled store - ie some items shown", async () => {
-    fetchMock.mockResponse(JSON.stringify(CONTAINERS), { status: 200 });
+    fetchMock.mockResponseOnce(JSON.stringify(CONTAINERS), { status: 200 });
 
     const { container } = renderWithProvider(<MissingItems />, {
       initialRoutes: ["/missing-items"],
     });
 
-    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
+    expect(
+      screen.getByRole("heading", { name: "Missing Items" })
+    ).toBeDefined();
 
     await checkMissingItemsList([
       {
@@ -177,7 +185,50 @@ describe("MissingItems", () => {
     expect(container).toMatchSnapshot();
   });
 
+  it("handle unknown containerTemplateId and storageAreaId", async () => {
+    const unknownContainers: ContainerData[] = [
+      {
+        containerNumber: 2,
+        containerTemplateId: "unknown",
+        storageAreaId: "trauma-tower",
+        checkId: UUID,
+        checkTime: TIMESTAMP,
+        checker: "Bob",
+        location: "Resus 1b",
+        isFull: false,
+        missingItems: [{ name: "Sterile gloves", quantity: 1, size: "Medium" }],
+        name: "Trauma Chest Drain",
+      },
+      {
+        containerNumber: 1,
+        containerTemplateId: "airway-trolley-2-drawer-c",
+        storageAreaId: "unknown",
+        checkId: UUID,
+        checkTime: TIMESTAMP,
+        checker: "Joe",
+        isFull: false,
+        missingItems: [{ name: "Guedel airway - Red", quantity: 1 }],
+        name: "Drawer C",
+      },
+    ];
+
+    fetchMock.mockResponseOnce(JSON.stringify(unknownContainers), { status: 200 });
+
+    renderWithProvider(<MissingItems />, {
+      initialRoutes: ["/missing-items"],
+    });
+
+    await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
+
+    expect(
+      screen.getByRole("heading", { name: "Missing Items" })
+    ).toBeDefined();
+
+    await checkMissingItemsList([]);
+  });
+
   it("can return to directory page", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify([]), { status: 200 });
     const { user, history } = renderWithProvider(<MissingItems />, {
       initialRoutes: ["/needed"],
     });
