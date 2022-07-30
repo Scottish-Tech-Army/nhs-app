@@ -5,7 +5,7 @@ import Directory from "./Directory";
 import { useAppSelector } from "./model/store";
 
 import Container from "./Container";
-import Summary from "./Summary";
+import MissingItems from "./MissingItems";
 import ItemDetails from "./ItemDetails";
 import { isAuthenticating, SignIn } from "./auth/SignIn";
 import { getAuthState } from "./model/auth/AuthSlice";
@@ -41,7 +41,7 @@ function App() {
       <Routes>
         <Route path="container/:storageAreaId/:containerTemplateId/:containerNumber" element={<Container />} />
         <Route path="item/:containerTemplateId/:itemId" element={<ItemDetails />} />
-        <Route path="summary" element={<Summary />} />
+        <Route path="missing-items" element={<MissingItems />} />
         <Route path="area/:storageAreaId" element={<StorageArea />} />
         <Route path="*" element={<Directory />} />
       </Routes>

@@ -6,6 +6,7 @@ import {
   getContainerName,
   getContainerTemplate,
   getItemDisplayName,
+  getStorageArea,
 } from "./model/DataDefinitions";
 
 import Navbar from "./Navbar";
@@ -17,7 +18,7 @@ export type FormValueType = {
 
 const CONTAINERS_API_ENDPONT = `${process.env.REACT_APP_INVENTORY_API_ENDPOINT}containers`;
 
-function Summary() {
+function MissingItems() {
   const [containers, setContainers] = useState<ContainerData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const partiallyFullContainers = containers.filter(
@@ -46,10 +47,10 @@ function Summary() {
 
   function getDisplayTime(isoDateTime: string) {
     const timestamp = parseISO(isoDateTime);
-    return format(timestamp, "EEE d/M/yyyy 'at' HH:mm");
+    return format(timestamp, "EEE d/M/yyyy HH:mm");
   }
 
-  function getContainerShoppingList(container: ContainerData, index: number) {
+  function getContainerMissingItems(container: ContainerData, index: number) {
     const containerTemplate = getContainerTemplate(
       container.containerTemplateId
     );
@@ -62,15 +63,27 @@ function Summary() {
       return null;
     }
 
+    const storageArea = getStorageArea(container.storageAreaId);
+
+    if (!storageArea) {
+      console.error("Storage area not found: ", container.storageAreaId);
+      return null;
+    }
+
     return (
       <div key={index} className="container">
         <div>
           <h2>
+            {storageArea.name}
+            <br />
             {getContainerName(containerTemplate, container.containerNumber)}
           </h2>
-          <div className="checker">{`Checked by ${
-            container.checker
-          } on ${getDisplayTime(container.checkTime)}`}</div>
+          {!!container.location && (
+            <div className="location">Location: {container.location}</div>
+          )}
+          <div className="checker">{`Checked: ${getDisplayTime(
+            container.checkTime
+          )} by ${container.checker}`}</div>
         </div>
 
         <div className="items">
@@ -84,16 +97,16 @@ function Summary() {
     );
   }
   return (
-    <div className="summary-list">
+    <div className="missing-items-list">
       <header>
-        <h1>Summary</h1>
+        <h1>Missing Items</h1>
       </header>
       <main>
         {loading ? (
           <div>Fetching Items</div>
         ) : partiallyFullContainers.length ? (
           <div className="scroll">
-            {partiallyFullContainers.map(getContainerShoppingList)}
+            {partiallyFullContainers.map(getContainerMissingItems)}
           </div>
         ) : (
           <div className="nothing-to-replace">No Items</div>
@@ -106,4 +119,4 @@ function Summary() {
   );
 }
 
-export default Summary;
+export default MissingItems;

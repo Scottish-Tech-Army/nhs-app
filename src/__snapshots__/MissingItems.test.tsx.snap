@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Summary renders correctly 1`] = `
+exports[`MissingItems rendered a missing-items list page for partially filled store - ie some items shown 1`] = `
 <div>
   <div
-    class="summary-list"
+    class="missing-items-list"
   >
     <header>
       <h1>
-        Summary
+        Missing Items
       </h1>
     </header>
     <main>
@@ -19,12 +19,20 @@ exports[`Summary renders correctly 1`] = `
         >
           <div>
             <h2>
+              Trauma Tower
+              <br />
               Trauma Chest Drain - Box 2
             </h2>
             <div
+              class="location"
+            >
+              Location: 
+              Resus 1b
+            </div>
+            <div
               class="checker"
             >
-              Checked by Bob on Thu 23/6/2022 at 10:18
+              Checked: Thu 23/6/2022 10:18 by Bob
             </div>
           </div>
           <div
@@ -52,6 +60,36 @@ exports[`Summary renders correctly 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="container"
+        >
+          <div>
+            <h2>
+              Airway Trolley 2
+              <br />
+              Drawer C – Oxygenate by Any Means
+            </h2>
+            <div
+              class="checker"
+            >
+              Checked: Thu 23/6/2022 10:18 by Joe
+            </div>
+          </div>
+          <div
+            class="items"
+          >
+            <div
+              class="item"
+            >
+              1 x Guedel airway - Red
+            </div>
+            <div
+              class="item"
+            >
+              1 x Nasopharyngeal Airway (7.0)
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <footer>
@@ -70,15 +108,15 @@ exports[`Summary renders correctly 1`] = `
         </a>
         <a
           aria-current="page"
-          aria-label="summary"
+          aria-label="missing-items"
           class="navicon active"
-          href="/summary"
+          href="/missing-items"
         >
           <svg>
             checklist.svg
           </svg>
           <div>
-            Summary
+            Missing Items
           </div>
         </a>
         <div

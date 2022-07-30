@@ -17,12 +17,12 @@ function Navbar() {
         <div>Directory</div>
       </NavLink>
       <NavLink
-        aria-label="summary"
-        to={"/summary"}
+        aria-label="missing-items"
+        to={"/missing-items"}
         className={({ isActive }) => (isActive ? "navicon active" : "navicon")}
       >
         <ChecklistIcon />
-        <div>Summary</div>
+        <div>Missing Items</div>
       </NavLink>
       <SignOut />
     </nav>

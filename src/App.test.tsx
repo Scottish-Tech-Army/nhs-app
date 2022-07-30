@@ -17,16 +17,16 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
   });
 
-  it("renders summary view", async () => {
+  it("renders missing-items view", async () => {
     const { user } = renderWithProvider(<App />, {
       preloadedState: INITIAL_SIGNED_IN_STATE,
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(screen.getByRole("link", { name: "summary" }));
+    await user.click(screen.getByRole("link", { name: "missing-items" }));
 
     expect(screen.queryByRole("heading", { name: "Directory" })).toBeNull();
-    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
   });
 
   it("renders storage area view", async () => {

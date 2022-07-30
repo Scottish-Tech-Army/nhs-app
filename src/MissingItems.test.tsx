@@ -3,7 +3,7 @@ import React from "react";
 
 import { screen, waitFor } from "@testing-library/react";
 
-import Summary from "./Summary";
+import MissingItems from "./MissingItems";
 import { renderWithProvider } from "./testUtils";
 import { ContainerData } from "./model/StorageTypes";
 import { TEST_INVENTORY_API_ENDPOINT } from "./setupTests";
@@ -12,7 +12,7 @@ import { Auth } from "@aws-amplify/auth";
 jest.mock("@aws-amplify/auth");
 
 const TIMESTAMP = "2022-06-23T09:18:06.324Z";
-const DISPLAY_TIMESTAMP = "Thu 23/6/2022 at 10:18";
+const DISPLAY_TIMESTAMP = "Thu 23/6/2022 10:18";
 
 const UUID = "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5";
 
@@ -24,6 +24,7 @@ const CONTAINERS: ContainerData[] = [
     checkId: UUID,
     checkTime: TIMESTAMP,
     checker: "Bob",
+    location: "Resus 1b",
     isFull: false,
     missingItems: [
       { name: "Sterile gloves", quantity: 1, size: "Medium" },
@@ -44,9 +45,23 @@ const CONTAINERS: ContainerData[] = [
     missingItems: [],
     name: "Trauma Chest Drain",
   },
+  {
+    containerNumber: 1,
+    containerTemplateId: "airway-trolley-2-drawer-c",
+    storageAreaId: "airway-trolley-2",
+    checkId: UUID,
+    checkTime: TIMESTAMP,
+    checker: "Joe",
+    isFull: false,
+    missingItems: [
+      { name: "Guedel airway - Red", quantity: 1 },
+      { name: "Nasopharyngeal Airway", quantity: 1, size: "7.0" },
+    ],
+    name: "Drawer C",
+  },
 ];
 
-describe("Summary", () => {
+describe("MissingItems", () => {
   beforeEach(() => {
     (Auth.currentSession as jest.Mock).mockImplementation(() => {
       return Promise.resolve({
@@ -57,35 +72,35 @@ describe("Summary", () => {
     });
   });
 
-  it("rendered a summary list page for filled store - no containers recorded", async () => {
+  it("rendered a missing-items list page for filled store - no containers recorded", async () => {
     fetchMock.mockResponse(JSON.stringify([]), { status: 200 });
 
-    renderWithProvider(<Summary />, {
-      initialRoutes: ["/summary"],
+    renderWithProvider(<MissingItems />, {
+      initialRoutes: ["/missing-items"],
     });
 
-    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
 
     expect(await screen.findByText("No Items")).toBeDefined();
 
-    await checkSummaryList([]);
+    await checkMissingItemsList([]);
   });
 
-  it("rendered a summary list page - loading", async () => {
+  it("rendered a missing-items list page - loading", async () => {
     fetchMock.mockResponse("", { status: 500 });
 
-    renderWithProvider(<Summary />, {
-      initialRoutes: ["/summary"],
+    renderWithProvider(<MissingItems />, {
+      initialRoutes: ["/missing-items"],
     });
 
-    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
 
     expect(screen.getByText("Fetching Items")).toBeDefined();
 
-    await checkSummaryList([]);
+    await checkMissingItemsList([]);
   });
 
-  it("rendered a summary list and all containers full", async () => {
+  it("rendered a missing-items list and all containers full", async () => {
     fetchMock.mockResponse(
       JSON.stringify([
         {
@@ -112,8 +127,8 @@ describe("Summary", () => {
       { status: 200 }
     );
 
-    renderWithProvider(<Summary />, {
-      initialRoutes: ["/summary"],
+    renderWithProvider(<MissingItems />, {
+      initialRoutes: ["/missing-items"],
     });
     await waitFor(() => expect(fetchMock).toBeCalledTimes(1));
     expect(fetchMock).toBeCalledWith(
@@ -123,25 +138,27 @@ describe("Summary", () => {
       })
     );
 
-    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
     expect(await screen.findByText("No Items")).toBeDefined();
 
-    await checkSummaryList([]);
+    await checkMissingItemsList([]);
   });
 
-  it("rendered a summary list page for partially filled store - ie some items shown", async () => {
+  it("rendered a missing-items list page for partially filled store - ie some items shown", async () => {
     fetchMock.mockResponse(JSON.stringify(CONTAINERS), { status: 200 });
 
-    renderWithProvider(<Summary />, {
-      initialRoutes: ["/summary"],
+    const { container } = renderWithProvider(<MissingItems />, {
+      initialRoutes: ["/missing-items"],
     });
 
-    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
 
-    await checkSummaryList([
+    await checkMissingItemsList([
       {
-        name: "Trauma Chest Drain - Box 2",
-        checkNameAndDate: `Checked by Bob on ${DISPLAY_TIMESTAMP}`,
+        storageArea: "Trauma Tower",
+        containerName: "Trauma Chest Drain - Box 2",
+        location: "Resus 1b",
+        checkNameAndDate: `Checked: ${DISPLAY_TIMESTAMP} by Bob`,
         items: [
           "1 x Sterile gloves (Medium)",
           "1 x ChloraPrep applicator",
@@ -149,24 +166,19 @@ describe("Summary", () => {
           "1 x Chest drain bottle",
         ],
       },
+      {
+        storageArea: "Airway Trolley 2",
+        containerName: "Drawer C",
+        checkNameAndDate: `Checked: ${DISPLAY_TIMESTAMP} by Joe`,
+        items: ["1 x Guedel airway - Red", "1 x Nasopharyngeal Airway (7.0)"],
+      },
     ]);
-  });
 
-  it("renders correctly", async () => {
-    fetchMock.mockResponse(JSON.stringify(CONTAINERS), { status: 200 });
-
-    const { container } = renderWithProvider(<Summary />, {
-      initialRoutes: ["/summary"],
-    });
-
-    await waitFor(() =>
-      expect(document.querySelectorAll("div.container")!).toHaveLength(1)
-    );
     expect(container).toMatchSnapshot();
   });
 
   it("can return to directory page", async () => {
-    const { user, history } = renderWithProvider(<Summary />, {
+    const { user, history } = renderWithProvider(<MissingItems />, {
       initialRoutes: ["/needed"],
     });
 
@@ -178,20 +190,36 @@ describe("Summary", () => {
   });
 
   type ExpectedContainerContents = {
-    name: string;
+    storageArea: string;
+    containerName: string;
+    location?: string;
     checkNameAndDate: string;
     items: string[];
   };
 
-  async function checkSummaryList(expectedContainers: ExpectedContainerContents[]) {
+  async function checkMissingItemsList(
+    expectedContainers: ExpectedContainerContents[]
+  ) {
     await waitFor(() => {
       const actualContainers = document.querySelectorAll("div.container")!;
 
       expect(actualContainers).toHaveLength(expectedContainers.length);
       actualContainers.forEach((actualContainer, index) => {
         const expectedContainer = expectedContainers[index];
-        expect(actualContainer).toHaveTextContent(expectedContainer.name);
-        expect(actualContainer).toHaveTextContent(expectedContainer.checkNameAndDate);
+        expect(actualContainer).toHaveTextContent(
+          expectedContainer.storageArea
+        );
+        expect(actualContainer).toHaveTextContent(
+          expectedContainer.containerName
+        );
+        if (expectedContainer.location) {
+          expect(actualContainer).toHaveTextContent(
+            expectedContainer.containerName
+          );
+        }
+        expect(actualContainer).toHaveTextContent(
+          expectedContainer.checkNameAndDate
+        );
 
         const actualItems = actualContainer.querySelectorAll("div.item")!;
         expect(actualItems).toHaveLength(expectedContainer.items.length);

@@ -1,9 +1,7 @@
-const { format } = require("date-fns");
-
 const DISCLAIMER_TEXT =
   "This application is for demo use only. It is not intended for real life use.";
 const DIRECTORY_TITLE = "Directory";
-const SUMMARY_TITLE = "Summary";
+const SUMMARY_TITLE = "Missing Items";
 const TRAUMA_TOWER = "Trauma Tower";
 const BOX_TITLE = "Trauma Chest Drain";
 const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
@@ -52,8 +50,8 @@ describe("directory", () => {
     cy.contains(BOX_TITLE);
   });
 
-  it("navigated to summary", () => {
-    goToSummary();
+  it("navigated to missing-items", () => {
+    goToMissingItems();
   });
 });
 
@@ -70,8 +68,8 @@ describe("storage area", () => {
     cy.contains("Sterile gloves (Small)");
   });
 
-  it("navigated to summary", () => {
-    goToSummary();
+  it("navigated to missing-items", () => {
+    goToMissingItems();
   });
 });
 
@@ -156,20 +154,20 @@ describe("multiple instance container", () => {
   });
 });
 
-describe("summary", () => {
+describe("missing-items", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
     markAllAreasFull();
   });
 
-  it("empty then populated summary page", () => {
-    // Empty summary page
-    goToSummary();
+  it("empty then populated missing-items page", () => {
+    // Empty missing-items page
+    goToMissingItems();
 
     cy.contains("No Items");
 
-    // Populated summary page
+    // Populated missing-items page
     goToDirectory();
 
     goToTraumaTower();
@@ -199,18 +197,17 @@ describe("summary", () => {
       .click();
     cy.contains("Save").click();
 
-    const checkerString = `Checked by ${TEST_USER} on ${format(
-      Date.now(),
-      "EEE d/M/yyyy 'at' HH:"
-    )}`;
+    const checkerRegex = new RegExp(
+      `Checked: \\w{3} \\d{1,2}\\/\\d{1,2}\\/\\d{4} \\d{2}:\\d{2} by ${TEST_USER}`
+    );
 
-    goToSummary();
+    goToMissingItems();
 
     cy.contains(BOX_FOUR_TITLE)
       .parent()
       .parent()
       .within(() => {
-        cy.contains(checkerString);
+        cy.contains(checkerRegex);
         cy.contains("1 x Sterile gloves (Small)");
         cy.contains("1 x Sterile gloves (Medium)");
         cy.contains("1 x Sterile gloves (Large)");
@@ -220,7 +217,7 @@ describe("summary", () => {
       .parent()
       .parent()
       .within(() => {
-        cy.contains(checkerString);
+        cy.contains(checkerRegex);
         cy.contains("1 x Sterile gloves (Small)").should("not.exist");
         cy.contains("1 x Sterile gloves (Medium)").should("not.exist");
         cy.contains("1 x Sterile gloves (Large)").should("not.exist");
@@ -262,8 +259,8 @@ describe("summary", () => {
 });
 
 // Navbar
-function goToSummary() {
-  cy.get('[aria-label="summary"]').click();
+function goToMissingItems() {
+  cy.get('[aria-label="missing-items"]').click();
   cy.contains("h1", SUMMARY_TITLE);
 }
 

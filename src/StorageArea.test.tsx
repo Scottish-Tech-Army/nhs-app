@@ -24,8 +24,8 @@ describe("StorageArea", () => {
       expect(screen.getByText(title)).toBeDefined();
     });
 
-    const summaryLink = await screen.findByRole("link", { name: "summary" });
-    expect(summaryLink).toHaveAttribute("href", "/summary");
+    const missingItemsLink = await screen.findByRole("link", { name: "missing-items" });
+    expect(missingItemsLink).toHaveAttribute("href", "/missing-items");
 
     expect(container).toMatchSnapshot();
   });
@@ -43,8 +43,8 @@ describe("StorageArea", () => {
       expect(screen.getByText(title)).toBeDefined();
     });
 
-    const summaryLink = await screen.findByRole("link", { name: "summary" });
-    expect(summaryLink).toHaveAttribute("href", "/summary");
+    const missingItemsLink = await screen.findByRole("link", { name: "missing-items" });
+    expect(missingItemsLink).toHaveAttribute("href", "/missing-items");
 
     expect(container).toMatchSnapshot();
   });

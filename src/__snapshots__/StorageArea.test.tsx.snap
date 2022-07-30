@@ -142,15 +142,15 @@ exports[`StorageArea renders a multiple instance container 1`] = `
           </div>
         </a>
         <a
-          aria-label="summary"
+          aria-label="missing-items"
           class="navicon"
-          href="/summary"
+          href="/missing-items"
         >
           <svg>
             checklist.svg
           </svg>
           <div>
-            Summary
+            Missing Items
           </div>
         </a>
         <div
@@ -244,15 +244,15 @@ exports[`StorageArea renders a single instance container 1`] = `
           </div>
         </a>
         <a
-          aria-label="summary"
+          aria-label="missing-items"
           class="navicon"
-          href="/summary"
+          href="/missing-items"
         >
           <svg>
             checklist.svg
           </svg>
           <div>
-            Summary
+            Missing Items
           </div>
         </a>
         <div
