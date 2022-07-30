@@ -95,16 +95,15 @@ export function SignIn() {
 
   return (
     <div className="signin">
-      <div className="branding-container">
-        <img
-          className="ae-logo"
-          src="/branding/EdinburghEmergencyMedicine.png"
-          height="130px"
-          width="130px"
-          alt=""
-        />
-        <h2>Log in</h2>
-      </div>
+      <img
+        className="ae-logo"
+        src="/branding/EdinburghEmergencyMedicine.png"
+        height="130px"
+        width="130px"
+        alt=""
+      />
+      <h2>Log in</h2>
+
       <label htmlFor={USERNAME_ID}>Username</label>
       <input
         id={USERNAME_ID}

@@ -11,8 +11,9 @@
 
 .root {
   position: relative;
-  width: 375px;
-  height: 768px;
+  height: 100vh;
+  min-width: 350px;
+  min-height: 500px;
 
   background: white;
   font-family: "HindRegular", sans-serif;
@@ -61,17 +62,16 @@
   padding: 0 0 0 30%;
 }
 .ae-logo {
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+  align-self: center;
 }
 
 .signin h2 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 35px;
   color: #491f6f;
+  align-self: center;
   margin-top: 30px;
-  margin-left: 15px;
+  margin-bottom: 0x;
 }
 
 .signin label {
@@ -90,7 +90,8 @@
 .signin .action-row {
   display: flex;
   flex-direction: row;
-  margin-top: 105px;
+  margin-top: 30px;
+  flex-grow: 1;
 }
 
 .signin button#action-button {
@@ -184,11 +185,15 @@
 .missing-items-list main {
   flex: 1;
   position: relative;
-  margin-bottom: 104px;
+  margin-bottom: 59px;
+}
+
+.container-details main {
+  margin-bottom: 77px;
 }
 
 .container-details.with-location main {
-  margin-bottom: 145px;
+  margin-bottom: 131px;
 }
 
 .missing-items-list main {
@@ -354,13 +359,13 @@
 .missing-items-list footer,
 .container-details footer {
   position: absolute;
-  left: 0%;
-  right: 0%;
-  bottom: 0%;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   border-top: 1px solid rgba(160, 160, 160, 0.25);
-  box-shadow: 0px 4px 120px rgba(193, 193, 197, 0.15);
-  height: 104px;
+  height: 59px;
+  box-sizing: border-box;
 }
 
 .directory footer nav,
@@ -374,16 +379,22 @@
   align-items: center;
 }
 
+.container-details footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 77px;
+}
+
 .container-details.with-location footer {
   flex-direction: column;
   align-items: stretch;
-  height: 145px;
+  height: 131px;
 }
 
 .container-locations {
   display: flex;
   align-self: center;
-  padding: 24px 24px 15px 24px;
+  padding: 10px 24px 15px 24px;
   align-items: center;
 }
 
@@ -408,6 +419,10 @@
   flex-grow: 1;
   font-family: "HindSemiBold", sans-serif;
   font-size: 16px;
+}
+
+.container-details.with-location footer button.save {
+  flex-grow: 0;
 }
 
 footer .navicon {
@@ -443,7 +458,6 @@ footer nav .navicon svg {
   flex-direction: column;
   align-items: center;
 }
-
 
 button.back {
   position: absolute;
@@ -527,10 +541,11 @@ button.back svg {
 .disclaimer-popup,
 .confirm-reset-popup {
   position: fixed;
+  box-sizing: border-box;
   left: 0;
   bottom: 0;
   height: 295px;
-  width: calc(375px - 26px); /* Update when .root width changes */
+  width: 100%;
   z-index: 9;
 
   padding: 10px;
