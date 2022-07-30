@@ -24,7 +24,9 @@ describe("StorageArea", () => {
       expect(screen.getByText(title)).toBeDefined();
     });
 
-    const missingItemsLink = await screen.findByRole("link", { name: "missing-items" });
+    const missingItemsLink = await screen.findByRole("link", {
+      name: "missing-items",
+    });
     expect(missingItemsLink).toHaveAttribute("href", "/missing-items");
 
     expect(container).toMatchSnapshot();
@@ -43,7 +45,9 @@ describe("StorageArea", () => {
       expect(screen.getByText(title)).toBeDefined();
     });
 
-    const missingItemsLink = await screen.findByRole("link", { name: "missing-items" });
+    const missingItemsLink = await screen.findByRole("link", {
+      name: "missing-items",
+    });
     expect(missingItemsLink).toHaveAttribute("href", "/missing-items");
 
     expect(container).toMatchSnapshot();
@@ -77,6 +81,22 @@ describe("StorageArea", () => {
     expect(history.location.pathname).toEqual(
       "/container/trauma-tower/trauma-chest-drain/4"
     );
+  });
+
+  it("can return to storage area group", async () => {
+    const { user, history } = renderWithRoute("transfer-bag-1");
+
+    await user.click(screen.getByRole("button", { name: "back" }));
+
+    expect(history.location.pathname).toEqual("/areas/transfer-bags");
+  });
+
+  it("can return to directory", async () => {
+    const { user, history } = renderWithRoute("trauma-tower");
+
+    await user.click(screen.getByRole("button", { name: "back" }));
+
+    expect(history.location.pathname).toEqual("/");
   });
 
   function renderWithRoute(storageAreaId: string) {

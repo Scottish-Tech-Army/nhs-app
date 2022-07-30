@@ -1,14 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Directory renders correctly 1`] = `
+exports[`StorageAreaGroup renders a storage area group 1`] = `
 <div>
   <div
-    class="directory"
+    class="storage-area-group"
   >
     <header>
       <h1>
-        Directory
+        Transfer Bags
       </h1>
+      <button
+        aria-label="back"
+        class="back"
+        type="button"
+      >
+        <svg>
+          arrow-left.svg
+        </svg>
+      </button>
     </header>
     <main>
       <div
@@ -16,7 +25,7 @@ exports[`Directory renders correctly 1`] = `
       >
         <a
           class="single-storage-area"
-          href="/area/trauma-tower"
+          href="/area/transfer-bag-1"
         >
           <svg>
             edit.svg
@@ -24,12 +33,12 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Trauma Tower
+            Transfer Bag 1
           </div>
         </a>
         <a
           class="single-storage-area"
-          href="/areas/airway-trolleys"
+          href="/area/transfer-bag-2"
         >
           <svg>
             edit.svg
@@ -37,12 +46,12 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Airway Trolleys
+            Transfer Bag 2
           </div>
         </a>
         <a
           class="single-storage-area"
-          href="/areas/transfer-bags"
+          href="/area/transfer-bag-3"
         >
           <svg>
             edit.svg
@@ -50,12 +59,12 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Transfer Bags
+            Transfer Bag 3
           </div>
         </a>
         <a
           class="single-storage-area"
-          href="/area/other-procedures"
+          href="/area/transfer-bag-4"
         >
           <svg>
             edit.svg
@@ -63,7 +72,33 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Other Procedures
+            Transfer Bag 4
+          </div>
+        </a>
+        <a
+          class="single-storage-area"
+          href="/area/transfer-bag-5"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 5
+          </div>
+        </a>
+        <a
+          class="single-storage-area"
+          href="/area/transfer-bag-6"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Transfer Bag 6
           </div>
         </a>
       </div>
@@ -71,9 +106,8 @@ exports[`Directory renders correctly 1`] = `
     <footer>
       <nav>
         <a
-          aria-current="page"
           aria-label="directory"
-          class="navicon active"
+          class="navicon"
           href="/"
         >
           <svg>

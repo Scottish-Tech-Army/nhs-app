@@ -3,10 +3,11 @@ const DISCLAIMER_TEXT =
 const DIRECTORY_TITLE = "Directory";
 const SUMMARY_TITLE = "Missing Items";
 const TRAUMA_TOWER = "Trauma Tower";
-const BOX_TITLE = "Trauma Chest Drain";
-const BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
-const BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
+const TRAUMA_TOWER_BOX_TITLE = "Trauma Chest Drain";
+const TRAUMA_TOWER_BOX_FOUR_TITLE = "Trauma Chest Drain - Box 4";
+const TRAUMA_TOWER_BOX_TWO_TITLE = "Trauma Chest Drain - Box 2";
 const LOCAL_HOST_PORT = "http://localhost:3000";
+const AIRWAY_TROLLEYS = "Airway Trolleys";
 const AIRWAY_TROLLEY_ONE = "Airway Trolley 1";
 
 const TEST_USER = Cypress.env("cognito_username");
@@ -47,7 +48,12 @@ describe("directory", () => {
 
   it("select storage area", () => {
     goToTraumaTower();
-    cy.contains(BOX_TITLE);
+    cy.contains(TRAUMA_TOWER_BOX_TITLE);
+  });
+
+  it("select storage area group", () => {
+    goToAirwayTrolleys();
+    cy.contains(AIRWAY_TROLLEY_ONE);
   });
 
   it("navigated to missing-items", () => {
@@ -55,7 +61,29 @@ describe("directory", () => {
   });
 });
 
-describe("storage area", () => {
+describe("storage area group", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    cy.contains("h1", DIRECTORY_TITLE);
+    goToAirwayTrolleys();
+  });
+
+  it("select storage area", () => {
+    goToAirwayTrolleyOne();
+  });
+
+  it("navigated to missing-items", () => {
+    goToMissingItems();
+  });
+
+  it("back button returns to directory", () => {
+    clickBackButton();
+    cy.get("h1").should("have.text", DIRECTORY_TITLE);
+  });
+});
+
+describe("storage area from directory", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
@@ -63,13 +91,41 @@ describe("storage area", () => {
   });
 
   it("select container", () => {
-    cy.contains(BOX_TITLE).parent().contains("4").click();
-    cy.contains("h1", BOX_FOUR_TITLE);
+    cy.contains(TRAUMA_TOWER_BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", TRAUMA_TOWER_BOX_FOUR_TITLE);
     cy.contains("Sterile gloves (Small)");
   });
 
   it("navigated to missing-items", () => {
     goToMissingItems();
+  });
+
+  it("back button returns to directory", () => {
+    clickBackButton();
+    cy.get("h1").should("have.text", DIRECTORY_TITLE);
+  });
+});
+
+describe("storage area from storage area group", () => {
+  beforeEach(() => {
+    cy.visit(LOCAL_HOST_PORT);
+    cy.contains("Accept").click();
+    goToAirwayTrolleys();
+    goToAirwayTrolleyOne();
+  });
+
+  it("select container", () => {
+    cy.contains("Drawer B").click();
+    cy.contains("h1", "Drawer B - Maintaining Oxygenation & SAD");
+  });
+
+  it("navigated to missing-items", () => {
+    goToMissingItems();
+  });
+
+  it("back button returns to storage area group", () => {
+    clickBackButton();
+    cy.get("h1").should("have.text", AIRWAY_TROLLEYS);
   });
 });
 
@@ -77,13 +133,14 @@ describe("single instance container", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
+    goToAirwayTrolleys();
     goToAirwayTrolleyOne();
     cy.contains("Drawer B").click();
     cy.contains("h1", "Drawer B - Maintaining Oxygenation & SAD");
   });
 
   it("back button returns to storage area", () => {
-    cy.get('[aria-label="back"]').click();
+    clickBackButton();
     cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
   });
 
@@ -117,12 +174,12 @@ describe("multiple instance container", () => {
     cy.contains("Accept").click();
     goToTraumaTower();
 
-    cy.contains(BOX_TITLE).parent().contains("4").click();
-    cy.contains("h1", BOX_FOUR_TITLE);
+    cy.contains(TRAUMA_TOWER_BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", TRAUMA_TOWER_BOX_FOUR_TITLE);
   });
 
   it("back button returns to storage area", () => {
-    cy.get('[aria-label="back"]').click();
+    clickBackButton();
     cy.get("h1").should("have.text", TRAUMA_TOWER);
   });
 
@@ -158,7 +215,7 @@ describe("missing-items", () => {
   beforeEach(() => {
     cy.visit(LOCAL_HOST_PORT);
     cy.contains("Accept").click();
-    markAllAreasFull();
+    markEverythingFull();
   });
 
   it("empty then populated missing-items page", () => {
@@ -172,17 +229,17 @@ describe("missing-items", () => {
 
     goToTraumaTower();
 
-    cy.contains(BOX_TITLE).parent().contains("4").click();
-    cy.contains("h1", BOX_FOUR_TITLE);
+    cy.contains(TRAUMA_TOWER_BOX_TITLE).parent().contains("4").click();
+    cy.contains("h1", TRAUMA_TOWER_BOX_FOUR_TITLE);
 
     cy.contains("Sterile gloves (Small)");
     cy.contains("Save").click();
 
     cy.get("h1").should("have.text", TRAUMA_TOWER);
 
-    cy.contains(BOX_TITLE).parent().contains("2").click();
+    cy.contains(TRAUMA_TOWER_BOX_TITLE).parent().contains("2").click();
 
-    cy.contains("h1", BOX_TWO_TITLE);
+    cy.contains("h1", TRAUMA_TOWER_BOX_TWO_TITLE);
     cy.contains("Sterile gloves (Small)")
       .parent()
       .find('.controls > [aria-label="add item"]')
@@ -203,7 +260,7 @@ describe("missing-items", () => {
 
     goToMissingItems();
 
-    cy.contains(BOX_FOUR_TITLE)
+    cy.contains(TRAUMA_TOWER_BOX_FOUR_TITLE)
       .parent()
       .parent()
       .within(() => {
@@ -213,7 +270,7 @@ describe("missing-items", () => {
         cy.contains("1 x Sterile gloves (Large)");
       });
 
-    cy.contains(BOX_TWO_TITLE)
+    cy.contains(TRAUMA_TOWER_BOX_TWO_TITLE)
       .parent()
       .parent()
       .within(() => {
@@ -226,7 +283,48 @@ describe("missing-items", () => {
     goToDirectory();
   });
 
-  function markAllAreasFull() {
+  function markEverythingFull() {
+    const areaLinkHrefs: string[] = [];
+    cy.get("a[href*='/area/']").each((item) => {
+      cy.wrap(item)
+        .invoke("attr", "href")
+        .then((href) => areaLinkHrefs.push(href!));
+    });
+
+    const areaGroupLinkHrefs: string[] = [];
+    cy.get("a[href*='/areas/']").each((item) => {
+      cy.wrap(item)
+        .invoke("attr", "href")
+        .then((href) => areaGroupLinkHrefs.push(href!));
+    });
+
+    cy.wrap(areaLinkHrefs).then(() => {
+      areaLinkHrefs.forEach((areaLinkHref) => {
+        cy.get(`a[href='${areaLinkHref}']`).then(($link) => {
+          const title = $link.text();
+          cy.log(`Area title: ${title}`);
+          cy.wrap($link).click();
+          markAllContainersFull(title);
+        });
+        goToDirectory();
+      });
+    });
+
+    cy.wrap(areaGroupLinkHrefs).then(() => {
+      areaGroupLinkHrefs.forEach((areaLinkHref) => {
+        cy.get(`a[href='${areaLinkHref}']`).then(($link) => {
+          const title = $link.text();
+          cy.log(`Group Area title: ${title}`);
+          cy.wrap($link).click();
+          cy.contains("h1", title);
+          markAllGroupAreasFull(title);
+        });
+        goToDirectory();
+      });
+    });
+  }
+
+  function markAllGroupAreasFull(groupAreaTitle: string) {
     const areaTitles: string[] = [];
     cy.get(".single-storage-area").each((item) => {
       areaTitles.push(item.text());
@@ -236,12 +334,14 @@ describe("missing-items", () => {
         cy.log("Filling " + title);
         cy.contains(title).click();
         markAllContainersFull(title);
-        goToDirectory();
+        clickBackButton();
+        cy.contains("h1", groupAreaTitle);
       });
     });
   }
 
   function markAllContainersFull(storageAreaTitle: string) {
+    cy.log(storageAreaTitle);
     const containerLinkHrefs: string[] = [];
     cy.get("a[href*='/container']").each((item) => {
       cy.wrap(item)
@@ -275,7 +375,18 @@ function goToTraumaTower() {
   cy.get("h1").should("have.text", TRAUMA_TOWER);
 }
 
+function goToAirwayTrolleys() {
+  cy.contains(AIRWAY_TROLLEYS).click();
+  cy.get("h1").should("have.text", AIRWAY_TROLLEYS);
+}
+
+// From storage area group
 function goToAirwayTrolleyOne() {
   cy.contains(AIRWAY_TROLLEY_ONE).click();
   cy.get("h1").should("have.text", AIRWAY_TROLLEY_ONE);
+}
+
+// General
+function clickBackButton() {
+  cy.get('[aria-label="back"]').click();
 }

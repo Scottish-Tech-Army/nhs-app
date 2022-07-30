@@ -269,7 +269,7 @@ function Container() {
           type="button"
           className="back"
           aria-label="back"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(`/area/${storageArea?.storageAreaId}`)}
         >
           <ArrowLeft />
         </button>

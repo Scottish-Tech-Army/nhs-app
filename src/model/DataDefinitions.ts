@@ -3,6 +3,7 @@ import {
   MissingContainerItem,
   ItemTemplate,
   StorageAreaTemplate,
+  StorageAreaGroupTemplate,
 } from "./StorageTypes";
 
 // Define items which appear in multiple containers
@@ -1420,25 +1421,74 @@ export const OTHER_PROCEDURES: StorageAreaTemplate = {
   possibleContainerLocations: LOCATIONS,
 };
 
-export const STORAGE_AREAS: StorageAreaTemplate[] = [
+export const AIRWAY_TROLLEYS: StorageAreaGroupTemplate = {
+  name: "Airway Trolleys",
+  storageAreaGroupId: "airway-trolleys",
+  storageAreas: [
+    AIRWAY_TROLLEY_1,
+    AIRWAY_TROLLEY_2,
+    AIRWAY_TROLLEY_3,
+    AIRWAY_TROLLEY_4,
+  ],
+};
+
+export const TRANSFER_BAGS: StorageAreaGroupTemplate = {
+  name: "Transfer Bags",
+  storageAreaGroupId: "transfer-bags",
+  storageAreas: [
+    TRANSFER_BAG_1,
+    TRANSFER_BAG_2,
+    TRANSFER_BAG_3,
+    TRANSFER_BAG_4,
+    TRANSFER_BAG_5,
+    TRANSFER_BAG_6,
+  ],
+};
+
+export const DIRECTORY: (StorageAreaTemplate | StorageAreaGroupTemplate)[] = [
   TRAUMA_TOWER,
-  AIRWAY_TROLLEY_1,
-  AIRWAY_TROLLEY_2,
-  AIRWAY_TROLLEY_3,
-  AIRWAY_TROLLEY_4,
-  TRANSFER_BAG_1,
-  TRANSFER_BAG_2,
-  TRANSFER_BAG_3,
-  TRANSFER_BAG_4,
-  TRANSFER_BAG_5,
-  TRANSFER_BAG_6,
+  AIRWAY_TROLLEYS,
+  TRANSFER_BAGS,
   OTHER_PROCEDURES,
 ];
+
+function listStorageAreas() {
+  const result: StorageAreaTemplate[] = [];
+  DIRECTORY.forEach((item) => {
+    if ((item as any).storageAreaGroupId) {
+      result.push(...(item as StorageAreaGroupTemplate).storageAreas);
+    } else {
+      result.push(item as StorageAreaTemplate);
+    }
+  });
+  return result;
+}
+
+const STORAGE_AREAS: StorageAreaTemplate[] = listStorageAreas();
 
 export function getStorageArea(storageAreaId: string) {
   return STORAGE_AREAS.find(
     (storageArea) => storageArea.storageAreaId === storageAreaId
   );
+}
+
+export function getStorageAreaGroup(
+  storageAreaGroupId: string
+): StorageAreaGroupTemplate {
+  return DIRECTORY.find(
+    (storageArea) =>
+      (storageArea as any).storageAreaGroupId === storageAreaGroupId
+  ) as StorageAreaGroupTemplate;
+}
+
+export function getGroupForStorageArea(storageAreaId: string) {
+  return DIRECTORY.find(
+    (item) =>
+      (item as any).storageAreaGroupId &&
+      (item as StorageAreaGroupTemplate).storageAreas.find(
+        (storageArea) => storageArea.storageAreaId === storageAreaId
+      )
+  ) as StorageAreaGroupTemplate | undefined;
 }
 
 export function getContainerTemplate(containerTemplateId: string) {

@@ -113,6 +113,7 @@
 }
 
 .directory header,
+.storage-area-group header,
 .storage-area header,
 .container-details header,
 .missing-items-list header {
@@ -122,6 +123,7 @@
 }
 
 .directory header h1,
+.storage-area-group header h1,
 .storage-area header h1,
 .container-details header h1,
 .missing-items-list header h1 {
@@ -167,6 +169,7 @@
 
 .container-details,
 .directory,
+.storage-area-group,
 .storage-area,
 .missing-items-list {
   display: flex;
@@ -175,6 +178,7 @@
 }
 
 .directory main,
+.storage-area-group main,
 .storage-area main,
 .container-details main,
 .missing-items-list main {
@@ -193,6 +197,7 @@
 }
 
 .directory main .scroll,
+.storage-area-group main .scroll,
 .storage-area main .scroll,
 .container-details main .scroll,
 .missing-items-list main .scroll {
@@ -207,6 +212,7 @@
 }
 
 .directory main .single-storage-area,
+.storage-area-group main .single-storage-area,
 .missing-items-list main .container {
   border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
@@ -233,9 +239,12 @@
   position: relative;
 }
 
-.directory main .single-storage-area {
+.directory main .single-storage-area,
+.storage-area-group main .single-storage-area {
   min-height: 70px;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
 
 .missing-items-list main .container {
@@ -261,7 +270,8 @@
   text-indent: -20px;
 }
 
-.directory main .single-storage-area svg {
+.directory main .single-storage-area svg,
+.storage-area-group main .single-storage-area svg {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -270,7 +280,8 @@
   color: #491f6f;
 }
 
-.directory main .single-storage-area .display-name {
+.directory main .single-storage-area .display-name,
+.storage-area-group main .single-storage-area .display-name {
   font-size: 14px;
   line-height: 130%;
   padding-left: 74px;
@@ -338,6 +349,7 @@
 }
 
 .directory footer,
+.storage-area-group footer,
 .storage-area footer,
 .missing-items-list footer,
 .container-details footer {
@@ -352,6 +364,7 @@
 }
 
 .directory footer nav,
+.storage-area-group footer nav,
 .storage-area footer nav,
 .missing-items-list footer nav,
 .container-details footer {
@@ -431,9 +444,8 @@ footer nav .navicon svg {
   align-items: center;
 }
 
-.item-details button.back,
-.container-details button.back,
-.missing-items-list button.back {
+
+button.back {
   position: absolute;
   width: 48px;
   height: 48px;
@@ -450,8 +462,7 @@ footer nav .navicon svg {
   color: #491f6f;
 }
 
-.container-details button.back svg,
-.item-details button.back svg {
+button.back svg {
   position: absolute;
   width: 22px;
   height: 22px;

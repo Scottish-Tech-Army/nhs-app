@@ -376,7 +376,7 @@ describe("Multiple Instance Container", () => {
 
     await user.click(screen.getByRole("button", { name: "back" }));
 
-    expect(history.location.pathname).toEqual("/");
+    expect(history.location.pathname).toEqual("/area/trauma-tower");
   });
 
   it("renders correctly", () => {

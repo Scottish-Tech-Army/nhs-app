@@ -6,10 +6,15 @@ import {
   getItemTemplate,
   BOX_CAT_HAEMORRHAGE,
   TRAUMA_TOWER,
+  AIRWAY_TROLLEY_2,
+  AIRWAY_TROLLEYS,
   BOX_TRAUMA_CHEST_DRAIN,
   AIRWAY_TROLLEY_DRAWER_B,
-  STORAGE_AREAS,
+  DIRECTORY,
+  getStorageAreaGroup,
+  getGroupForStorageArea,
 } from "./DataDefinitions";
+import { StorageAreaGroupTemplate, StorageAreaTemplate } from "./StorageTypes";
 
 test("getContainerTemplate", () => {
   expect(getContainerTemplate("unknown")).toBeUndefined();
@@ -21,8 +26,28 @@ test("getContainerTemplate", () => {
 test("getStorageArea", () => {
   expect(getStorageArea("unknown")).toBeUndefined();
   expect(getStorageArea("")).toBeUndefined();
+  expect(getStorageArea("airway-trolleys")).toBeUndefined();
 
   expect(getStorageArea("trauma-tower")).toEqual(TRAUMA_TOWER);
+
+  expect(getStorageArea("airway-trolley-2")).toEqual(AIRWAY_TROLLEY_2);
+});
+
+test("getStorageAreaGroup", () => {
+  expect(getStorageAreaGroup("unknown")).toBeUndefined();
+  expect(getStorageAreaGroup("")).toBeUndefined();
+  expect(getStorageAreaGroup("trauma-tower")).toBeUndefined();
+
+  expect(getStorageAreaGroup("airway-trolleys")).toEqual(AIRWAY_TROLLEYS);
+});
+
+test("getGroupForStorageArea", () => {
+  expect(getGroupForStorageArea("unknown")).toBeUndefined();
+  expect(getGroupForStorageArea("")).toBeUndefined();
+  expect(getGroupForStorageArea("trauma-tower")).toBeUndefined();
+  expect(getGroupForStorageArea("airway-trolleys")).toBeUndefined();
+
+  expect(getGroupForStorageArea("airway-trolley-2")).toEqual(AIRWAY_TROLLEYS);
 });
 
 test("getContainerName with replicates", () => {
@@ -112,11 +137,11 @@ describe("getItemTemplate", () => {
   });
 });
 
-test("STORAGE_AREAS should have unique ids", () => {
+test("storage areas and container templates should have unique ids", () => {
   const storageAreaIds = new Set();
   const containerTemplateIds = new Set();
 
-  STORAGE_AREAS.forEach((storageArea) => {
+  function checkStorageArea(storageArea: StorageAreaTemplate) {
     expect(storageAreaIds).not.toContain(storageArea.storageAreaId);
     storageAreaIds.add(storageArea.storageAreaId);
 
@@ -126,5 +151,18 @@ test("STORAGE_AREAS should have unique ids", () => {
       );
       containerTemplateIds.add(containerTemplate.containerTemplateId);
     });
+  }
+
+  DIRECTORY.forEach((item) => {
+    if ((item as any).storageAreaId) {
+      checkStorageArea(item as StorageAreaTemplate);
+    } else {
+      const group = item as StorageAreaGroupTemplate;
+      // eslint-disable-next-line jest/no-conditional-expect
+      expect(storageAreaIds).not.toContain(group.storageAreaGroupId);
+      storageAreaIds.add(group.storageAreaGroupId);
+
+      group.storageAreas.forEach(checkStorageArea);
+    }
   });
 });

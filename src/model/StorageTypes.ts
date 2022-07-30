@@ -22,6 +22,12 @@ export type StorageAreaTemplate = {
   possibleContainerLocations?: string[];
 };
 
+export type StorageAreaGroupTemplate = {
+  storageAreaGroupId: string;
+  name: string;
+  storageAreas: StorageAreaTemplate[];
+};
+
 export type MissingContainerItem = {
   name: string;
   size?: string;

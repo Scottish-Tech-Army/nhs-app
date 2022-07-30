@@ -9,6 +9,15 @@ exports[`StorageArea renders a multiple instance container 1`] = `
       <h1>
         Trauma Tower
       </h1>
+      <button
+        aria-label="back"
+        class="back"
+        type="button"
+      >
+        <svg>
+          arrow-left.svg
+        </svg>
+      </button>
     </header>
     <main>
       <div
@@ -180,6 +189,15 @@ exports[`StorageArea renders a single instance container 1`] = `
       <h1>
         Transfer Bag 1
       </h1>
+      <button
+        aria-label="back"
+        class="back"
+        type="button"
+      >
+        <svg>
+          arrow-left.svg
+        </svg>
+      </button>
     </header>
     <main>
       <div

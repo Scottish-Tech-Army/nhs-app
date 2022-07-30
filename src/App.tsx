@@ -11,6 +11,7 @@ import { isAuthenticating, SignIn } from "./auth/SignIn";
 import { getAuthState } from "./model/auth/AuthSlice";
 import { Amplify } from "@aws-amplify/core";
 import StorageArea from "./StorageArea";
+import StorageAreaGroup from "./StorageAreaGroup";
 
 const awsConfig = {
   Auth: {
@@ -42,6 +43,7 @@ function App() {
         <Route path="container/:storageAreaId/:containerTemplateId/:containerNumber" element={<Container />} />
         <Route path="item/:containerTemplateId/:itemId" element={<ItemDetails />} />
         <Route path="missing-items" element={<MissingItems />} />
+        <Route path="areas/:storageAreaGroupId" element={<StorageAreaGroup />} />
         <Route path="area/:storageAreaId" element={<StorageArea />} />
         <Route path="*" element={<Directory />} />
       </Routes>

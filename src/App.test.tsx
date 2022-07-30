@@ -40,6 +40,29 @@ describe("App", () => {
     expect(screen.getByText("Trauma Chest Drain")).toBeDefined();
   });
 
+  it("renders storage area group view", async () => {
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
+    await user.click(screen.getByRole("button", { name: "Accept" }));
+
+    await user.click(screen.getByText("Airway Trolleys"));
+
+    expect(screen.getByText("Airway Trolley 1")).toBeDefined();
+  });
+
+  it("renders storage area from storage area group view", async () => {
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
+    await user.click(screen.getByRole("button", { name: "Accept" }));
+
+    await user.click(screen.getByText("Airway Trolleys"));
+    await user.click(screen.getByText("Airway Trolley 1"));
+
+    expect(screen.getByText("Drawer E")).toBeDefined();
+  });
+
   it("renders container view", async () => {
     const { user } = renderWithProvider(<App />, {
       preloadedState: INITIAL_SIGNED_IN_STATE,

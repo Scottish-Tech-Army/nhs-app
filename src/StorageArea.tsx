@@ -1,12 +1,18 @@
 import React from "react";
 import "./App.css";
 import { ContainerTemplate } from "./model/StorageTypes";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
-import { getStorageArea } from "./model/DataDefinitions";
+import {
+  getGroupForStorageArea,
+  getStorageArea,
+} from "./model/DataDefinitions";
+import { ReactComponent as ArrowLeft } from "./icons/arrow-left.svg";
 
 function StorageArea() {
   let { storageAreaId } = useParams();
+  const navigate = useNavigate();
+
   let storageArea = getStorageArea(storageAreaId!);
 
   const getContainers = (containerTemplate: ContainerTemplate) => {
@@ -52,6 +58,13 @@ function StorageArea() {
     );
   };
 
+  function getBackPath() {
+    const storageAreaGroup = getGroupForStorageArea(storageArea!.storageAreaId);
+    return storageAreaGroup
+      ? `/areas/${storageAreaGroup?.storageAreaGroupId}`
+      : "/";
+  }
+
   if (!storageArea) {
     return null;
   }
@@ -60,6 +73,14 @@ function StorageArea() {
     <div className="storage-area">
       <header>
         <h1>{storageArea.name}</h1>
+        <button
+          type="button"
+          className="back"
+          aria-label="back"
+          onClick={() => navigate(getBackPath())}
+        >
+          <ArrowLeft />
+        </button>
       </header>
       <main>
         <div className="scroll">
