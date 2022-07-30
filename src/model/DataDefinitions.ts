@@ -5,6 +5,9 @@ import {
   StorageAreaTemplate,
 } from "./StorageTypes";
 
+// Define items which appear in multiple containers
+type PartialItemTemplate = Omit<ItemTemplate, "quantity">;
+
 // Define container templates which have fixed named replicates
 type PartialFixedContainerTemplate = Omit<
   ContainerTemplate,
@@ -20,6 +23,218 @@ export const LOCATIONS = [
   "Ward Clerk's Desk",
 ];
 
+// Repeated items
+
+const ITEM_10ML_SYRINGE: PartialItemTemplate = {
+  name: "10ml Syringe",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_CATHETER_MOUNT: PartialItemTemplate = {
+  name: "Catheter Mount",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_CHLORAPREP_APPLICATOR: PartialItemTemplate = {
+  name: "ChloraPrep applicator",
+  size: "3ml",
+  description: "ChloraPrep applicator for cleaning skin for sterile procedure",
+  location: "Resus store XX",
+  photo: "chloraprep.jpg",
+};
+
+const ITEM_DISPOSABLE_MAC_BLADE_SIZE_3: PartialItemTemplate = {
+  name: "Disposable Mac Blade",
+  size: "3",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_DISPOSABLE_MAC_BLADE_SIZE_4: PartialItemTemplate = {
+  name: "Disposable Mac Blade",
+  size: "4",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_ET_TUBE_SIZE_9: PartialItemTemplate = {
+  name: "ET Tube",
+  size: "9.0",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_ET_TUBE_SIZE_8: PartialItemTemplate = {
+  name: "ET Tube",
+  size: "8.0",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_ET_TUBE_SIZE_7: PartialItemTemplate = {
+  name: "ET Tube",
+  size: "7.0",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_ET_TUBE_SIZE_6: PartialItemTemplate = {
+  name: "ET Tube",
+  size: "6.0",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_FACE_MASK_SIZE_4: PartialItemTemplate = {
+  name: "Face Mask",
+  size: "4",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_FACE_MASK_SIZE_5: PartialItemTemplate = {
+  name: "Face Mask",
+  size: "5",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_GUEDEL_AIRWAY_GREEN: PartialItemTemplate = {
+  name: "Guedel airway",
+  size: "Green",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_GUEDEL_AIRWAY_ORANGE: PartialItemTemplate = {
+  name: "Guedel airway",
+  size: "Orange",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_GUEDEL_AIRWAY_RED: PartialItemTemplate = {
+  name: "Guedel airway",
+  size: "Red",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_LIDOCAINE_VIAL: PartialItemTemplate = {
+  name: "Lidocaine 1% vial",
+  size: "5ml / 50mg",
+  description: "Local anaesthetic",
+  location: "Resus store XX",
+  photo: "lidocaine.jpg",
+};
+
+const ITEM_LUBRICATING_GEL_SACHET: PartialItemTemplate = {
+  name: "Lubricating Gel Sachet",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_MAGILL_FORCEPS: PartialItemTemplate = {
+  name: "Magill Forceps",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_MERSILK_SUTURE: PartialItemTemplate = {
+  name: "Mersilk Suture",
+  size: "1-0",
+  description: "Non-absorbable, handheld suture",
+  location: "Resus store XX",
+  photo: "mersilk.jpg",
+};
+
+const ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_6: PartialItemTemplate = {
+  name: "Nasopharyngeal Airway",
+  size: "6.0",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_7: PartialItemTemplate = {
+  name: "Nasopharyngeal Airway",
+  size: "7.0",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_SODIUM_CHLORIDE_1000ML: PartialItemTemplate = {
+  name: "Sodium Chloride 0.9% 1000ml",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+const ITEM_STERILE_GLOVES_SIZE_SMALL: PartialItemTemplate = {
+  name: "Sterile gloves",
+  size: "Small",
+  description: "Small sterile gloves - 1 pair",
+  location: "Resus store XX",
+  photo: "smallsterilegloves.jpg",
+};
+
+const ITEM_STERILE_GLOVES_SIZE_MEDIUM: PartialItemTemplate = {
+  name: "Sterile gloves",
+  size: "Medium",
+  description: "Medium sterile gloves - 1 pair",
+  location: "Resus store XX",
+  photo: "mediumsterilegloves.jpg",
+};
+
+const ITEM_STERILE_GLOVES_SIZE_LARGE: PartialItemTemplate = {
+  name: "Sterile gloves",
+  size: "Large",
+  description: "Large sterile gloves - 1 pair",
+  location: "Resus store XX",
+  photo: "largesterilegloves.jpg",
+};
+
+const ITEM_STANDARD_SUTURE_PACK: PartialItemTemplate = {
+  name: "Suture pack",
+  size: "Standard",
+  description: "Pack of equipment for suturing",
+  location: "Resus store XX",
+  photo: "standardsuture.jpg",
+};
+
+const ITEM_TUBE_TIE: PartialItemTemplate = {
+  name: "Tube Tie",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+const ITEM_ZINC_OXIDE_TAPE: PartialItemTemplate = {
+  name: "Roll of zinc oxide tape",
+  description: "DESCRIPTION",
+  location: "LOCATION",
+  photo: "PHOTO.jpg",
+};
+
+// Containers and areas
+
 export const BOX_TRAUMA_CHEST_DRAIN: ContainerTemplate = {
   name: "Trauma Chest Drain",
   containerTemplateId: "trauma-chest-drain",
@@ -34,27 +249,9 @@ export const BOX_TRAUMA_CHEST_DRAIN: ContainerTemplate = {
       location: "Resus store XX",
       photo: "chestdrain.jpg",
     },
-    {
-      name: "Sterile gloves",
-      size: "Small",
-      description: "Small sterile gloves - 1 pair",
-      location: "Resus store XX",
-      photo: "smallsterilegloves.jpg",
-    },
-    {
-      name: "Sterile gloves",
-      size: "Medium",
-      description: "Medium sterile gloves - 1 pair",
-      location: "Resus store XX",
-      photo: "mediumsterilegloves.jpg",
-    },
-    {
-      name: "Sterile gloves",
-      size: "Large",
-      description: "Large sterile gloves - 1 pair",
-      location: "Resus store XX",
-      photo: "largesterilegloves.jpg",
-    },
+    ITEM_STERILE_GLOVES_SIZE_SMALL,
+    ITEM_STERILE_GLOVES_SIZE_MEDIUM,
+    ITEM_STERILE_GLOVES_SIZE_LARGE,
     {
       name: "Chest drain catheter",
       size: "28Fr",
@@ -76,29 +273,9 @@ export const BOX_TRAUMA_CHEST_DRAIN: ContainerTemplate = {
       location: "Resus store XX",
       photo: "pleuralcatheter.jpg",
     },
-    {
-      name: "ChloraPrep applicator",
-      description:
-        "ChloraPrep applicator for cleaning skin for sterile procedure",
-      location: "Resus store XX",
-      photo: "chloraprep.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Lidocaine 1%",
-      size: "5ml / 50mg",
-      description: "Local anaesthetic",
-      location: "Resus store XX",
-      photo: "lidocaine.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Suture pack",
-      size: "Standard",
-      description: "Pack of equipment for suturing",
-      location: "Resus store XX",
-      photo: "standardsuture.jpg",
-    },
+    { ...ITEM_CHLORAPREP_APPLICATOR, quantity: 2 },
+    { ...ITEM_LIDOCAINE_VIAL, quantity: 2 },
+    ITEM_STANDARD_SUTURE_PACK,
     {
       name: "Mefix roll",
       size: "5cm x 10m",
@@ -186,21 +363,8 @@ export const BOX_CAT_HAEMORRHAGE: ContainerTemplate = {
       location: "Resus store XX",
       photo: "dressingpack.jpg",
     },
-    {
-      name: "Suture pack",
-      size: "Standard",
-      description: "Pack of equipment for suturing",
-      location: "Resus store XX",
-      photo: "standardsuture.jpg",
-    },
-    {
-      name: "Mersilk Suture",
-      size: "1-0",
-      description: "Non-absorbable, handheld suture",
-      location: "Resus store XX",
-      photo: "mersilk.jpg",
-      quantity: 2,
-    },
+    ITEM_STANDARD_SUTURE_PACK,
+    { ...ITEM_MERSILK_SUTURE, quantity: 2 },
     {
       name: "Stapler",
       description: "Skin stapler for wound closure",
@@ -255,7 +419,7 @@ export const TRAUMA_TOWER: StorageAreaTemplate = {
     BOX_CAT_HAEMORRHAGE,
     BOX_MAX_FAX_HAEMORRHAGE,
   ],
-  possibleLocations: LOCATIONS,
+  possibleContainerLocations: LOCATIONS,
 };
 
 export const AIRWAY_TROLLEY_TOP: PartialFixedContainerTemplate = {
@@ -268,32 +432,15 @@ export const AIRWAY_TROLLEY_TOP: PartialFixedContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Lubricating gel sachet",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_LUBRICATING_GEL_SACHET,
     {
       name: "Medium Introducer",
       description: "DESCRIPTION",
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Nasopharyngeal Airway",
-      size: "6.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Nasopharyngeal Airway",
-      size: "7.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_6,
+    ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_7,
   ],
 };
 
@@ -301,121 +448,22 @@ export const AIRWAY_TROLLEY_DRAWER_A: PartialFixedContainerTemplate = {
   name: "Drawer A - Face mask & Tracheal Intubation",
   containerType: "Drawer",
   items: [
-    {
-      name: "Face Mask",
-      size: "4",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Face Mask",
-      size: "5",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Guedel airway - Green",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Guedel airway - Orange",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Guedel airway - Red",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "ET Tube",
-      size: "9.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "ET Tube",
-      size: "8.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "ET Tube",
-      size: "7.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "ET Tube",
-      size: "6.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Disposable Mac Blade",
-      size: "3",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Disposable Mac Blade",
-      size: "4",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Easyfix crinx tube tie",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Roll of zinc oxide tape",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "10ml Syringe",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Magill Forceps",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Catheter Mount",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
+    { ...ITEM_FACE_MASK_SIZE_4, quantity: 2 },
+    { ...ITEM_FACE_MASK_SIZE_5, quantity: 2 },
+    ITEM_GUEDEL_AIRWAY_GREEN,
+    ITEM_GUEDEL_AIRWAY_ORANGE,
+    ITEM_GUEDEL_AIRWAY_RED,
+    { ...ITEM_ET_TUBE_SIZE_9, quantity: 2 },
+    { ...ITEM_ET_TUBE_SIZE_8, quantity: 2 },
+    { ...ITEM_ET_TUBE_SIZE_7, quantity: 2 },
+    { ...ITEM_ET_TUBE_SIZE_6, quantity: 2 },
+    { ...ITEM_DISPOSABLE_MAC_BLADE_SIZE_3, quantity: 2 },
+    { ...ITEM_DISPOSABLE_MAC_BLADE_SIZE_4, quantity: 2 },
+    { ...ITEM_TUBE_TIE, quantity: 2 },
+    ITEM_ZINC_OXIDE_TAPE,
+    { ...ITEM_10ML_SYRINGE, quantity: 2 },
+    ITEM_MAGILL_FORCEPS,
+    { ...ITEM_CATHETER_MOUNT, quantity: 2 },
     {
       name: "HME Filter",
       description: "DESCRIPTION",
@@ -429,13 +477,7 @@ export const AIRWAY_TROLLEY_DRAWER_A: PartialFixedContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Lubricating gel sachet",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 4,
-    },
+    { ...ITEM_LUBRICATING_GEL_SACHET, quantity: 4 },
     {
       name: "Video Laryngoscope (McGrath)",
       description: "DESCRIPTION",
@@ -497,31 +539,10 @@ export const AIRWAY_TROLLEY_DRAWER_B: PartialFixedContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "10ml Syringe",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Lubricating Gel Sachet",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Easyfix crinx tube tie",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Roll of zinc oxide tape",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_10ML_SYRINGE,
+    ITEM_LUBRICATING_GEL_SACHET,
+    { ...ITEM_TUBE_TIE, quantity: 2 },
+    ITEM_ZINC_OXIDE_TAPE,
     {
       name: "LMA",
       size: "3",
@@ -556,52 +577,13 @@ export const AIRWAY_TROLLEY_DRAWER_C: PartialFixedContainerTemplate = {
   name: "Drawer C – Oxygenate by Any Means",
   containerType: "Drawer",
   items: [
-    {
-      name: "Guedel airway - Green",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Guedel airway - Orange",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Guedel airway - Red",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Face Mask",
-      size: "4",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Face Mask",
-      size: "5",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Nasopharyngeal Airway",
-      size: "6.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Nasopharyngeal Airway",
-      size: "7.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_GUEDEL_AIRWAY_GREEN,
+    ITEM_GUEDEL_AIRWAY_ORANGE,
+    ITEM_GUEDEL_AIRWAY_RED,
+    ITEM_FACE_MASK_SIZE_4,
+    ITEM_FACE_MASK_SIZE_5,
+    ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_6,
+    ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_7,
   ],
 };
 
@@ -706,25 +688,9 @@ export const AIRWAY_TROLLEY_DRAWER_E_AIRWAY_BOX: PartialFixedContainerTemplate =
         location: "LOCATION",
         photo: "PHOTO.jpg",
       },
-      {
-        name: "ET Tube",
-        size: "6.0",
-        description: "DESCRIPTION",
-        location: "LOCATION",
-        photo: "PHOTO.jpg",
-      },
-      {
-        name: "10ml Syringe",
-        description: "DESCRIPTION",
-        location: "LOCATION",
-        photo: "PHOTO.jpg",
-      },
-      {
-        name: "Local anaesthetic",
-        description: "DESCRIPTION",
-        location: "LOCATION",
-        photo: "PHOTO.jpg",
-      },
+      ITEM_ET_TUBE_SIZE_6,
+      ITEM_10ML_SYRINGE,
+      ITEM_LIDOCAINE_VIAL,
     ],
   };
 
@@ -884,79 +850,22 @@ export const TRANSFER_BAG_FRONT_POCKET: PartialFixedContainerTemplate = {
   name: "Airway (Front Pocket)",
   containerType: "Pocket",
   items: [
-    {
-      name: "Guedel airway - Green",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Guedel airway - Orange",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Guedel airway - Red",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Nasopharyngeal Airway",
-      size: "6.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Nasopharyngeal Airway",
-      size: "7.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Mac Blade",
-      size: "3",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
-    {
-      name: "Mac Blade",
-      size: "4",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
+    ITEM_GUEDEL_AIRWAY_GREEN,
+    ITEM_GUEDEL_AIRWAY_ORANGE,
+    ITEM_GUEDEL_AIRWAY_RED,
+    ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_6,
+    ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_7,
+    { ...ITEM_DISPOSABLE_MAC_BLADE_SIZE_3, quantity: 2 },
+    { ...ITEM_DISPOSABLE_MAC_BLADE_SIZE_4, quantity: 2 },
     {
       name: "Laryngoscope Handle",
       description: "DESCRIPTION",
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "10ml Syringe",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Tube Tie",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Lubricating Gel Sachet",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
+    ITEM_10ML_SYRINGE,
+    ITEM_TUBE_TIE,
+    { ...ITEM_LUBRICATING_GEL_SACHET, quantity: 2 },
   ],
 };
 
@@ -964,51 +873,13 @@ export const TRANSFER_BAG_FRONT_NET_POCKET: PartialFixedContainerTemplate = {
   name: "Airway (Front Net Pocket)",
   containerType: "Net Pocket",
   items: [
-    {
-      name: "ET Tube",
-      size: "9.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "ET Tube",
-      size: "8.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Magill Forceps",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Catheter Mount",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "ET Tube",
-      size: "6.0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "10ml Syringe",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Local anaesthetic",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_ET_TUBE_SIZE_9,
+    ITEM_ET_TUBE_SIZE_8,
+    ITEM_MAGILL_FORCEPS,
+    ITEM_CATHETER_MOUNT,
+    ITEM_ET_TUBE_SIZE_6,
+    ITEM_10ML_SYRINGE,
+    ITEM_LIDOCAINE_VIAL,
   ],
 };
 
@@ -1022,20 +893,8 @@ export const TRANSFER_BAG_MIDDLE_POCKET: PartialFixedContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Face Mask",
-      size: "4",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Face Mask",
-      size: "5",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_FACE_MASK_SIZE_4,
+    ITEM_FACE_MASK_SIZE_5,
     {
       name: "High-flow Oxygen Mask and Tubing",
       description: "DESCRIPTION",
@@ -1049,12 +908,7 @@ export const TRANSFER_BAG_BACK_POCKET: PartialFixedContainerTemplate = {
   name: "Circulation (Back Pocket)",
   containerType: "Pocket",
   items: [
-    {
-      name: "Sodium Chloride 0.9% 1000mls",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_SODIUM_CHLORIDE_1000ML,
     {
       name: "PlasmaLyte 148 500mls",
       description: "DESCRIPTION",
@@ -1126,13 +980,7 @@ export const TRANSFER_BAG_BACK_POCKET_SYRINGE_GRAB_BAG: PartialFixedContainerTem
     name: "Circulation (Back Pocket) Syringe Grab Bag",
     containerType: "Bag",
     items: [
-      {
-        name: "10ml Syringe",
-        description: "DESCRIPTION",
-        location: "LOCATION",
-        photo: "PHOTO.jpg",
-        quantity: 2,
-      },
+      { ...ITEM_10ML_SYRINGE, quantity: 2 },
       {
         name: "5ml Syringe",
         description: "DESCRIPTION",
@@ -1412,33 +1260,10 @@ export const A_LINE_BOX: ContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Chloraprep 2% Applicator",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Sterile Gloves",
-      size: "Small",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Sterile Gloves",
-      size: "Medium",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Sterile Gloves",
-      size: "Large",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_CHLORAPREP_APPLICATOR,
+    ITEM_STERILE_GLOVES_SIZE_SMALL,
+    ITEM_STERILE_GLOVES_SIZE_MEDIUM,
+    ITEM_STERILE_GLOVES_SIZE_LARGE,
     {
       name: "Dressing Pack",
       size: "Small",
@@ -1470,26 +1295,9 @@ export const A_LINE_BOX: ContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Suture pack",
-      size: "Standard",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Lidocaine 1% 5mls vial",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
-    {
-      name: "Mersilk Suture",
-      size: "1-0",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_STANDARD_SUTURE_PACK,
+    ITEM_LIDOCAINE_VIAL,
+    ITEM_MERSILK_SUTURE,
     {
       name: "Blunt Drawing-up Needle",
       description: "DESCRIPTION",
@@ -1508,12 +1316,7 @@ export const A_LINE_BOX: ContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Sodium Chloride 0.9% 1000ml",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-    },
+    ITEM_SODIUM_CHLORIDE_1000ML,
     {
       name: "Red Transducer Set",
       description: "DESCRIPTION",
@@ -1582,13 +1385,7 @@ export const NG_INSERTION_KIT_BOX: ContainerTemplate = {
       location: "LOCATION",
       photo: "PHOTO.jpg",
     },
-    {
-      name: "Lubrication Gel Sachet",
-      description: "DESCRIPTION",
-      location: "LOCATION",
-      photo: "PHOTO.jpg",
-      quantity: 2,
-    },
+    { ...ITEM_LUBRICATING_GEL_SACHET, quantity: 2 },
     {
       name: "pH Paper",
       description: "DESCRIPTION",
@@ -1620,7 +1417,7 @@ export const OTHER_PROCEDURES: StorageAreaTemplate = {
   storageAreaId: "other-procedures",
   name: "Other Procedures",
   containers: [A_LINE_BOX, NG_INSERTION_KIT_BOX],
-  possibleLocations: LOCATIONS,
+  possibleContainerLocations: LOCATIONS,
 };
 
 export const STORAGE_AREAS: StorageAreaTemplate[] = [

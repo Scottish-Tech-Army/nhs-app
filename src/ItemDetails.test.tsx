@@ -8,14 +8,13 @@ import { Routes, Route } from "react-router-dom";
 import ItemDetails from "./ItemDetails";
 import { renderWithProvider } from "./testUtils";
 
-
 describe("ItemDetails", () => {
   it("rendered an item details page with size", async () => {
     const { container } = renderWithRoute("trauma-chest-drain", "9");
     expect(screen.getByText("Item Details")).toBeDefined();
 
     expect(
-      getByText(document.querySelector("h2.name")!, "Standard suture pack")
+      getByText(document.querySelector("h2.name")!, "Suture pack")
     ).toBeDefined();
     expect(
       getByText(document.querySelector("div.size")!, "Standard")
@@ -39,17 +38,17 @@ describe("ItemDetails", () => {
   });
 
   it("rendered an item details page without size", async () => {
-    const { container } = renderWithRoute("trauma-chest-drain", "7");
+    const { container } = renderWithRoute("trauma-chest-drain", "11");
     expect(screen.getByText("Item Details")).toBeDefined();
 
     expect(
-      getByText(document.querySelector("h2.name")!, "ChloraPrep applicator")
+      getByText(document.querySelector("h2.name")!, "Chest drain bottle")
     ).toBeDefined();
     expect(getByText(document.querySelector("div.size")!, "N/A")).toBeDefined();
     expect(
       getByText(
         document.querySelector("div.description")!,
-        "ChloraPrep applicator for cleaning skin for sterile procedure"
+        "Chest drain bottle for draining air and blood"
       )
     ).toBeDefined();
     expect(
@@ -58,7 +57,7 @@ describe("ItemDetails", () => {
 
     expect(document.querySelector("img.item-photo")).toHaveAttribute(
       "src",
-      "/items/chloraprep.jpg"
+      "/items/chestdrainbottle.jpg"
     );
 
     expect(container).toMatchSnapshot();
@@ -99,14 +98,19 @@ describe("ItemDetails", () => {
 
     await user.click(screen.getByRole("button", { name: "back" }));
 
-    expect(history.location.pathname).toEqual("/container/trauma-chest-drain/5");
+    expect(history.location.pathname).toEqual(
+      "/container/trauma-chest-drain/5"
+    );
   });
 
   function renderWithRoute(containerTemplateId: string, itemId: string) {
     // Add routes to get the contents of useParams populated
     return renderWithProvider(
       <Routes>
-        <Route path="item/:containerTemplateId/:itemId" element={<ItemDetails />} />
+        <Route
+          path="item/:containerTemplateId/:itemId"
+          element={<ItemDetails />}
+        />
         <Route path="*" element={<div>Unknown path</div>} />
       </Routes>,
       {

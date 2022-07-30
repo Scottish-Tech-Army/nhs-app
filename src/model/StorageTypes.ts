@@ -19,7 +19,7 @@ export type StorageAreaTemplate = {
   storageAreaId: string;
   name: string;
   containers: ContainerTemplate[];
-  possibleLocations?: string[];
+  possibleContainerLocations?: string[];
 };
 
 export type MissingContainerItem = {

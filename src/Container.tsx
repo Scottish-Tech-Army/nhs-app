@@ -86,7 +86,7 @@ function Container() {
 
   useEffect(() => {
     const currentStorageArea = getStorageArea(storageAreaId!);
-    setLocation(currentStorageArea?.possibleLocations?.[0]);
+    setLocation(currentStorageArea?.possibleContainerLocations?.[0]);
     setStorageArea(currentStorageArea);
     const currentContainerTemplate = getContainerTemplate(containerTemplateId!);
 
@@ -99,7 +99,7 @@ function Container() {
     }
   }, [storageAreaId, containerTemplateId, containerNumberValue]);
 
-  const isMultipleLocation = !!storageArea?.possibleLocations;
+  const isMultipleLocation = !!storageArea?.possibleContainerLocations;
 
   async function handleSubmit() {
     await Auth.currentSession()
@@ -237,7 +237,7 @@ function Container() {
         value={location}
         onChange={({ target }) => setLocation(target.value)}
       >
-        {storageArea!.possibleLocations!.map((current, index) => (
+        {storageArea!.possibleContainerLocations!.map((current, index) => (
           <option key={index} value={current}>
             {current}
           </option>

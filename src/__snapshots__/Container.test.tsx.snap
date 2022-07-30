@@ -451,7 +451,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            ChloraPrep applicator
+            ChloraPrep applicator (3ml)
           </div>
           <div
             class="controls"
@@ -509,7 +509,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Lidocaine 1% (5ml / 50mg)
+            Lidocaine 1% vial (5ml / 50mg)
           </div>
           <div
             class="controls"
@@ -567,7 +567,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Standard suture pack (Standard)
+            Suture pack (Standard)
           </div>
           <div
             class="controls"
