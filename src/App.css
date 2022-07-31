@@ -11,8 +11,9 @@
 
 .root {
   position: relative;
-  width: 375px;
-  height: 768px;
+  height: 100vh;
+  min-width: 350px;
+  min-height: 500px;
 
   background: white;
   font-family: "HindRegular", sans-serif;
@@ -46,7 +47,6 @@
   }
 }
 
-
 .signin {
   display: flex;
   flex-direction: column;
@@ -56,23 +56,18 @@
   padding: 33px;
   box-sizing: border-box;
 }
-.branding-container{
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 0 30%;
-}
-.ae-logo{
-    justify-content: center; 
-    align-items: center;
-    align-content: center;
+
+.ae-logo {
+  align-self: center;
 }
 
 .signin h2 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 35px;
   color: #491f6f;
+  align-self: center;
   margin-top: 30px;
-  margin-left: 15px;
+  margin-bottom: 0x;
 }
 
 .signin label {
@@ -91,7 +86,8 @@
 .signin .action-row {
   display: flex;
   flex-direction: row;
-  margin-top: 105px;
+  margin-top: 30px;
+  flex-grow: 1;
 }
 
 .signin button#action-button {
@@ -114,21 +110,23 @@
 }
 
 .directory header,
+.storage-area-group header,
 .storage-area header,
-.box-details header,
-.summary-list header {
+.container-details header,
+.missing-items-list header {
   background-color: #491f6f;
   color: white;
   min-height: 100px;
 }
 
 .directory header h1,
+.storage-area-group header h1,
 .storage-area header h1,
-.box-details header h1,
-.summary-list header h1 {
+.container-details header h1,
+.missing-items-list header h1 {
   font-family: "HindSemiBold", sans-serif;
   font-size: 22px;
-  line-height: 29px;
+  line-height: 130%;
 
   text-align: center;
   padding-top: 26px;
@@ -138,7 +136,11 @@
   margin: 0;
 }
 
-.box-details header button.full {
+.container-details header h1 {
+  font-size: 16px;
+}
+
+.container-details header button.full {
   position: absolute;
   right: 26px;
   top: 26px;
@@ -158,37 +160,48 @@
   border-radius: 50%;
 }
 
-.box-details .item {
+.container-details .item {
   display: flex;
 }
 
-.box-details,
+.container-details,
 .directory,
+.storage-area-group,
 .storage-area,
-.summary-list {
+.missing-items-list {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
 .directory main,
+.storage-area-group main,
 .storage-area main,
-.box-details main,
-.summary-list main {
+.container-details main,
+.missing-items-list main {
   flex: 1;
   position: relative;
-  margin-bottom: 104px;
+  margin-bottom: 59px;
 }
 
-.summary-list main {
+.container-details main {
+  margin-bottom: 77px;
+}
+
+.container-details.with-location main {
+  margin-bottom: 131px;
+}
+
+.missing-items-list main {
   flex: 1;
   position: relative;
 }
 
 .directory main .scroll,
+.storage-area-group main .scroll,
 .storage-area main .scroll,
-.box-details main .scroll,
-.summary-list main .scroll {
+.container-details main .scroll,
+.missing-items-list main .scroll {
   position: absolute;
   left: 0;
   top: 0;
@@ -200,7 +213,8 @@
 }
 
 .directory main .single-storage-area,
-.summary-list main .box {
+.storage-area-group main .single-storage-area,
+.missing-items-list main .container {
   border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
@@ -212,7 +226,7 @@
   position: relative;
 }
 
-.box-details main .item {
+.container-details main .item {
   border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
@@ -226,23 +240,39 @@
   position: relative;
 }
 
-.directory main .single-storage-area {
+.directory main .single-storage-area,
+.storage-area-group main .single-storage-area {
   min-height: 70px;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
 
-.summary-list main .box {
+.missing-items-list main .container {
   flex-direction: column;
   padding: 16px;
+  align-items: stretch;
 }
 
-.summary-list main .box h2 {
+.missing-items-list main .container h2 {
   font-size: 16px;
   line-height: 130%;
   margin-top: 0;
+  margin-bottom: 5px;
 }
 
-.directory main .single-storage-area svg {
+.missing-items-list main .container .checker {
+  border-bottom: black 1px solid;
+  margin-bottom: 15px;
+}
+
+.missing-items-list main .container .item {
+  padding-left: 20px;
+  text-indent: -20px;
+}
+
+.directory main .single-storage-area svg,
+.storage-area-group main .single-storage-area svg {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -251,7 +281,8 @@
   color: #491f6f;
 }
 
-.directory main .single-storage-area .display-name {
+.directory main .single-storage-area .display-name,
+.storage-area-group main .single-storage-area .display-name {
   font-size: 14px;
   line-height: 130%;
   padding-left: 74px;
@@ -260,18 +291,18 @@
   padding-bottom: 18px;
 }
 
-.box-details main .item .display-name {
+.container-details main .item .display-name {
   font-size: 14px;
   line-height: 130%;
 }
 
-.box-details main .item .controls {
+.container-details main .item .controls {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.box-details main .item .quantity {
+.container-details main .item .quantity {
   flex-grow: 1;
   text-align: center;
   font-size: 28px;
@@ -279,11 +310,11 @@
   color: #491f6f;
 }
 
-.box-details main .item .quantity .actual-quantity-bad {
+.container-details main .item .quantity .actual-quantity-bad {
   color: #768692;
 }
 
-.box-details main .item button.item-info {
+.container-details main .item button.item-info {
   padding: 0;
   margin-right: 76px;
   margin-left: 2px;
@@ -296,12 +327,12 @@
   flex-shrink: 0;
 }
 
-.box-details main .item button.item-info svg {
+.container-details main .item button.item-info svg {
   width: 24px;
   height: 24px;
 }
 
-.box-details main .item button.change-quantity {
+.container-details main .item button.change-quantity {
   width: 38px;
   height: 38px;
   border: 1px solid rgba(73, 31, 111, 0.2);
@@ -313,36 +344,68 @@
   flex-shrink: 0;
 }
 
-.box-details main .item button.change-quantity svg {
+.container-details main .item button.change-quantity svg {
   width: 20px;
   height: 20px;
 }
 
 .directory footer,
+.storage-area-group footer,
 .storage-area footer,
-.summary-list footer,
-.box-details footer {
+.missing-items-list footer,
+.container-details footer {
   position: absolute;
-  left: 0%;
-  right: 0%;
-  bottom: 0%;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   border-top: 1px solid rgba(160, 160, 160, 0.25);
-  box-shadow: 0px 4px 120px rgba(193, 193, 197, 0.15);
-  height: 104px;
+  height: 59px;
+  box-sizing: border-box;
 }
 
 .directory footer nav,
+.storage-area-group footer nav,
 .storage-area footer nav,
-.summary-list footer nav,
-.box-details footer {
+.missing-items-list footer nav,
+.container-details footer {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.box-details footer button.save {
+.container-details footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 77px;
+}
+
+.container-details.with-location footer {
+  flex-direction: column;
+  align-items: stretch;
+  height: 131px;
+}
+
+.container-locations {
+  display: flex;
+  align-self: center;
+  padding: 10px 24px 15px 24px;
+  align-items: center;
+}
+
+.container-locations label {
+  font-size: 14px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.container-locations select {
+  border-radius: 3px;
+  font-family: "HindRegular";
+  font-size: 14px;
+}
+
+.container-details footer button.save {
   margin-left: 24px;
   margin-right: 24px;
   height: 56px;
@@ -350,6 +413,12 @@
   color: white;
   border-radius: 15px;
   flex-grow: 1;
+  font-family: "HindSemiBold", sans-serif;
+  font-size: 16px;
+}
+
+.container-details.with-location footer button.save {
+  flex-grow: 0;
 }
 
 footer .navicon {
@@ -386,9 +455,7 @@ footer nav .navicon svg {
   align-items: center;
 }
 
-.item-details button.back,
-.box-details button.back,
-.summary-list button.back {
+button.back {
   position: absolute;
   width: 48px;
   height: 48px;
@@ -401,12 +468,11 @@ footer nav .navicon svg {
   background-color: white;
 }
 
-.box-details button.back {
+.container-details button.back {
   color: #491f6f;
 }
 
-.box-details button.back svg,
-.item-details button.back svg {
+button.back svg {
   position: absolute;
   width: 22px;
   height: 22px;
@@ -471,10 +537,11 @@ footer nav .navicon svg {
 .disclaimer-popup,
 .confirm-reset-popup {
   position: fixed;
+  box-sizing: border-box;
   left: 0;
   bottom: 0;
   height: 295px;
-  width: calc(375px - 26px); /* Update when .root width changes */
+  width: 100%;
   z-index: 9;
 
   padding: 10px;
@@ -544,7 +611,7 @@ footer nav .navicon svg {
   height: 100%;
 }
 
-.storage-area main .box {
+.storage-area main .multiple-container {
   border: 1px solid rgba(73, 31, 111, 0.25);
   border-radius: 12px;
   margin-bottom: 17px;
@@ -557,29 +624,30 @@ footer nav .navicon svg {
   position: relative;
 }
 
-.storage-area main .box .box-title {
+.storage-area main .multiple-container .container-title {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
-.storage-area main .box .display-name {
+.storage-area main .multiple-container .display-name {
   margin-bottom: 17px;
   margin-left: 25px;
   margin-right: 25px;
   font-size: 18px;
   line-height: 130%;
   align-self: center;
+  text-align: center;
 }
 
-.storage-area main .box .box-numbers {
+.storage-area main .multiple-container .container-numbers {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.storage-area main .box a.box-number {
+.storage-area main .multiple-container a.container-number {
   height: 40px;
   width: 40px;
   background-color: white;
@@ -596,7 +664,25 @@ footer nav .navicon svg {
   border: #491f6f solid 1px;
 }
 
-.storage-area main .box a.box-number:hover {
+.storage-area main a.single-container {
+  padding: 10px;
+  margin-bottom: 17px;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-color: white;
+  color: #491f6f;
+  border: #491f6f solid 1px;
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 130%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.storage-area main .multiple-container a.container-number:hover,
+.storage-area main a.single-container:hover {
   background-color: #491f6f;
   color: white;
 }

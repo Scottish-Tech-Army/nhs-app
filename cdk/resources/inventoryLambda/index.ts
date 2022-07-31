@@ -6,46 +6,46 @@ import { v4 as uuidv4 } from "uuid";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
-export type EIMissingBoxItem = {
+export type MissingContainerItem = {
   name: string;
   size?: string;
   quantity: number;
 };
 
-export type EIBoxInput = {
+export type ContainerInputData = {
   checker: string;
-  boxTemplateId: string;
-  boxNumber: number;
+  containerTemplateId: string;
+  containerNumber: number;
   storageAreaId: string;
   name: string;
-  missingItems: EIMissingBoxItem[];
+  missingItems: MissingContainerItem[];
   isFull: boolean;
 };
 
-export type EIBox = EIBoxInput & {
+export type ContainerData = ContainerInputData & {
   checkId: string;
   checkTime: string;
 };
 
-const boxesTableName = process.env.BOXES_TABLE_NAME;
+const containersTableName = process.env.CONTAINERS_TABLE_NAME;
 
 const headers = { "Access-Control-Allow-Origin": "*" };
 
-const getBoxes = (): Promise<EIBox[]> =>
+const getContainers = (): Promise<ContainerData[]> =>
   dynamodbClient
     .send(
       new ScanCommand({
-        TableName: boxesTableName,
+        TableName: containersTableName,
         ReturnConsumedCapacity: "TOTAL",
       })
     )
-    .then((result) => result.Items!.map((item) => unmarshall(item) as EIBox));
+    .then((result) => result.Items!.map((item) => unmarshall(item) as ContainerData));
 
-const addBox = (box: EIBox) =>
+const addContainer = (container: ContainerData) =>
   dynamodbClient.send(
     new PutItemCommand({
-      TableName: boxesTableName,
-      Item: marshall(box),
+      TableName: containersTableName,
+      Item: marshall(container),
     })
   );
 
@@ -63,8 +63,8 @@ export const handler = async (
     body: JSON.stringify({ message, request: event }),
   });
 
-  if (event.resource === "/boxes") {
-    const racks = await getBoxes();
+  if (event.resource === "/containers") {
+    const racks = await getContainers();
 
     return {
       headers,
@@ -77,17 +77,17 @@ export const handler = async (
     if (!event.body) {
       return errorResponse(400, "Invalid request body");
     }
-    let payload: EIBoxInput;
+    let payload: ContainerInputData;
     try {
       payload = JSON.parse(event.body);
     } catch (error) {
       return errorResponse(400, "Invalid request body");
     }
-    if (!payload.boxTemplateId) {
-      return errorResponse(400, "boxTemplateId missing");
+    if (!payload.containerTemplateId) {
+      return errorResponse(400, "containerTemplateId missing");
     }
-    if (payload.boxNumber === undefined) {
-      return errorResponse(400, "boxNumber missing");
+    if (payload.containerNumber === undefined) {
+      return errorResponse(400, "containerNumber missing");
     }
     if (!payload.storageAreaId) {
       return errorResponse(400, "storageAreaId missing");
@@ -96,16 +96,16 @@ export const handler = async (
       return errorResponse(400, "checker missing");
     }
 
-    const box = {
+    const container = {
       ...payload,
       checkId: uuidv4(),
       checkTime: new Date().toISOString(),
     };
-    console.log(`adding ckeck ${box.checkId}`);
+    console.log(`adding ckeck ${container.checkId}`);
 
-    await addBox(box);
+    await addContainer(container);
     console.log(
-      `Box ${box.name}, ${box.boxNumber} checked by ${box.checker} at ${box.checkTime}`
+      `Container ${container.name}, ${container.containerNumber} checked by ${container.checker} at ${container.checkTime}`
     );
 
     return { headers, statusCode: 200, body: "" };

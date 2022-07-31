@@ -6,9 +6,9 @@ console = {
   debug: jest.fn(),
 };
 
-export const TEST_BOXES_TABLE_NAME = "dbtable-boxes";
+export const TEST_CONTAINERS_TABLE_NAME = "dbtable-containers";
 
-process.env.BOXES_TABLE_NAME = TEST_BOXES_TABLE_NAME;
+process.env.CONTAINERS_TABLE_NAME = TEST_CONTAINERS_TABLE_NAME;
 
 beforeEach(() => {
   jest.resetAllMocks();

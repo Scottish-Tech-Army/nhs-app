@@ -11,16 +11,14 @@ describe("Directory", () => {
 
     expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
 
-    [
-      "Trauma Tower 1",
-      "Trauma Tower 2",
-      "Backup Area",
-    ].forEach((title) => {
+    ["Trauma Tower", "Airway Trolleys", "Transfer Bags"].forEach((title) => {
       expect(screen.getByText(title)).toBeDefined();
     });
 
-    const summaryLink = await screen.findByRole("link", { name: "summary" });
-    expect(summaryLink).toHaveAttribute("href", "/summary");
+    const missingItemsLink = await screen.findByRole("link", {
+      name: "missing-items",
+    });
+    expect(missingItemsLink).toHaveAttribute("href", "/missing-items");
   });
 
   it("renders correctly", () => {
@@ -31,13 +29,25 @@ describe("Directory", () => {
 
   it("navigates to storage area page", async () => {
     const { user, history } = renderWithProvider(<Directory />);
-    
+
     expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
 
     expect(history.location.pathname).toEqual("/");
 
-    await user.click(await screen.findByText("Trauma Tower 2"));
+    await user.click(await screen.findByText("Trauma Tower"));
 
-    expect(history.location.pathname).toEqual("/area/1");
+    expect(history.location.pathname).toEqual("/area/trauma-tower");
+  });
+
+  it("navigates to storage area group page", async () => {
+    const { user, history } = renderWithProvider(<Directory />);
+
+    expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
+
+    expect(history.location.pathname).toEqual("/");
+
+    await user.click(await screen.findByText("Airway Trolleys"));
+
+    expect(history.location.pathname).toEqual("/areas/airway-trolleys");
   });
 });

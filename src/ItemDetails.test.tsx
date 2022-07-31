@@ -8,14 +8,13 @@ import { Routes, Route } from "react-router-dom";
 import ItemDetails from "./ItemDetails";
 import { renderWithProvider } from "./testUtils";
 
-
 describe("ItemDetails", () => {
   it("rendered an item details page with size", async () => {
-    const { container } = renderWithRoute("0", "9");
+    const { container } = renderWithRoute("trauma-chest-drain", "9");
     expect(screen.getByText("Item Details")).toBeDefined();
 
     expect(
-      getByText(document.querySelector("h2.name")!, "Standard suture pack")
+      getByText(document.querySelector("h2.name")!, "Suture pack")
     ).toBeDefined();
     expect(
       getByText(document.querySelector("div.size")!, "Standard")
@@ -39,17 +38,17 @@ describe("ItemDetails", () => {
   });
 
   it("rendered an item details page without size", async () => {
-    const { container } = renderWithRoute("0", "7");
+    const { container } = renderWithRoute("trauma-chest-drain", "11");
     expect(screen.getByText("Item Details")).toBeDefined();
 
     expect(
-      getByText(document.querySelector("h2.name")!, "ChloraPrep applicator")
+      getByText(document.querySelector("h2.name")!, "Chest drain bottle")
     ).toBeDefined();
     expect(getByText(document.querySelector("div.size")!, "N/A")).toBeDefined();
     expect(
       getByText(
         document.querySelector("div.description")!,
-        "ChloraPrep applicator for cleaning skin for sterile procedure"
+        "Chest drain bottle for draining air and blood"
       )
     ).toBeDefined();
     expect(
@@ -58,62 +57,67 @@ describe("ItemDetails", () => {
 
     expect(document.querySelector("img.item-photo")).toHaveAttribute(
       "src",
-      "/items/chloraprep.jpg"
+      "/items/chestdrainbottle.jpg"
     );
 
     expect(container).toMatchSnapshot();
   });
 
-  it("does not render if no boxTemplateId", async () => {
+  it("does not render if no containerTemplateId", async () => {
     const { container } = renderWithRoute("", "3");
 
     expect(container).toHaveTextContent("Unknown path");
   });
 
   it("does not render if no itemNumber", async () => {
-    const { container } = renderWithRoute("0", "");
+    const { container } = renderWithRoute("trauma-chest-drain", "");
 
     expect(container).toHaveTextContent("Unknown path");
   });
 
-  it("does not render if unknown boxTemplateId", async () => {
+  it("does not render if unknown containerTemplateId", async () => {
     const { container } = renderWithRoute("Unknown", "4");
 
     expect(container.children).toHaveLength(1);
   });
 
   it("does not render if unknown itemNumber", async () => {
-    const { container } = renderWithRoute("0", "Unknown");
+    const { container } = renderWithRoute("trauma-chest-drain", "Unknown");
 
     expect(container.children).toHaveLength(1);
   });
 
-  it("does not render if unknown itemNumber - box number too high", async () => {
-    const { container } = renderWithRoute("0", "15");
+  it("does not render if unknown itemNumber - container number too high", async () => {
+    const { container } = renderWithRoute("trauma-chest-drain", "15");
 
     expect(container.children).toHaveLength(1);
   });
 
   it("can return to previous page", async () => {
-    const { user, history } = renderWithRoute("0", "3");
+    const { user, history } = renderWithRoute("trauma-chest-drain", "3");
 
-    await user.click(screen.getByRole("button", { name: "Back" }));
+    await user.click(screen.getByRole("button", { name: "back" }));
 
-    expect(history.location.pathname).toEqual("/box/0/5");
+    expect(history.location.pathname).toEqual(
+      "/container/trauma-chest-drain/5"
+    );
   });
 
-  function renderWithRoute(boxTemplateId: string, itemId: string) {
+  function renderWithRoute(containerTemplateId: string, itemId: string) {
     // Add routes to get the contents of useParams populated
     return renderWithProvider(
       <Routes>
-        <Route path="item/:boxTemplateId/:itemId" element={<ItemDetails />} />
+        <Route
+          path="item/:containerTemplateId/:itemId"
+          element={<ItemDetails />}
+        />
         <Route path="*" element={<div>Unknown path</div>} />
       </Routes>,
       {
         initialRoutes: [
           "/",
-          `/box/${boxTemplateId}/5`,
-          `/item/${boxTemplateId}/${itemId}`,
+          `/container/${containerTemplateId}/5`,
+          `/item/${containerTemplateId}/${itemId}`,
         ],
       }
     );

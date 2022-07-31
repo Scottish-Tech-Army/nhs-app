@@ -7,7 +7,7 @@ exports[`ItemDetails rendered an item details page with size 1`] = `
   >
     <header>
       <button
-        aria-label="Back"
+        aria-label="back"
         class="back"
         type="button"
       >
@@ -28,7 +28,7 @@ exports[`ItemDetails rendered an item details page with size 1`] = `
       <h2
         class="name"
       >
-        Standard suture pack
+        Suture pack
       </h2>
       <dl
         class="details"
@@ -76,7 +76,7 @@ exports[`ItemDetails rendered an item details page without size 1`] = `
   >
     <header>
       <button
-        aria-label="Back"
+        aria-label="back"
         class="back"
         type="button"
       >
@@ -92,12 +92,12 @@ exports[`ItemDetails rendered an item details page without size 1`] = `
       <img
         alt=""
         class="item-photo"
-        src="/items/chloraprep.jpg"
+        src="/items/chestdrainbottle.jpg"
       />
       <h2
         class="name"
       >
-        ChloraPrep applicator
+        Chest drain bottle
       </h2>
       <dl
         class="details"
@@ -109,7 +109,7 @@ exports[`ItemDetails rendered an item details page without size 1`] = `
             Description
           </dt>
           <dd>
-            ChloraPrep applicator for cleaning skin for sterile procedure
+            Chest drain bottle for draining air and blood
           </dd>
         </div>
         <div

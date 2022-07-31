@@ -52,7 +52,7 @@ describe("signIn", () => {
     expect(store.getState().auth).toStrictEqual({
       errorMessage: "",
       authState: SIGNED_IN,
-      user: TEST_USER_WITH_COGNITO,
+      user: TEST_USER,
     });
   });
 
@@ -279,7 +279,7 @@ describe("completeNewPassword", () => {
     expect(store.getState().auth).toStrictEqual({
       errorMessage: "",
       authState: SIGNED_IN,
-      user: TEST_USER_WITH_COGNITO,
+      user: TEST_USER,
     });
   });
 
@@ -332,6 +332,32 @@ describe("completeNewPassword", () => {
     );
     expect(store.getState().auth).toStrictEqual({
       errorMessage: "test error",
+      authState: RESET_PASSWORD,
+      user: TEST_USER,
+    });
+  });
+
+  it("another challenge response calling completeNewPassword - failure", async () => {
+    mockCurrentAuthenticatedUser.mockImplementation(() =>
+      Promise.resolve(TEST_COGNITO_USER)
+    );
+
+    const cognitoUser = {
+      getUsername: () => TEST_USERNAME,
+      challengeName: "MFA_SETUP",
+    } as unknown as CognitoUser;
+
+    mockCompleteNewPassword.mockImplementation(() => Promise.resolve(cognitoUser));
+
+    await dispatch(completeNewPassword(TEST_USER, "new password"));
+    expect(mockCompleteNewPassword).toHaveBeenCalledTimes(1);
+    expect(mockCompleteNewPassword).toHaveBeenCalledWith(
+      TEST_COGNITO_USER,
+      "new password",
+      {}
+    );
+    expect(store.getState().auth).toStrictEqual({
+      errorMessage: "auth challenge response: MFA_SETUP",
       authState: RESET_PASSWORD,
       user: TEST_USER,
     });

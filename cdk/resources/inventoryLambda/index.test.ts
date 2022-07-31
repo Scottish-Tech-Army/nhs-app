@@ -1,7 +1,7 @@
-import { EIBox, EIBoxInput, handler } from "./index";
+import { ContainerData, ContainerInputData, handler } from "./index";
 import { dynamodbClient } from "./aws";
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { TEST_BOXES_TABLE_NAME } from "./setupTests";
+import { TEST_CONTAINERS_TABLE_NAME } from "./setupTests";
 import * as uuid from "uuid";
 
 jest.mock("uuid");
@@ -10,12 +10,12 @@ jest.mock("./aws");
 const TIMESTAMP = "2022-06-23T09:18:06.324Z";
 const UUID = "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5";
 
-const INPUT_BOXES: EIBoxInput[] = [
+const INPUT_CONTAINERS: ContainerInputData[] = [
   {
     name: "Trauma Chest Drain",
-    boxTemplateId: "0",
-    storageAreaId: "2",
-    boxNumber: 2,
+    containerTemplateId: "trauma-chest-drain",
+    storageAreaId: "trauma-tower",
+    containerNumber: 2,
     missingItems: [
       {
         name: "Sterile gloves",
@@ -41,24 +41,24 @@ const INPUT_BOXES: EIBoxInput[] = [
   },
   {
     name: "Trauma Chest Drain",
-    boxTemplateId: "0",
-    boxNumber: 4,
-    storageAreaId: "3",
+    containerTemplateId: "trauma-chest-drain",
+    containerNumber: 4,
+    storageAreaId: "trauma-tower",
     missingItems: [],
     isFull: true,
     checker: "Bob",
   },
 ];
 
-const BOXES: EIBox[] = [
+const CONTAINERS: ContainerData[] = [
   {
-    boxNumber: 2,
-    boxTemplateId: "0",
+    containerNumber: 2,
+    containerTemplateId: "trauma-chest-drain",
     checkId: UUID,
     checkTime: TIMESTAMP,
     checker: "Bob",
     isFull: false,
-    storageAreaId: "2",
+    storageAreaId: "trauma-tower",
     missingItems: [
       {
         name: "Sterile gloves",
@@ -82,27 +82,27 @@ const BOXES: EIBox[] = [
     name: "Trauma Chest Drain",
   },
   {
-    boxNumber: 4,
-    boxTemplateId: "0",
+    containerNumber: 4,
+    containerTemplateId: "trauma-chest-drain",
     checkId: UUID,
     checkTime: TIMESTAMP,
     checker: "Bob",
     isFull: true,
-    storageAreaId: "3",
+    storageAreaId: "trauma-tower",
     missingItems: [],
     name: "Trauma Chest Drain",
   },
 ];
 
-const DYNAMO_BOXES = [
+const DYNAMO_CONTAINERS = [
   {
-    boxNumber: { N: "2" },
-    boxTemplateId: { S: "0" },
+    containerNumber: { N: "2" },
+    containerTemplateId: { S: "trauma-chest-drain" },
     checkId: { S: "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5" },
     checkTime: { S: "2022-06-23T09:18:06.324Z" },
     checker: { S: "Bob" },
     isFull: { BOOL: false },
-    storageAreaId: { S: "2" },
+    storageAreaId: { S: "trauma-tower" },
     missingItems: {
       L: [
         {
@@ -127,52 +127,52 @@ const DYNAMO_BOXES = [
   },
 
   {
-    boxNumber: { N: "4" },
-    boxTemplateId: { S: "0" },
+    containerNumber: { N: "4" },
+    containerTemplateId: { S: "trauma-chest-drain" },
     checkId: { S: "e5443b6c-4389-4119-a9c0-b7ad1f1eebc5" },
     checkTime: { S: "2022-06-23T09:18:06.324Z" },
     checker: { S: "Bob" },
     isFull: { BOOL: true },
-    storageAreaId: { S: "3" },
+    storageAreaId: { S: "trauma-tower" },
     missingItems: { L: [] },
     name: { S: "Trauma Chest Drain" },
   },
 ];
 
-const DB_BOXES_RESPONSE = {
-  Items: DYNAMO_BOXES,
+const DB_CONTAINERS_RESPONSE = {
+  Items: DYNAMO_CONTAINERS,
 };
 
-describe("api call GET /boxes", () => {
+describe("api call GET /containers", () => {
   it("successful response", async () => {
-    (dynamodbClient.send as jest.Mock).mockResolvedValueOnce(DB_BOXES_RESPONSE);
+    (dynamodbClient.send as jest.Mock).mockResolvedValueOnce(DB_CONTAINERS_RESPONSE);
 
     const event: Partial<APIGatewayProxyEvent> = {
-      resource: "/boxes",
+      resource: "/containers",
     };
     const result = await handler(event as APIGatewayProxyEvent);
 
     expect(result.statusCode).toEqual(200);
-    expect(result.body).toEqual(JSON.stringify(BOXES));
+    expect(result.body).toEqual(JSON.stringify(CONTAINERS));
 
     expect(dynamodbClient.send).toHaveBeenCalledTimes(1);
     expect(dynamodbClient.send).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
           ReturnConsumedCapacity: "TOTAL",
-          TableName: TEST_BOXES_TABLE_NAME,
+          TableName: TEST_CONTAINERS_TABLE_NAME,
         },
       })
     );
   });
 
-  it("successful response with empty boxes table", async () => {
+  it("successful response with empty containers table", async () => {
     (dynamodbClient.send as jest.Mock).mockResolvedValueOnce({
       Items: [],
     });
 
     const event: Partial<APIGatewayProxyEvent> = {
-      resource: "/boxes",
+      resource: "/containers",
     };
     const result = await handler(event as APIGatewayProxyEvent);
 
@@ -191,13 +191,13 @@ describe("api call POST /check", () => {
     jest.useRealTimers();
   });
 
-  it("successful response - box with missing items", async () => {
+  it("successful response - container with missing items", async () => {
     uuidSpy = jest.spyOn(uuid, "v4");
     uuidSpy.mockReturnValue(UUID);
 
     const event: Partial<APIGatewayProxyEvent> = {
       resource: "/check",
-      body: JSON.stringify(INPUT_BOXES[0]),
+      body: JSON.stringify(INPUT_CONTAINERS[0]),
     };
     const result = await handler(event as APIGatewayProxyEvent);
 
@@ -208,20 +208,20 @@ describe("api call POST /check", () => {
     expect(dynamodbClient.send).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
-          Item: DYNAMO_BOXES[0],
-          TableName: TEST_BOXES_TABLE_NAME,
+          Item: DYNAMO_CONTAINERS[0],
+          TableName: TEST_CONTAINERS_TABLE_NAME,
         },
       })
     );
   });
 
-  it("successful response - full box", async () => {
+  it("successful response - full container", async () => {
     uuidSpy = jest.spyOn(uuid, "v4");
     uuidSpy.mockReturnValue(UUID);
 
     const event: Partial<APIGatewayProxyEvent> = {
       resource: "/check",
-      body: JSON.stringify(INPUT_BOXES[1]),
+      body: JSON.stringify(INPUT_CONTAINERS[1]),
     };
     const result = await handler(event as APIGatewayProxyEvent);
 
@@ -232,8 +232,8 @@ describe("api call POST /check", () => {
     expect(dynamodbClient.send).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
-          Item: DYNAMO_BOXES[1],
-          TableName: TEST_BOXES_TABLE_NAME,
+          Item: DYNAMO_CONTAINERS[1],
+          TableName: TEST_CONTAINERS_TABLE_NAME,
         },
       })
     );
@@ -241,11 +241,11 @@ describe("api call POST /check", () => {
 
   // TODO check other input fields
 
-  it("failure response on missing input boxTemplateId", async () => {
+  it("failure response on missing input containerTemplateId", async () => {
     const input = {
       name: "Trauma Chest Drain",
-      boxNumber: 4,
-      storageAreaId: "1",
+      containerNumber: 4,
+      storageAreaId: "trauma-tower",
       missingItems: [],
       isFull: true,
       checker: "Bob",
@@ -259,7 +259,7 @@ describe("api call POST /check", () => {
     expect(result.statusCode).toEqual(400);
     expect(result.body).toEqual(
       JSON.stringify({
-        message: "boxTemplateId missing",
+        message: "containerTemplateId missing",
         request: {
           body: JSON.stringify(input),
           resource: "/check",
@@ -268,11 +268,11 @@ describe("api call POST /check", () => {
     );
   });
 
-  it("failure response on missing input boxNumber", async () => {
+  it("failure response on missing input containerNumber", async () => {
     const input = {
       name: "Trauma Chest Drain",
-      boxTemplateId: "0",
-      storageAreaId: "1",
+      containerTemplateId: "trauma-chest-drain",
+      storageAreaId: "trauma-tower",
       missingItems: [],
       isFull: true,
       checker: "Bob",
@@ -286,7 +286,7 @@ describe("api call POST /check", () => {
     expect(result.statusCode).toEqual(400);
     expect(result.body).toEqual(
       JSON.stringify({
-        message: "boxNumber missing",
+        message: "containerNumber missing",
         request: {
           body: JSON.stringify(input),
           resource: "/check",
@@ -298,8 +298,8 @@ describe("api call POST /check", () => {
   it("failure response on missing input storageAreaId", async () => {
     const input = {
       name: "Trauma Chest Drain",
-      boxTemplateId: "0",
-      boxNumber: 4,
+      containerTemplateId: "trauma-chest-drain",
+      containerNumber: 4,
       missingItems: [],
       isFull: true,
       checker: "Bob",
@@ -325,9 +325,9 @@ describe("api call POST /check", () => {
   it("failure response on missing input checker", async () => {
     const input = {
       name: "Trauma Chest Drain",
-      boxTemplateId: "0",
-      boxNumber: 4,
-      storageAreaId: "1",
+      containerTemplateId: "trauma-chest-drain",
+      containerNumber: 4,
+      storageAreaId: "trauma-tower",
       missingItems: [],
       isFull: true,
     };

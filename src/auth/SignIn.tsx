@@ -55,19 +55,21 @@ export function SignIn() {
     return null;
   }
 
+  const logo = (
+    <img
+      className="ae-logo"
+      src="/branding/EdinburghEmergencyMedicine.png"
+      height="130px"
+      width="130px"
+      alt=""
+    />
+  );
+
   if (authState === RESET_PASSWORD) {
     return (
       <div className="signin">
-        <div className="branding-container">
-          <img
-            className="ae-logo"
-            src="/branding/EdinburghEmergencyMedicine.png"
-            height="130px"
-            width="130px"
-            alt=""
-          />
-          <h2>Change Password</h2>
-        </div>
+        {logo}
+        <h2>Change Password</h2>
         <label htmlFor={PASSWORD_ID}>New password</label>
         <input
           id={PASSWORD_ID}
@@ -95,16 +97,9 @@ export function SignIn() {
 
   return (
     <div className="signin">
-      <div className="branding-container">
-        <img
-          className="ae-logo"
-          src="/branding/EdinburghEmergencyMedicine.png"
-          height="130px"
-          width="130px"
-          alt=""
-        />
-        <h2>Log in</h2>
-      </div>
+      {logo}
+      <h2>Log in</h2>
+
       <label htmlFor={USERNAME_ID}>Username</label>
       <input
         id={USERNAME_ID}

@@ -7,36 +7,45 @@ export type ItemTemplate = {
   quantity?: number;
 };
 
-export type BoxTemplate = {
-  boxTemplateId: string;
+export type ContainerTemplate = {
+  containerTemplateId: string;
   name: string;
+  containerType: string;
   items: ItemTemplate[];
-  count: number;
+  quantity?: number;
 };
 
 export type StorageAreaTemplate = {
   storageAreaId: string;
   name: string;
-  boxes: BoxTemplate[];
+  containers: ContainerTemplate[];
+  possibleContainerLocations?: string[];
 };
 
-export type EIMissingBoxItem = {
+export type StorageAreaGroupTemplate = {
+  storageAreaGroupId: string;
+  name: string;
+  storageAreas: StorageAreaTemplate[];
+};
+
+export type MissingContainerItem = {
   name: string;
   size?: string;
   quantity: number;
 };
 
-export type EIBoxInput = {
+export type ContainerInputData = {
   checker: string;
-  boxTemplateId: string;
-  boxNumber: number;
+  containerTemplateId: string;
+  containerNumber?: number;
   storageAreaId: string;
+  location?: string;
   name: string;
-  missingItems: EIMissingBoxItem[];
+  missingItems: MissingContainerItem[];
   isFull: boolean;
 };
 
-export type EIBox = EIBoxInput & {
+export type ContainerData = ContainerInputData & {
   checkId: string;
   checkTime: string;
 };

@@ -5,15 +5,15 @@ import { renderWithProvider } from "./testUtils";
 import Navbar from "./Navbar";
 
 describe("Navbar", () => {
-  it("renders for summary page", () => {
+  it("renders for missing-items page", () => {
     renderWithProvider(<Navbar />, {
-      initialRoutes: ["/summary"],
+      initialRoutes: ["/missing-items"],
     });
 
     expect(screen.getByRole("link", { name: "directory" })).not.toHaveClass(
       "active"
     );
-    expect(screen.getByRole("link", { name: "summary" })).toHaveClass("active");
+    expect(screen.getByRole("link", { name: "missing-items" })).toHaveClass("active");
 
     expect(screen.getByLabelText("log out")).not.toHaveClass("active");
   });
@@ -26,7 +26,7 @@ describe("Navbar", () => {
     expect(screen.getByRole("link", { name: "directory" })).toHaveClass(
       "active"
     );
-    expect(screen.getByRole("link", { name: "summary" })).not.toHaveClass(
+    expect(screen.getByRole("link", { name: "missing-items" })).not.toHaveClass(
       "active"
     );
 
@@ -35,14 +35,14 @@ describe("Navbar", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("navigates from summary page", async () => {
+  it("navigates from missing-items page", async () => {
     const { user, history } = renderWithProvider(<Navbar />, {
-      initialRoutes: ["/summary"],
+      initialRoutes: ["/missing-items"],
     });
 
-    await user.click(screen.getByRole("link", { name: "summary" }));
+    await user.click(screen.getByRole("link", { name: "missing-items" }));
 
-    expect(history.location.pathname).toEqual("/summary");
+    expect(history.location.pathname).toEqual("/missing-items");
 
     await user.click(screen.getByRole("link", { name: "directory" }));
 
@@ -58,9 +58,9 @@ describe("Navbar", () => {
 
     expect(history.location.pathname).toEqual("/");
 
-    await user.click(screen.getByRole("link", { name: "summary" }));
+    await user.click(screen.getByRole("link", { name: "missing-items" }));
 
-    expect(history.location.pathname).toEqual("/summary");
+    expect(history.location.pathname).toEqual("/missing-items");
   });
 
   it("shows logout confirmation", async () => {

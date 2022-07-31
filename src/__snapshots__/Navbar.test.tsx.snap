@@ -17,15 +17,15 @@ exports[`Navbar renders for directory 1`] = `
       </div>
     </a>
     <a
-      aria-label="summary"
+      aria-label="missing-items"
       class="navicon"
-      href="/summary"
+      href="/missing-items"
     >
       <svg>
         checklist.svg
       </svg>
       <div>
-        Summary
+        Missing Items
       </div>
     </a>
     <div

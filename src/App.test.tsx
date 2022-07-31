@@ -17,16 +17,16 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
   });
 
-  it("renders summary view", async () => {
+  it("renders missing-items view", async () => {
     const { user } = renderWithProvider(<App />, {
       preloadedState: INITIAL_SIGNED_IN_STATE,
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(screen.getByRole("link", { name: "summary" }));
+    await user.click(screen.getByRole("link", { name: "missing-items" }));
 
     expect(screen.queryByRole("heading", { name: "Directory" })).toBeNull();
-    expect(screen.getByRole("heading", { name: "Summary" })).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
   });
 
   it("renders storage area view", async () => {
@@ -35,36 +35,59 @@ describe("App", () => {
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
-    await user.click(screen.getByText("Trauma Tower 1"));
+    await user.click(screen.getByText("Trauma Tower"));
 
     expect(screen.getByText("Trauma Chest Drain")).toBeDefined();
   });
 
-  it("renders box view", async () => {
+  it("renders storage area group view", async () => {
     const { user } = renderWithProvider(<App />, {
       preloadedState: INITIAL_SIGNED_IN_STATE,
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
-    await user.click(screen.getByText("Trauma Tower 1"));
+
+    await user.click(screen.getByText("Airway Trolleys"));
+
+    expect(screen.getByText("Airway Trolley 1")).toBeDefined();
+  });
+
+  it("renders storage area from storage area group view", async () => {
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
+    await user.click(screen.getByRole("button", { name: "Accept" }));
+
+    await user.click(screen.getByText("Airway Trolleys"));
+    await user.click(screen.getByText("Airway Trolley 1"));
+
+    expect(screen.getByText("Drawer E")).toBeDefined();
+  });
+
+  it("renders container view", async () => {
+    const { user } = renderWithProvider(<App />, {
+      preloadedState: INITIAL_SIGNED_IN_STATE,
+    });
+    await user.click(screen.getByRole("button", { name: "Accept" }));
+    await user.click(screen.getByText("Trauma Tower"));
     await user.click(
       within(screen.getByText("Trauma Chest Drain").parentElement!).getByText(
         "2"
       )
     );
 
-    expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
+    expect(screen.getByRole("heading")).toHaveTextContent("Trauma Chest Drain - Box 2");
 
     expect(
       screen.getByText("Blunt dissection chest drainage insertion pack (28Fg)")
     ).toBeDefined();
   });
 
-  it("renders item view from box view", async () => {
+  it("renders item view from container view", async () => {
     const { user } = renderWithProvider(<App />, {
       preloadedState: INITIAL_SIGNED_IN_STATE,
     });
     await user.click(screen.getByRole("button", { name: "Accept" }));
-    await user.click(screen.getByText("Trauma Tower 1"));
+    await user.click(screen.getByText("Trauma Tower"));
 
     await user.click(
       within(screen.getByText("Trauma Chest Drain").parentElement!).getByText(
@@ -72,7 +95,7 @@ describe("App", () => {
       )
     );
 
-    expect(screen.getByText("Trauma Chest Drain - Box 2")).toBeDefined();
+    expect(screen.getByRole("heading")).toHaveTextContent("Trauma Chest Drain - Box 2");
 
     const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
 
