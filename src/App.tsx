@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Directory from "./Directory";
@@ -29,6 +29,24 @@ function App() {
 
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
 
+  useEffect(() => {
+    // Deal with webkit 'feature' where 100vh includes chrome at bottom
+    function handleResizeEvent() {
+      const rootElement = document.querySelector<HTMLElement>("#root")!;
+      const appElement = document.querySelector<HTMLElement>(".root")!;
+      appElement.style.height = `${window.innerHeight}px`;
+      rootElement.style.height = `${window.innerHeight}px`;
+    }
+
+    window.addEventListener("resize", handleResizeEvent);
+
+    handleResizeEvent();
+
+    return () => {
+      window.removeEventListener("resize", handleResizeEvent);
+    };
+  }, []);
+
   if (isAuthenticating(authState)) {
     return (
       <div className="root">
@@ -40,10 +58,19 @@ function App() {
   return (
     <div className="root">
       <Routes>
-        <Route path="container/:storageAreaId/:containerTemplateId/:containerNumber" element={<Container />} />
-        <Route path="item/:containerTemplateId/:itemId" element={<ItemDetails />} />
+        <Route
+          path="container/:storageAreaId/:containerTemplateId/:containerNumber"
+          element={<Container />}
+        />
+        <Route
+          path="item/:containerTemplateId/:itemId"
+          element={<ItemDetails />}
+        />
         <Route path="missing-items" element={<MissingItems />} />
-        <Route path="areas/:storageAreaGroupId" element={<StorageAreaGroup />} />
+        <Route
+          path="areas/:storageAreaGroupId"
+          element={<StorageAreaGroup />}
+        />
         <Route path="area/:storageAreaId" element={<StorageArea />} />
         <Route path="*" element={<Directory />} />
       </Routes>
