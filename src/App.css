@@ -428,6 +428,10 @@ html {
   font-size: 16px;
 }
 
+.container-details footer button.save:disabled {
+  background-color: grey;
+}
+
 .container-details.with-location footer button.save {
   flex-grow: 0;
 }

@@ -86,7 +86,7 @@ function Container() {
 
   useEffect(() => {
     const currentStorageArea = getStorageArea(storageAreaId!);
-    setLocation(currentStorageArea?.possibleContainerLocations?.[0]);
+    setLocation(undefined);
     setStorageArea(currentStorageArea);
     const currentContainerTemplate = getContainerTemplate(containerTemplateId!);
 
@@ -228,6 +228,8 @@ function Container() {
     );
   }
 
+  console.log("location", location);
+  
   const getLocationListbox = () => (
     <div className="container-locations">
       <label htmlFor="location">Location</label>
@@ -237,6 +239,9 @@ function Container() {
         value={location}
         onChange={({ target }) => setLocation(target.value)}
       >
+          <option key="undefined" value="">
+            Choose a location
+          </option>
         {storageArea!.possibleContainerLocations!.map((current, index) => (
           <option key={index} value={current}>
             {current}
@@ -282,7 +287,7 @@ function Container() {
       </main>
       <footer>
         {isMultipleLocation && getLocationListbox()}
-        <button type="button" className="save" onClick={handleSubmit}>
+        <button type="button" className="save" onClick={handleSubmit} disabled={isMultipleLocation && !location}>
           Save
         </button>
       </footer>

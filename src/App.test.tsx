@@ -9,30 +9,29 @@ jest.mock("@aws-amplify/core");
 
 describe("App", () => {
   it("renders default view", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
+
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     expect(screen.getByRole("heading", { name: "Directory" })).toBeDefined();
   });
 
   it("renders missing-items view", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
+
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(screen.getByRole("link", { name: "missing-items" }));
 
     expect(screen.queryByRole("heading", { name: "Directory" })).toBeNull();
-    expect(screen.getByRole("heading", { name: "Missing Items" })).toBeDefined();
+    expect(
+      screen.getByRole("heading", { name: "Missing Items" })
+    ).toBeDefined();
   });
 
   it("renders storage area view", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
+
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(screen.getByText("Trauma Tower"));
@@ -41,9 +40,8 @@ describe("App", () => {
   });
 
   it("renders storage area group view", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
+
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(screen.getByText("Airway Trolleys"));
@@ -52,9 +50,8 @@ describe("App", () => {
   });
 
   it("renders storage area from storage area group view", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
+
     await user.click(screen.getByRole("button", { name: "Accept" }));
 
     await user.click(screen.getByText("Airway Trolleys"));
@@ -64,9 +61,8 @@ describe("App", () => {
   });
 
   it("renders container view", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
+
     await user.click(screen.getByRole("button", { name: "Accept" }));
     await user.click(screen.getByText("Trauma Tower"));
     await user.click(
@@ -75,7 +71,9 @@ describe("App", () => {
       )
     );
 
-    expect(screen.getByRole("heading")).toHaveTextContent("Trauma Chest Drain - Box 2");
+    expect(screen.getByRole("heading")).toHaveTextContent(
+      "Trauma Chest Drain - Box 2"
+    );
 
     expect(
       screen.getByText("Blunt dissection chest drainage insertion pack (28Fg)")
@@ -83,9 +81,8 @@ describe("App", () => {
   });
 
   it("renders item view from container view", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
+
     await user.click(screen.getByRole("button", { name: "Accept" }));
     await user.click(screen.getByText("Trauma Tower"));
 
@@ -95,7 +92,9 @@ describe("App", () => {
       )
     );
 
-    expect(screen.getByRole("heading")).toHaveTextContent("Trauma Chest Drain - Box 2");
+    expect(screen.getByRole("heading")).toHaveTextContent(
+      "Trauma Chest Drain - Box 2"
+    );
 
     const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
 
@@ -109,9 +108,7 @@ describe("App", () => {
   });
 
   it("disclaimer must be accepted to continue", async () => {
-    const { user } = renderWithProvider(<App />, {
-      preloadedState: INITIAL_SIGNED_IN_STATE,
-    });
+    const { user } = renderComponent();
 
     expect(
       screen.getByText(
@@ -129,9 +126,22 @@ describe("App", () => {
   });
 
   it("signin page if not signed in", async () => {
-    renderWithProvider(<App />);
+    renderWithProvider(
+      <div id="root">
+        <App />
+      </div>
+    );
 
     expect(screen.getByText("Username")).toBeDefined();
     expect(screen.getByText("Password")).toBeDefined();
   });
+
+  function renderComponent() {
+    return renderWithProvider(
+      <div id="root">
+        <App />
+      </div>,
+      { preloadedState: INITIAL_SIGNED_IN_STATE }
+    );
+  }
 });
