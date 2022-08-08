@@ -9,16 +9,24 @@
     url("./fonts/Hind-SemiBold.ttf") format("truetype");
 }
 
-.root {
-  position: relative;
+html {
   height: 100vh;
+  height: -webkit-fill-available;
+}
+
+#root,
+.root {
+  height: 100vh;
+  height: -webkit-fill-available;
   min-width: 350px;
-  min-height: 500px;
   max-width: 600px;
+  min-height: 500px;
   margin-left: auto;
   margin-right: auto;
+}
 
-  background: white;
+.root {
+  position: relative;
   font-family: "HindRegular", sans-serif;
   font-style: normal;
 }
@@ -70,7 +78,7 @@
   color: #491f6f;
   align-self: center;
   margin-top: 30px;
-  margin-bottom: 0x;
+  margin-bottom: 0;
 }
 
 .signin label {
@@ -418,6 +426,10 @@
   flex-grow: 1;
   font-family: "HindSemiBold", sans-serif;
   font-size: 16px;
+}
+
+.container-details footer button.save:disabled {
+  background-color: grey;
 }
 
 .container-details.with-location footer button.save {

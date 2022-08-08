@@ -925,6 +925,11 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           name="location"
         >
           <option
+            value=""
+          >
+            Choose a location
+          </option>
+          <option
             value="Resus Stock Cupboard"
           >
             Resus Stock Cupboard
@@ -958,6 +963,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
       </div>
       <button
         class="save"
+        disabled=""
         type="button"
       >
         Save

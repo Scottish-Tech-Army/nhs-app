@@ -197,7 +197,9 @@ describe("multiple instance container", () => {
       .find('.controls > [aria-label="add item"]')
       .click();
 
-    cy.getByLabel("Location").should("have.value", "Resus Stock Cupboard");
+    cy.getByLabel("Location")
+      .find("option:selected")
+      .should("have.text", "Choose a location");
     cy.getByLabel("Location").select("Resus 1b");
 
     cy.contains("Save").click();
@@ -233,6 +235,12 @@ describe("missing-items", () => {
     cy.contains("h1", TRAUMA_TOWER_BOX_FOUR_TITLE);
 
     cy.contains("Sterile gloves (Small)");
+
+    cy.getByLabel("Location")
+      .find("option:selected")
+      .should("have.text", "Choose a location");
+    cy.getByLabel("Location").select("Resus 1a");
+
     cy.contains("Save").click();
 
     cy.get("h1").should("have.text", TRAUMA_TOWER);
@@ -252,6 +260,12 @@ describe("missing-items", () => {
       .parent()
       .find('.controls > [aria-label="add item"]')
       .click();
+
+    cy.getByLabel("Location")
+      .find("option:selected")
+      .should("have.text", "Choose a location");
+    cy.getByLabel("Location").select("Resus 1b");
+
     cy.contains("Save").click();
 
     const checkerRegex = new RegExp(

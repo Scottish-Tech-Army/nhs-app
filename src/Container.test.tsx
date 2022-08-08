@@ -58,9 +58,9 @@ describe("Multiple Instance Container", () => {
 
     expect(
       screen.getByRole("combobox", { name: "Location" })
-    ).toHaveDisplayValue("Resus Stock Cupboard");
+    ).toHaveDisplayValue("Choose a location");
 
-    expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
+    expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
   });
 
   it("does not render if no storageAreaId", async () => {
@@ -123,6 +123,32 @@ describe("Multiple Instance Container", () => {
     expect(container.children).toHaveLength(0);
 
     expect(container).toMatchSnapshot();
+  });
+
+  it("should have a location to enable saving", async () => {
+    const { user } = renderWithRoute("trauma-tower", "trauma-chest-drain", "3");
+
+    const location = screen.getByRole("combobox", { name: "Location" });
+    const saveButton = screen.getByRole("button", { name: "Save" });
+
+    expect(location).toHaveDisplayValue("Choose a location");
+    expect(saveButton).toBeDisabled();
+
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "Location" }),
+      ["Resus 1b"]
+    );
+
+    expect(location).toHaveDisplayValue("Resus 1b");
+    expect(saveButton).not.toBeDisabled();
+
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "Location" }),
+      ["Choose a location"]
+    );
+
+    expect(location).toHaveDisplayValue("Choose a location");
+    expect(saveButton).toBeDisabled();
   });
 
   it("can save item changes - success", async () => {
@@ -226,6 +252,11 @@ describe("Multiple Instance Container", () => {
     await user.click(increaseButton);
     await user.click(decreaseButton);
 
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "Location" }),
+      ["Resus 1b"]
+    );
+
     await user.click(screen.getByRole("button", { name: "Save" }));
 
     const expectedPayload: ContainerInputData = {
@@ -233,7 +264,7 @@ describe("Multiple Instance Container", () => {
       containerNumber: 3,
       storageAreaId: "trauma-tower",
       name: "Trauma Chest Drain",
-      location: "Resus Stock Cupboard",
+      location: "Resus 1b",
       missingItems: [
         { quantity: 1, name: "Sterile gloves", size: "Small" },
         { quantity: 1, name: "Sterile gloves", size: "Medium" },
@@ -418,7 +449,7 @@ describe("Single Instance Container", () => {
 
     expect(container).not.toHaveTextContent("Location");
 
-    expect(screen.getByRole("button", { name: "Save" })).toBeDefined();
+    expect(screen.getByRole("button", { name: "Save" })).not.toBeDisabled();
   });
 
   it("can save item changes - success", async () => {
