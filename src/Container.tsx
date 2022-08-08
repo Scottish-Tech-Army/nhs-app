@@ -228,8 +228,6 @@ function Container() {
     );
   }
 
-  console.log("location", location);
-  
   const getLocationListbox = () => (
     <div className="container-locations">
       <label htmlFor="location">Location</label>
