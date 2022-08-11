@@ -75,7 +75,7 @@ REACT_APP_AWS_USER_POOL_ID=eu-west-2_XXXXXXXXX
 REACT_APP_AWS_USER_POOL_WEB_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-#### Build the web clients
+#### Build the web client
 
 Create a production build web client
 
@@ -87,7 +87,7 @@ npm run build
 
 ### Deploy the frontend - hosted with AWS
 
-As the web clients is a static site, you can either deploy to AWS and direct incoming traffic to the CloudFront distribution, or just host it on your own website. To deploy to AWS:
+As the web client is a static site, you can either deploy to AWS and direct incoming traffic to the CloudFront distribution, or just host it on your own website. To deploy to AWS:
 
 ```
 cd PROJECT_ROOT/cdk; cdk deploy [--profile AWS_PROFILE] --context env=dev STA-NHS-Inventory-Frontend-dev
@@ -118,7 +118,7 @@ The process is basically the same:
 - Use the output to populate environment specific configuration for the web client
 - Build and deploy the frontend stack.
 
-Multiple `.env.CONFIG` files can be maintained in the web client folders. The `package.json` of each of the web clients can be set to look for particular config files for particular builds:
+Multiple `.env.CONFIG` files can be maintained in the project root folder. The `package.json` can be set to look for particular config files for particular builds:
 
 ```
 "scripts": {
