@@ -115,7 +115,7 @@ To host on your own website, build the web client as described above and the cop
 The process is basically the same:
 
 - Create an environment specific backend with the CDK backend stack
-- Use the output to populate environment specific configuration for the web clients
+- Use the output to populate environment specific configuration for the web client
 - Build and deploy the frontend stack.
 
 Multiple `.env.CONFIG` files can be maintained in the web client folders. The `package.json` of each of the web clients can be set to look for particular config files for particular builds:
