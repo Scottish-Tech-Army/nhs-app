@@ -746,11 +746,8 @@ export const TRANSFER_BAG_FRONT_NET_POCKET: PartialFixedContainerTemplate = {
     ITEM_ET_TUBE_SIZE_9,
     ITEM_ET_TUBE_SIZE_8,
     ITEM_MAGILL_FORCEPS,
-    ITEM_
+    ITEM_MEDIUM_INTRODUCER,
     ITEM_CATHETER_MOUNT,
-    ITEM_ET_TUBE_SIZE_6,
-    ITEM_10ML_SYRINGE,
-    ITEM_LIDOCAINE_VIAL,
   ],
 };
 
@@ -781,8 +778,8 @@ export const TRANSFER_BAG_BACK_POCKET_CANNULATION_GRAB_BAG: PartialFixedContaine
     name: "Circulation (Back Pocket) Cannulation Grab Bag",
     containerType: "Bag",
     items: [
-      { ...MISSING_FIELDS, name: "Green Cannula", size: "18G", quantity: 2 },
-      { ...MISSING_FIELDS, name: "Orange Cannula", size: "14G", quantity: 2 },
+      { ...MISSING_FIELDS, name: "Green IV Cannula", size: "18G", quantity: 2 },
+      { ...MISSING_FIELDS, name: "Orange IV Cannula", size: "14G", quantity: 2 },
       { ...MISSING_FIELDS, name: "Disposable Tourniquet" },
       { ...MISSING_FIELDS, name: "IV Tegaderm", quantity: 2 },
       { ...MISSING_FIELDS, name: "Alcohol Swabs", quantity: 4 },
