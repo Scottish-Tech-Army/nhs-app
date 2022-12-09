@@ -1481,13 +1481,13 @@ export const TRANSFER_BAGS: StorageAreaGroupTemplate = {
 };
 
 export const RED_BAGS: StorageAreaGroupTemplate = {
-  name: "Red Bags",
+  name: "Medic 1 - Red Bags",
   storageAreaGroupId: "red-bags",
   storageAreas: [RED_BAG_1],
 };
 
 export const BLACK_BAGS: StorageAreaGroupTemplate = {
-  name: "Black Bags (First Responder)",
+  name: "Medic 1 - Black Bags",
   storageAreaGroupId: "black-bags",
   storageAreas: [BLACK_BAG_1],
 };
