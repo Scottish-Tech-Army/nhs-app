@@ -405,8 +405,8 @@ export const BOX_CAT_HAEMORRHAGE: ContainerTemplate = {
     { ...ITEM_CHITO_GAUZE, quantity: 2 },
     { ...ITEM_MODULAR_BANDAGE, quantity: 2 },
     {
-      name: "Mosquito Artery Forceps (Straight)",
-      size: "12.5cm",
+      name: "Mosquito Artery Forceps",
+      size: "Straight 12.5cm",
       description: "Forceps for clamping blood vessels",
       location: "Resus store XX",
       photo: "mosquito.png",
