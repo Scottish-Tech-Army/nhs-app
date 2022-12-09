@@ -238,6 +238,12 @@ const ITEM_MAGILL_FORCEPS: PartialItemTemplate = {
   name: "Magill Forceps",
 };
 
+const ITEM_MEDIUM_INTRODUCER: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Medium Introducer",
+  description: "Intubation stylet",
+};
+
 const ITEM_MERSILK_SUTURE: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Mersilk Suture",
@@ -460,7 +466,7 @@ export const AIRWAY_TROLLEY_TOP: PartialFixedContainerTemplate = {
   items: [
     { ...MISSING_FIELDS, name: "Laminated RSI Checklist (June 2021)"},
     ITEM_LUBRICATING_GEL_SACHET,
-    { ...MISSING_FIELDS, name: "Medium Introducer" },
+    ITEM_MEDIUM_INTRODUCER,
     ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_6,
     ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_7,
   ],
@@ -740,6 +746,7 @@ export const TRANSFER_BAG_FRONT_NET_POCKET: PartialFixedContainerTemplate = {
     ITEM_ET_TUBE_SIZE_9,
     ITEM_ET_TUBE_SIZE_8,
     ITEM_MAGILL_FORCEPS,
+    ITEM_
     ITEM_CATHETER_MOUNT,
     ITEM_ET_TUBE_SIZE_6,
     ITEM_10ML_SYRINGE,
