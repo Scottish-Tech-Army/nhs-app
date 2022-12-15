@@ -64,7 +64,7 @@ const ITEM_50ML_SYRINGE: PartialItemTemplate = {
 const ITEM_BITE_BLOCK_SIZE_SMALL: PartialItemTemplate = {
   name: "Bite block",
   size: "Small : White",
-  description: "Pair of bite blocks",
+  description: "Pair of bite blocks for maxillofacial packing",
   location: "Resus store XX",
   photo: "smallbiteblock.jpg",
 };
@@ -72,7 +72,7 @@ const ITEM_BITE_BLOCK_SIZE_SMALL: PartialItemTemplate = {
 const ITEM_BITE_BLOCK_SIZE_MEDIUM: PartialItemTemplate = {
   name: "Bite block",
   size: "Medium : Green",
-  description: "Pair of bite blocks",
+  description: "Pair of bite blocks for maxillofacial packing",
   location: "Resus store XX",
   photo: "mediumbiteblock.jpg",
 };
@@ -80,7 +80,7 @@ const ITEM_BITE_BLOCK_SIZE_MEDIUM: PartialItemTemplate = {
 const ITEM_BITE_BLOCK_SIZE_LARGE: PartialItemTemplate = {
   name: "Bite block",
   size: "Large : Orange",
-  description: "Pair of bite blocks",
+  description: "Pair of bite blocks for maxillofacial packing",
   location: "Resus store XX",
   photo: "largebiteblock.jpg",
 };
@@ -95,6 +95,9 @@ const ITEM_BLAST_BANDAGES: PartialItemTemplate = {
 const ITEM_CATHETER_MOUNT: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Catheter Mount",
+  description: "Flexible catheter mount for connecting endotracheal tube/igel to breathing circuit or BVM",
+  location: "Resus store XX",
+  photo: "catheter-mount.jpg",
 };
 
 const ITEM_CAT_TOURNIQUET: PartialItemTemplate = {
@@ -114,7 +117,7 @@ const ITEM_CHITO_GAUZE: PartialItemTemplate = {
 const ITEM_CHLORAPREP_APPLICATOR: PartialItemTemplate = {
   name: "ChloraPrep applicator",
   size: "3ml",
-  description: "ChloraPrep applicator for cleaning skin for sterile procedure",
+  description: "ChloraPrep applicator for disinfecting skin for sterile procedure",
   location: "Resus store XX",
   photo: "chloraprep.jpg",
 };
@@ -123,12 +126,16 @@ const ITEM_DISPOSABLE_MAC_BLADE_SIZE_3: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Disposable Mac Blade",
   size: "3",
+  description: "Single use intubation blade for use with disposable laryngoscope",
+  photo: "mac-blade.jpg",
 };
 
 const ITEM_DISPOSABLE_MAC_BLADE_SIZE_4: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Disposable Mac Blade",
   size: "4",
+  description: "Single use intubation blade for use with disposable laryngoscope",
+  photo: "mac-blade.jpg",
 };
 
 const ITEM_ELASTOPLAST_TAPE: PartialItemTemplate = {
@@ -138,7 +145,7 @@ const ITEM_ELASTOPLAST_TAPE: PartialItemTemplate = {
 
 const ITEM_EPISTAT: PartialItemTemplate = {
   name: "Epistat",
-  description: "Epistat nasal catheter",
+  description: "Epistat nasal catheter for maxillofacial packing",
   location: "Resus store XX",
   photo: "epistat.jpg",
 };
@@ -147,36 +154,54 @@ const ITEM_ET_TUBE_SIZE_9: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "ET Tube",
   size: "9.0",
+  description: "Endotracheal tube for intubation",
+  location: "Resus store XX",
+  photo: "ett.jpg",
 };
 
 const ITEM_ET_TUBE_SIZE_8: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "ET Tube",
   size: "8.0",
+  description: "Endotracheal tube for intubation",
+  location: "Resus store XX",
+  photo: "ett.jpg",
 };
 
 const ITEM_ET_TUBE_SIZE_7: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "ET Tube",
   size: "7.0",
+  description: "Endotracheal tube for intubation",
+  location: "Resus store XX",
+  photo: "ett.jpg",
 };
 
 const ITEM_ET_TUBE_SIZE_6: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "ET Tube",
   size: "6.0",
+  description: "Endotracheal tube for intubation",
+  location: "Resus store XX",
+  photo: "ett.jpg",
 };
 
 const ITEM_FACE_MASK_SIZE_4: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Face Mask",
   size: "4",
+  description: "Face mask for connecting to BVM or C-circuit",
+  location: "Resus store XX",
+  photo: "face-mask.jpg",
 };
 
 const ITEM_FACE_MASK_SIZE_5: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Face Mask",
   size: "5",
+  description: "Face mask for connecting to BVM or C-circuit",
+  location: "Resus store XX",
+  photo: "face-mask.jpg",
 };
 
 const ITEM_GAUZE_SWABS: PartialItemTemplate = {
@@ -186,38 +211,56 @@ const ITEM_GAUZE_SWABS: PartialItemTemplate = {
 
 const ITEM_GUEDEL_AIRWAY_GREEN: PartialItemTemplate = {
   ...MISSING_FIELDS,
-  name: "Guedel airway",
-  size: "Green",
+  name: "Oropharyngeal (Guedel) airway",
+  size: "Green - 2",
+  description: "Oropharyngeal airway",
+  location: "Resus store XX",
+  photo: "opa.jpg",
 };
 
 const ITEM_GUEDEL_AIRWAY_ORANGE: PartialItemTemplate = {
   ...MISSING_FIELDS,
-  name: "Guedel airway",
-  size: "Orange",
+  name: "Oropharyngeal (Guedel) airway",
+  size: "Orange - 3",
+  description: "Oropharyngeal airway",
+  location: "Resus store XX",
+  photo: "opa.jpg",
 };
 
 const ITEM_GUEDEL_AIRWAY_RED: PartialItemTemplate = {
   ...MISSING_FIELDS,
-  name: "Guedel airway",
-  size: "Red",
+  name: "Oropharyngeal (Guedel) airway",
+  size: "Red - 4",
+  description: "Oropharyngeal airway",
+  location: "Resus store XX",
+  photo: "opa.jpg",
 };
 
 const ITEM_IGEL_SIZE_3: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "i-gel",
   size: "3",
+  description: "i-gel supraglottic airway",
+  location: "Resus store XX",
+  photo: "igel.jpg",
 };
 
 const ITEM_IGEL_SIZE_4: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "i-gel",
   size: "4",
+  description: "i-gel supraglottic airway",
+  location: "Resus store XX",
+  photo: "igel.jpg",
 };
 
 const ITEM_IGEL_SIZE_5: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "i-gel",
   size: "5",
+  description: "i-gel supraglottic airway",
+  location: "Resus store XX",
+  photo: "igel.jpg",
 };
 
 const ITEM_LIDOCAINE_VIAL: PartialItemTemplate = {
