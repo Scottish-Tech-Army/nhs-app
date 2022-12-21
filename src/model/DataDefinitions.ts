@@ -140,6 +140,7 @@ const ITEM_DISPOSABLE_MAC_BLADE_SIZE_4: PartialItemTemplate = {
 
 const ITEM_DRESSING_PACK: PartialItemTemplate = {
   ...MISSING_FIELDS,
+  name: "Dressing pack",
   size: "Medium",
   description: "Universal dressing pack",
   location: "Resus store XX",
@@ -312,6 +313,8 @@ const ITEM_MODULAR_BANDAGE: PartialItemTemplate = {
 };
 
 const ITEM_MOSQUITO_FORCEPS: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Mosquito Artery Forceps",
   size: "Straight 12.5cm",
   description: "Forceps for clamping blood vessels",
   location: "Resus store XX",
