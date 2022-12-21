@@ -138,6 +138,14 @@ const ITEM_DISPOSABLE_MAC_BLADE_SIZE_4: PartialItemTemplate = {
   photo: "mac-blade.jpg",
 };
 
+const ITEM_DRESSING_PACK: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  size: "Medium",
+  description: "Universal dressing pack",
+  location: "Resus store XX",
+  photo: "dressingpack.jpg",
+};
+
 const ITEM_ELASTOPLAST_TAPE: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Elastoplast tape",
@@ -303,6 +311,13 @@ const ITEM_MODULAR_BANDAGE: PartialItemTemplate = {
   photo: "modular.jpg",
 };
 
+const ITEM_MOSQUITO_FORCEPS: PartialItemTemplate = {
+  size: "Straight 12.5cm",
+  description: "Forceps for clamping blood vessels",
+  location: "Resus store XX",
+  photo: "mosquito.png",
+};
+
 const ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_6: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Nasopharyngeal Airway",
@@ -313,6 +328,14 @@ const ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_7: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Nasopharyngeal Airway",
   size: "7.0",
+};
+
+const ITEM_SKIN_STAPLER: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+   name: "Skin Stapler",
+   description: "Skin stapler for wound closure",
+   location: "Resus store XX",
+   photo: "stapler.jpg",
 };
 
 const ITEM_SODIUM_CHLORIDE_1000ML: PartialItemTemplate = {
@@ -453,29 +476,11 @@ export const BOX_CAT_HAEMORRHAGE: ContainerTemplate = {
     { ...ITEM_BLAST_BANDAGES, quantity: 2 },
     { ...ITEM_CHITO_GAUZE, quantity: 2 },
     { ...ITEM_MODULAR_BANDAGE, quantity: 2 },
-    {
-      name: "Mosquito Artery Forceps",
-      size: "Straight 12.5cm",
-      description: "Forceps for clamping blood vessels",
-      location: "Resus store XX",
-      photo: "mosquito.png",
-      quantity: 2,
-    },
-    {
-      name: "Dressing pack",
-      size: "Medium",
-      description: "Universal dressing pack",
-      location: "Resus store XX",
-      photo: "dressingpack.jpg",
-    },
+    { ...ITEM_MOSQUITO_FORCEPS, quantity: 2 },
+    ITEM_DRESSING_PACK,
     ITEM_STANDARD_SUTURE_PACK,
     { ...ITEM_MERSILK_SUTURE, quantity: 2 },
-    {
-      name: "Stapler",
-      description: "Skin stapler for wound closure",
-      location: "Resus store XX",
-      photo: "stapler.jpg",
-    },
+    ITEM_SKIN_STAPLER,
   ],
 };
 
