@@ -92,6 +92,15 @@ const ITEM_BLAST_BANDAGES: PartialItemTemplate = {
   photo: "blast.jpg",
 };
 
+const ITEM_BLUNT_NEEDLE: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Blunt Drawing-Up Needle",
+  size: "",
+  description: "Blunt fill needle with filter for drawing up drugs",
+  location: "Resus store XX",
+  photo: "blunt-needle.jpg",
+};
+
 const ITEM_CATHETER_MOUNT: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Catheter Mount",
@@ -122,6 +131,15 @@ const ITEM_CHLORAPREP_APPLICATOR: PartialItemTemplate = {
   photo: "chloraprep.jpg",
 };
 
+const ITEM_DISPOSABLE_HAT: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Disposable Hat/Cap",
+  size: "",
+  description: "Disposable theatre hat/cap for sterile procedures",
+  location: "Resus store XX",
+  photo: "surgical-cap.jpg",
+};
+
 const ITEM_DISPOSABLE_MAC_BLADE_SIZE_3: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Disposable Mac Blade",
@@ -136,6 +154,14 @@ const ITEM_DISPOSABLE_MAC_BLADE_SIZE_4: PartialItemTemplate = {
   size: "4",
   description: "Single use intubation blade for use with disposable laryngoscope",
   photo: "mac-blade.jpg",
+};
+
+const ITEM_DISPOSABLE_STERILE_GOWN: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Disposable Sterile Gown",
+  size: "Medium",
+  description: "Disposable single-use sterile gown",
+  location: "Resus store XX",
 };
 
 const ITEM_DRESSING_PACK: PartialItemTemplate = {
@@ -218,6 +244,15 @@ const ITEM_GAUZE_SWABS: PartialItemTemplate = {
   name: "Gauze Swabs (pack of 5)",
 };
 
+const ITEM_GREEN_NEEDLE: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Green Needle",
+  size: "21g",
+  description: "Green single-use hypodermic needle",
+  location: "Resus store XX",
+  photo: "green-needle.jpg",
+};
+
 const ITEM_GUEDEL_AIRWAY_GREEN: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Oropharyngeal (Guedel) airway",
@@ -272,6 +307,15 @@ const ITEM_IGEL_SIZE_5: PartialItemTemplate = {
   photo: "igel.jpg",
 };
 
+const ITEM_INCO_PAD: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Inco Pad",
+  size: "",
+  description: "Incontinence pad/sheet",
+  location: "Resus store XX",
+  photo: "inco-pad.jpg",
+};
+
 const ITEM_LIDOCAINE_VIAL: PartialItemTemplate = {
   name: "Lidocaine 1% vial",
   size: "5ml / 50mg",
@@ -288,6 +332,15 @@ const ITEM_LUBRICATING_GEL_SACHET: PartialItemTemplate = {
 const ITEM_MAGILL_FORCEPS: PartialItemTemplate = {
   ...MISSING_FIELDS,
   name: "Magill Forceps",
+};
+
+const ITEM_MASK_WITH_VISOR: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Mask with Visor",
+  size: "",
+  description: "Surgical face mask with visor/eye shield",
+  location: "Resus store XX",
+  photo: "mask-visor.jpg",
 };
 
 const ITEM_MEDIUM_INTRODUCER: PartialItemTemplate = {
@@ -333,6 +386,15 @@ const ITEM_NASOPHARYNGEAL_AIRWAY_SIZE_7: PartialItemTemplate = {
   size: "7.0",
 };
 
+const ITEM_ORANGE_NEEDLE: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Orange Needle",
+  size: "25g",
+  description: "Orange single-use hypodermic needle",
+  location: "Resus store XX",
+  photo: "orange-needle.jpg",
+};
+
 const ITEM_SKIN_STAPLER: PartialItemTemplate = {
   ...MISSING_FIELDS,
    name: "Skin Stapler",
@@ -376,6 +438,15 @@ const ITEM_STANDARD_SUTURE_PACK: PartialItemTemplate = {
   description: "Pack of equipment for suturing",
   location: "Resus store XX",
   photo: "standardsuture.jpg",
+};
+
+const ITEM_TEGADERM_LARGE: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Large Tegaderm",
+  size: "10cm x 12cm",
+  description: "Large Tegaderm Film dressing for covering device insertion",
+  location: "Resus store XX",
+  photo: "large-tegaderm.jpg",
 };
 
 const ITEM_TUBE_TIE: PartialItemTemplate = {
@@ -1064,19 +1135,19 @@ export const A_LINE_BOX: ContainerTemplate = {
   containerType: "Box",
   containerTemplateId: "a-line-box",
   items: [
-    { ...MISSING_FIELDS, name: "Disposable Sterile Gown" },
+    ITEM_DISPOSABLE_STERILE_GOWN,
     ITEM_STERILE_GLOVES_SIZE_SMALL,
     ITEM_STERILE_GLOVES_SIZE_MEDIUM,
     ITEM_STERILE_GLOVES_SIZE_LARGE,
-    { ...MISSING_FIELDS, name: "Disposable Hat" },
-    { ...MISSING_FIELDS, name: "Mask with Visor" },
-    { ...MISSING_FIELDS, name: "Inco Pad" },
+   	ITEM_DISPOSABLE_HAT,
+	  ITEM_MASK_WITH_VISOR,
+	  ITEM_INCO_PAD,
     ITEM_CHLORAPREP_APPLICATOR,
     ITEM_LIDOCAINE_VIAL,
-    { ...MISSING_FIELDS, name: "Blunt Drawing-up Needle" },
-    { ...MISSING_FIELDS, name: "Orange needle" },
-    { ...MISSING_FIELDS, name: "Large Tegaderm" },
-    { ...MISSING_FIELDS, name: "Dressing Pack", size: "Small" },
+    ITEM_BLUNT_NEEDLE,
+	  ITEM_ORANGE_NEEDLE,
+	  ITEM_TEGADERM_LARGE,
+	  ITEM_DRESSING_PACK,
     { ...MISSING_FIELDS, name: "Radial Artery Catheter" },
     { ...MISSING_FIELDS, name: "Femoral Artery Catheter" },
     ITEM_STANDARD_SUTURE_PACK,
