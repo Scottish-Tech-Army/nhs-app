@@ -61,6 +61,24 @@ const ITEM_50ML_SYRINGE: PartialItemTemplate = {
   name: "50ml Syringe",
 };
 
+const ITEM_ARTERIAL_FEMORAL: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Arterial Line Catheter",
+  size: "Femoral - 18G x 10cm",
+  description: "Vygon leadercath (seldinger) arterial line catheter",
+  location: "Resus store XX",
+  photo: "vygon.jpg",
+};
+	
+const ITEM_ARTERIAL_RADIAL: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Arterial Line Catheter",
+  size: "Radial - 20G x 8cm",
+  description: "Vygon leadercath (seldinger) arterial line catheter",
+  location: "Resus store XX",
+  photo: "vygon.jpg",
+};
+
 const ITEM_BITE_BLOCK_SIZE_SMALL: PartialItemTemplate = {
   name: "Bite block",
   size: "Small : White",
@@ -316,6 +334,14 @@ const ITEM_INCO_PAD: PartialItemTemplate = {
   photo: "inco-pad.jpg",
 };
 
+const ITEM_INVASIVE_DEVICES_BUNDLE: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Invasive Devices Procedure Bundle Paperwork",
+  size: "",
+  description: "Paperwork for documenting insertion of invasive device",
+  location: "Resus store XX",
+};
+
 const ITEM_LIDOCAINE_VIAL: PartialItemTemplate = {
   name: "Lidocaine 1% vial",
   size: "5ml / 50mg",
@@ -395,12 +421,30 @@ const ITEM_ORANGE_NEEDLE: PartialItemTemplate = {
   photo: "orange-needle.jpg",
 };
 
+const ITEM_PRESSURE_BAG: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Pressure Bag",
+  size: "1000ml",
+  description: "Pressure bag for delivering fluid quickly or pressurising arterial or central line transducer set",
+  location: "Resus store XX",
+  photo: "pressure-bag.jpg",
+};
+
+const ITEM_PRESSURE_TRANSDUCER: PartialItemTemplate = {
+  ...MISSING_FIELDS,
+  name: "Transducer Set",
+  size: "Single",
+  description: "Single pressure transducer set for arterial or central line",
+  location: "Resus store XX",
+  photo: "pressure-transducer.jpg",
+};
+
 const ITEM_SKIN_STAPLER: PartialItemTemplate = {
   ...MISSING_FIELDS,
-   name: "Skin Stapler",
-   description: "Skin stapler for wound closure",
-   location: "Resus store XX",
-   photo: "stapler.jpg",
+  name: "Skin Stapler",
+  description: "Skin stapler for wound closure",
+  location: "Resus store XX",
+  photo: "stapler.jpg",
 };
 
 const ITEM_SODIUM_CHLORIDE_1000ML: PartialItemTemplate = {
@@ -408,6 +452,7 @@ const ITEM_SODIUM_CHLORIDE_1000ML: PartialItemTemplate = {
   name: "Sodium Chloride 0.9%",
   size: "1000ml",
 };
+
 const ITEM_STERILE_GLOVES_SIZE_SMALL: PartialItemTemplate = {
   name: "Sterile gloves",
   size: "Small",
@@ -1139,24 +1184,24 @@ export const A_LINE_BOX: ContainerTemplate = {
     ITEM_STERILE_GLOVES_SIZE_SMALL,
     ITEM_STERILE_GLOVES_SIZE_MEDIUM,
     ITEM_STERILE_GLOVES_SIZE_LARGE,
-   	ITEM_DISPOSABLE_HAT,
-	  ITEM_MASK_WITH_VISOR,
-	  ITEM_INCO_PAD,
+    ITEM_DISPOSABLE_HAT,
+    ITEM_MASK_WITH_VISOR,
+    ITEM_INCO_PAD,
     ITEM_CHLORAPREP_APPLICATOR,
     ITEM_LIDOCAINE_VIAL,
     ITEM_BLUNT_NEEDLE,
-	  ITEM_ORANGE_NEEDLE,
-	  ITEM_TEGADERM_LARGE,
-	  ITEM_DRESSING_PACK,
-    { ...MISSING_FIELDS, name: "Radial Artery Catheter" },
-    { ...MISSING_FIELDS, name: "Femoral Artery Catheter" },
+    ITEM_ORANGE_NEEDLE,
+    ITEM_TEGADERM_LARGE,
+    ITEM_DRESSING_PACK,
+    ITEM_ARTERIAL_RADIAL,
+    ITEM_ARTERIAL_FEMORAL,
     ITEM_STANDARD_SUTURE_PACK,
     ITEM_MERSILK_SUTURE,
     ITEM_LIDOCAINE_VIAL,
     ITEM_SODIUM_CHLORIDE_1000ML,
-    { ...MISSING_FIELDS, name: "Red Transducer Set" },
-    { ...MISSING_FIELDS, name: "Pressure bag" },
-    { ...MISSING_FIELDS, name: "Invasive Devices Procedure Bundle Paperwork" },
+    ITEM_PRESSURE_TRANSDUCER,
+    ITEM_PRESSURE_BAG,
+    ITEM_INVASIVE_DEVICES_BUNDLE,
       ],
 };
 
