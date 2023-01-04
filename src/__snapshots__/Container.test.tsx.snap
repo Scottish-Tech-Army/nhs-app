@@ -45,7 +45,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Blunt dissection chest drainage insertion pack (28Fg)
+            Blunt dissection chest drainage insertion pack (28Fg) - Resus store XX
           </div>
           <div
             class="controls"
@@ -103,7 +103,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Sterile gloves (Small)
+            Sterile gloves (Small) - Resus store XX
           </div>
           <div
             class="controls"
@@ -161,7 +161,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Sterile gloves (Medium)
+            Sterile gloves (Medium) - Resus store XX
           </div>
           <div
             class="controls"
@@ -219,7 +219,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Sterile gloves (Large)
+            Sterile gloves (Large) - Resus store XX
           </div>
           <div
             class="controls"
@@ -277,7 +277,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Chest drain catheter (28Fr)
+            Chest drain catheter (28Fr) - Resus store XX
           </div>
           <div
             class="controls"
@@ -335,7 +335,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Chest drain catheter (32Fr)
+            Chest drain catheter (32Fr) - Resus store XX
           </div>
           <div
             class="controls"
@@ -393,7 +393,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Chest drain catheter (36Fr)
+            Chest drain catheter (36Fr) - Resus store XX
           </div>
           <div
             class="controls"
@@ -451,7 +451,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            ChloraPrep applicator (3ml)
+            ChloraPrep applicator (3ml) - Resus store XX
           </div>
           <div
             class="controls"
@@ -509,7 +509,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Lidocaine 1% vial (5ml / 50mg)
+            Lidocaine 1% vial (5ml / 50mg) - Resus store XX
           </div>
           <div
             class="controls"
@@ -567,7 +567,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Suture pack (Standard)
+            Suture pack (Standard) - Resus store XX
           </div>
           <div
             class="controls"
@@ -625,7 +625,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Mefix roll (5cm x 10m)
+            Mefix roll (5cm x 10m) - Resus store XX
           </div>
           <div
             class="controls"
@@ -683,7 +683,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Chest drain bottle
+            Chest drain bottle - Resus store XX
           </div>
           <div
             class="controls"
@@ -741,7 +741,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Chest drain tubing
+            Chest drain tubing - Resus store XX
           </div>
           <div
             class="controls"
@@ -799,7 +799,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Sterile water (H20) bottle (1000ml bottle)
+            Sterile water (H20) bottle (1000ml bottle) - Resus store XX
           </div>
           <div
             class="controls"
@@ -857,7 +857,7 @@ exports[`Multiple Instance Container renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Spencer wells forceps (Straight 20cm)
+            Spencer wells forceps (Straight 20cm) - Resus store XX
           </div>
           <div
             class="controls"

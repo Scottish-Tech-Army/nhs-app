@@ -36,6 +36,7 @@ function calculateMissingItem(
     ? {
         name: itemTemplate.name,
         size: itemTemplate.size,
+        location: itemTemplate.location,
         quantity: quantityToGet,
       }
     : undefined;
