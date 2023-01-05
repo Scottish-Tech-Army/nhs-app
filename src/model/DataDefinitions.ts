@@ -273,27 +273,27 @@ const ITEM_GREEN_NEEDLE: PartialItemTemplate = {
 
 const ITEM_GUEDEL_AIRWAY_GREEN: PartialItemTemplate = {
   ...MISSING_FIELDS,
-  name: "Oropharyngeal (Guedel) airway",
+  name: "OPA",
   size: "Green - 2",
-  description: "Oropharyngeal airway",
+  description: "Oropharyngeal airway (Guedel)",
   location: "Resus store XX",
   photo: "opa.jpg",
 };
 
 const ITEM_GUEDEL_AIRWAY_ORANGE: PartialItemTemplate = {
   ...MISSING_FIELDS,
-  name: "Oropharyngeal (Guedel) airway",
+  name: "OPA",
   size: "Orange - 3",
-  description: "Oropharyngeal airway",
+  description: "Oropharyngeal airway (Guedel)",
   location: "Resus store XX",
   photo: "opa.jpg",
 };
 
 const ITEM_GUEDEL_AIRWAY_RED: PartialItemTemplate = {
   ...MISSING_FIELDS,
-  name: "Oropharyngeal (Guedel) airway",
+  name: "OPA",
   size: "Red - 4",
-  description: "Oropharyngeal airway",
+  description: "Oropharyngeal airway (Guedel)",
   location: "Resus store XX",
   photo: "opa.jpg",
 };
