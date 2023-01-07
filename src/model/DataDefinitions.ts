@@ -28,7 +28,7 @@ export const LOCATIONS = [
 const MISSING_FIELDS: Pick<ItemTemplate, "description" | "location" | "photo"> =
   {
     description: "DESCRIPTION",
-    location: "LOCATION",
+    location: "",
     photo: "PHOTO.jpg",
   };
 
@@ -1759,6 +1759,9 @@ export function getItemDisplayName(item: ItemTemplate | MissingContainerItem) {
   let result = item.name;
   if (item.size) {
     result += ` (${item.size})`;
+  }
+  if (item.location) {
+    result += ` - ${item.location}`;
   }
   return result;
 }

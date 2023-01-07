@@ -39,21 +39,21 @@ describe("Multiple Instance Container", () => {
     const inputFields = Array.from(document.querySelectorAll(".display-name"));
 
     expect(inputFields.map((input) => input.textContent)).toEqual([
-      "Blunt dissection chest drainage insertion pack (28Fg)",
-      "Sterile gloves (Small)",
-      "Sterile gloves (Medium)",
-      "Sterile gloves (Large)",
-      "Chest drain catheter (28Fr)",
-      "Chest drain catheter (32Fr)",
-      "Chest drain catheter (36Fr)",
-      "ChloraPrep applicator (3ml)",
-      "Lidocaine 1% vial (5ml / 50mg)",
-      "Suture pack (Standard)",
-      "Mefix roll (5cm x 10m)",
-      "Chest drain bottle",
-      "Chest drain tubing",
-      "Sterile water (H20) bottle (1000ml bottle)",
-      "Spencer wells forceps (Straight 20cm)",
+      "Blunt dissection chest drainage insertion pack (28Fg) - Resus store XX",
+      "Sterile gloves (Small) - Resus store XX",
+      "Sterile gloves (Medium) - Resus store XX",
+      "Sterile gloves (Large) - Resus store XX",
+      "Chest drain catheter (28Fr) - Resus store XX",
+      "Chest drain catheter (32Fr) - Resus store XX",
+      "Chest drain catheter (36Fr) - Resus store XX",
+      "ChloraPrep applicator (3ml) - Resus store XX",
+      "Lidocaine 1% vial (5ml / 50mg) - Resus store XX",
+      "Suture pack (Standard) - Resus store XX",
+      "Mefix roll (5cm x 10m) - Resus store XX",
+      "Chest drain bottle - Resus store XX",
+      "Chest drain tubing - Resus store XX",
+      "Sterile water (H20) bottle (1000ml bottle) - Resus store XX",
+      "Spencer wells forceps (Straight 20cm) - Resus store XX",
     ]);
 
     expect(
@@ -161,7 +161,7 @@ describe("Multiple Instance Container", () => {
     );
 
     const itemLabel = screen.getByText(
-      "Blunt dissection chest drainage insertion pack (28Fg)"
+      "Blunt dissection chest drainage insertion pack (28Fg) - Resus store XX"
     );
 
     const increaseButton = getByRole(itemLabel.parentElement!, "button", {
@@ -189,24 +189,25 @@ describe("Multiple Instance Container", () => {
       name: "Trauma Chest Drain",
       location: "Resus 1b",
       missingItems: [
-        { quantity: 1, name: "Sterile gloves", size: "Small" },
-        { quantity: 1, name: "Sterile gloves", size: "Medium" },
-        { quantity: 1, name: "Sterile gloves", size: "Large" },
-        { quantity: 1, name: "Chest drain catheter", size: "28Fr" },
-        { quantity: 1, name: "Chest drain catheter", size: "32Fr" },
-        { quantity: 1, name: "Chest drain catheter", size: "36Fr" },
-        { quantity: 2, name: "ChloraPrep applicator", size: "3ml" },
-        { quantity: 2, name: "Lidocaine 1% vial", size: "5ml / 50mg" },
-        { quantity: 1, name: "Suture pack", size: "Standard" },
-        { quantity: 1, name: "Mefix roll", size: "5cm x 10m" },
-        { quantity: 1, name: "Chest drain bottle" },
-        { quantity: 1, name: "Chest drain tubing" },
+        { quantity: 1, name: "Sterile gloves", location: "Resus store XX", size: "Small" },
+        { quantity: 1, name: "Sterile gloves", location: "Resus store XX", size: "Medium" },
+        { quantity: 1, name: "Sterile gloves", location: "Resus store XX", size: "Large" },
+        { quantity: 1, name: "Chest drain catheter", location: "Resus store XX", size: "28Fr" },
+        { quantity: 1, name: "Chest drain catheter", location: "Resus store XX", size: "32Fr" },
+        { quantity: 1, name: "Chest drain catheter", location: "Resus store XX", size: "36Fr" },
+        { quantity: 2, name: "ChloraPrep applicator", location: "Resus store XX", size: "3ml" },
+        { quantity: 2, name: "Lidocaine 1% vial", location: "Resus store XX", size: "5ml / 50mg" },
+        { quantity: 1, name: "Suture pack", location: "Resus store XX", size: "Standard" },
+        { quantity: 1, name: "Mefix roll", location: "Resus store XX", size: "5cm x 10m" },
+        { quantity: 1, name: "Chest drain bottle", location: "Resus store XX" },
+        { quantity: 1, name: "Chest drain tubing", location: "Resus store XX" },
         {
           quantity: 1,
           name: "Sterile water (H20) bottle",
+          location: "Resus store XX", 
           size: "1000ml bottle",
         },
-        { quantity: 1, name: "Spencer wells forceps", size: "Straight 20cm" },
+        { quantity: 1, name: "Spencer wells forceps", location: "Resus store XX", size: "Straight 20cm" },
       ],
       isFull: false,
       checker: TEST_USERNAME,
@@ -238,7 +239,7 @@ describe("Multiple Instance Container", () => {
     );
 
     const itemLabel = screen.getByText(
-      "Blunt dissection chest drainage insertion pack (28Fg)"
+      "Blunt dissection chest drainage insertion pack (28Fg) - Resus store XX"
     );
 
     const increaseButton = getByRole(itemLabel.parentElement!, "button", {
@@ -266,24 +267,25 @@ describe("Multiple Instance Container", () => {
       name: "Trauma Chest Drain",
       location: "Resus 1b",
       missingItems: [
-        { quantity: 1, name: "Sterile gloves", size: "Small" },
-        { quantity: 1, name: "Sterile gloves", size: "Medium" },
-        { quantity: 1, name: "Sterile gloves", size: "Large" },
-        { quantity: 1, name: "Chest drain catheter", size: "28Fr" },
-        { quantity: 1, name: "Chest drain catheter", size: "32Fr" },
-        { quantity: 1, name: "Chest drain catheter", size: "36Fr" },
-        { quantity: 2, name: "ChloraPrep applicator", size: "3ml" },
-        { quantity: 2, name: "Lidocaine 1% vial", size: "5ml / 50mg" },
-        { quantity: 1, name: "Suture pack", size: "Standard" },
-        { quantity: 1, name: "Mefix roll", size: "5cm x 10m" },
-        { quantity: 1, name: "Chest drain bottle" },
-        { quantity: 1, name: "Chest drain tubing" },
+        { quantity: 1, name: "Sterile gloves", location: "Resus store XX", size: "Small" },
+        { quantity: 1, name: "Sterile gloves", location: "Resus store XX", size: "Medium" },
+        { quantity: 1, name: "Sterile gloves", location: "Resus store XX", size: "Large" },
+        { quantity: 1, name: "Chest drain catheter", location: "Resus store XX", size: "28Fr" },
+        { quantity: 1, name: "Chest drain catheter", location: "Resus store XX", size: "32Fr" },
+        { quantity: 1, name: "Chest drain catheter", location: "Resus store XX", size: "36Fr" },
+        { quantity: 2, name: "ChloraPrep applicator", location: "Resus store XX", size: "3ml" },
+        { quantity: 2, name: "Lidocaine 1% vial", location: "Resus store XX", size: "5ml / 50mg" },
+        { quantity: 1, name: "Suture pack", location: "Resus store XX", size: "Standard" },
+        { quantity: 1, name: "Mefix roll", location: "Resus store XX", size: "5cm x 10m" },
+        { quantity: 1, name: "Chest drain bottle", location: "Resus store XX" },
+        { quantity: 1, name: "Chest drain tubing", location: "Resus store XX" },
         {
           quantity: 1,
           name: "Sterile water (H20) bottle",
+          location: "Resus store XX", 
           size: "1000ml bottle",
         },
-        { quantity: 1, name: "Spencer wells forceps", size: "Straight 20cm" },
+        { quantity: 1, name: "Spencer wells forceps", location: "Resus store XX", size: "Straight 20cm" },
       ],
       isFull: false,
       checker: TEST_USERNAME,
@@ -388,7 +390,7 @@ describe("Multiple Instance Container", () => {
       "3"
     );
 
-    const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
+    const itemLabel = screen.getByText("Chest drain catheter (28Fr) - Resus store XX");
 
     const infoButton = getByRole(itemLabel.parentElement!, "button", {
       name: "item information",
@@ -481,7 +483,7 @@ describe("Single Instance Container", () => {
       containerNumber: 1,
       storageAreaId: "airway-trolley-2",
       name: "Side",
-      missingItems: [{ quantity: 1, name: "Aintree Catheter" }],
+      missingItems: [{ quantity: 1, name: "Aintree Catheter", location: "" }],
       isFull: false,
       checker: TEST_USERNAME,
     };

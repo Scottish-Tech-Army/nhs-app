@@ -32,6 +32,7 @@ export type MissingContainerItem = {
   name: string;
   size?: string;
   quantity: number;
+  location?: string;
 };
 
 export type ContainerInputData = {

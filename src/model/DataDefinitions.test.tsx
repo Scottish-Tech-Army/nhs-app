@@ -71,7 +71,7 @@ test("getItemDisplayName", () => {
       location: "Resus store XX",
       photo: "smallsterilegloves.jpg",
     })
-  ).toEqual("Sterile gloves (Small)");
+  ).toEqual("Sterile gloves (Small) - Resus store XX");
 
   expect(
     getItemDisplayName({
@@ -82,7 +82,7 @@ test("getItemDisplayName", () => {
       photo: "chloraprep.jpg",
       quantity: 2,
     })
-  ).toEqual("ChloraPrep applicator");
+  ).toEqual("ChloraPrep applicator - Resus store XX");
 
   expect(
     getItemDisplayName({
