@@ -76,7 +76,7 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Red Bags
+            Medic 1 - Red Bags
           </div>
         </a>
         <a
@@ -89,7 +89,7 @@ exports[`Directory renders correctly 1`] = `
           <div
             class="display-name"
           >
-            Black Bags (First Responder)
+            Medic 1 - Black Bags
           </div>
         </a>
       </div>
