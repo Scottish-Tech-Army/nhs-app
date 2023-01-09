@@ -1432,7 +1432,7 @@ export const RED_BAG_MAIN_COMPARTMENT_PAEDIATRIC_SCRAM: PartialFixedContainerTem
 
 export const RED_BAG_1: StorageAreaTemplate = {
   storageAreaId: "red-bag-1",
-  name: "Red Bag 1",
+  name: "Medic 1 - Red Bag 1",
   containers: [
     {
       ...RED_BAG_FRONT_UPPER_POCKET_SURGICAL_POUCH,
@@ -1593,7 +1593,7 @@ export const BLACK_BAG_RIGHT_POCKET: PartialFixedContainerTemplate = {
 
 export const BLACK_BAG_1: StorageAreaTemplate = {
   storageAreaId: "black-bag-1",
-  name: "Black Bag (First Responder) 1",
+  name: "Medic 1 - Black Bag 1",
   containers: [
     {
       ...BLACK_BAG_MAIN_COMPARTMENT_TOP_FLAP,
