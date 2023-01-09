@@ -76,7 +76,7 @@ describe("App", () => {
     );
 
     expect(
-      screen.getByText("Blunt dissection chest drainage insertion pack (28Fg)")
+      screen.getByText("Blunt dissection chest drainage insertion pack (28Fg) - Resus store XX")
     ).toBeDefined();
   });
 
@@ -96,7 +96,7 @@ describe("App", () => {
       "Trauma Chest Drain - Box 2"
     );
 
-    const itemLabel = screen.getByText("Chest drain catheter (28Fr)");
+    const itemLabel = screen.getByText("Chest drain catheter (28Fr) - Resus store XX");
 
     const infoButton = getByRole(itemLabel.parentElement!, "button", {
       name: "item information",

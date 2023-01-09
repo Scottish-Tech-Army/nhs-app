@@ -66,6 +66,32 @@ exports[`Directory renders correctly 1`] = `
             Other Procedures
           </div>
         </a>
+        <a
+          class="single-storage-area"
+          href="/areas/red-bags"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Medic 1 - Red Bags
+          </div>
+        </a>
+        <a
+          class="single-storage-area"
+          href="/areas/black-bags"
+        >
+          <svg>
+            edit.svg
+          </svg>
+          <div
+            class="display-name"
+          >
+            Medic 1 - Black Bags
+          </div>
+        </a>
       </div>
     </main>
     <footer>
